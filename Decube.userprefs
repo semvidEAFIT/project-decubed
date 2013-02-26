@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Helpers\Vector3Int.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Model\Level.cs" Line="12" Column="46" />
+      <File FileName="Assets\Scripts\Helpers\CubeHelper.cs" Line="19" Column="55" />
+      <File FileName="Assets\Scripts\Model\Cubes\Cube.cs" Line="104" Column="17" />
+      <File FileName="Assets\Scripts\Model\Entity.cs" Line="4" Column="14" />
+      <File FileName="Assets\Scripts\Helpers\Vector3Int.cs" Line="25" Column="8" />
+      <File FileName="Assets\Scripts\Helpers\Vector3EqualityComparer.cs" Line="15" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
