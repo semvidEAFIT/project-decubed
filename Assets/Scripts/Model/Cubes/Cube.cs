@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Cube : Entity{
+public class Cube : Entity, IClickable{
 	
 //	/// <summary>
 //	/// The cube that is selected in the whole world.
 //	/// </summary>
-//	private static Cube selectedCube;
+	private static Cube selectedCube;
 	
 	#region Variables
 	/// <summary>
@@ -27,11 +27,12 @@ public class Cube : Entity{
 //	/// <param name='nextPosition'>
 //	/// Next position.
 //	/// </param>
-//    public virtual void MoveTo(Vector3 nextPosition) {
-//        Level.Singleton.Entities.Remove(Vector3Int.getVector(transform.position));
-//		CubeAnimations.AnimateMove(gameObject, Vector3.down, nextPosition);
-//        Level.Singleton.Entities.Add(Vector3Int.getVector(nextPosition), this);
-//    }
+    public virtual void MoveTo(Vector3Int nextPosition) {
+        Level.Singleton.Entities.Remove(new Vector3Int(transform.position));
+		//TODO:Fix Animation
+		CubeAnimations.AnimateMove(gameObject, Vector3.down, nextPosition.ToVector3);
+        Level.Singleton.Entities.Add(nextPosition, this);
+    }
 	
 	#region Command Management
 	/// <summary>
@@ -89,17 +90,17 @@ public class Cube : Entity{
 	
 	#endregion
 	
-//    public void NotifyClick()
-//    {
-//        if (selectedCube != this)
-//        {
-//            if(selectedCube != null){
-//                selectedCube.IsSelected = false;
-//            }
-//            selected = true;
-//            selectedCube = this;
-//        }
-//    }
+    public void NotifyClick()
+    {
+        if (selectedCube != this)
+        {
+            if(selectedCube != null){
+                selectedCube.IsSelected = false;
+            }
+            selected = true;
+            selectedCube = this;
+        }
+    }
 	
 	public override void Update(){
 	}

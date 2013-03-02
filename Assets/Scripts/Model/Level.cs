@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
 //        {
 //            sensors.Add(e);
 //        }
-		entities.Add(new Vector3Int(position),entity);
+		entities.Add(new Vector3Int(position), entity);
 	}
 		
 	public void RemoveEntity(Vector3 position){
@@ -33,10 +33,20 @@ public class Level : MonoBehaviour
 		return entities[new Vector3Int(position)];
 	}
 	
+	///TODO: REvisar si borrar o no
 	public bool ContainsElement(Vector3 position){
 		return entities.ContainsKey(new Vector3Int(position));
 	}
+	
+	public bool ContainsElement(Vector3Int position){
+		return entities.ContainsKey(position);
+	}
 	#endregion
+	
+	 void Awake()
+    {
+        entities = new Dictionary<Vector3Int, Entity>(new Vector3EqualityComparer());
+    }
 //	
 //	#region Monobehavious Methods
 //    void Awake()

@@ -2,6 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Cube helper.
+/// 
+/// TODO: Quitar esta clase y mover metodos a Level, por que Level es el qeu tiene esta responsabilidad
+/// </summary>
 public class CubeHelper
 {
 	/// <summary>
@@ -16,18 +21,25 @@ public class CubeHelper
 	public static Vector3Int GetTopPosition (Vector3 position)
 	{
 		Vector3Int finalPosition = new Vector3Int(position);
-		bool occupied = Level.Singleton.ContainsElement(position);
+		bool occupied = Level.Singleton.ContainsElement(finalPosition);
 		
 		if (occupied){
 			while (occupied) {
 				finalPosition.y++;
-				occupied = Level.Singleton.ContainsElement (position);
+				Debug.Log("Entro 1 " + position);
+				occupied = Level.Singleton.ContainsElement (finalPosition);
+				Debug.Log("Entro 2" + occupied);
 			}
 		}else{
 			
 			while (!occupied) {
 				finalPosition.y--;
-				occupied = Level.Singleton.ContainsElement (position);
+				occupied = Level.Singleton.ContainsElement (finalPosition);
+				
+				if (finalPosition.y < 0.5)//TODO:Change floor check
+                {
+                    break;
+                }
 			}
 			finalPosition.y++;
 		}
