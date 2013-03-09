@@ -1,7 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class Clicker : MonoBehaviour {
+//TODO: Revisar si alguien usaba Clicker (le cambiamos el nombre a este script)
+/// <summary>
+/// Check clicked objects and notify them (must implement IClickeable interface)
+/// </summary>
+public class MouseInputManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
@@ -17,6 +21,7 @@ public class Clicker : MonoBehaviour {
                 foreach(MonoBehaviour m in scripts){
                     if(m is IClickable){
                         ((IClickable)m).NotifyClick();
+						break;
                     }
                 }
             }

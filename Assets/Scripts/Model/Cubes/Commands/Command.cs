@@ -8,18 +8,21 @@
 public abstract class Command
 {
 	#region variables
-	private Cube receiver;
+	
+	private Cube cube;
 	private Vector3Int endPosition;
 	private CubeController listener;
+	
 	#endregion
 	
-	public Command (Cube receiver, Vector3Int endPosition)
+	public Command (Cube cube, Vector3Int endPosition)
 	{
-		this.receiver = receiver;
+		this.cube = cube;
 		this.endPosition = endPosition;
 	}
 	
 	#region Command Methods
+	
 	public virtual void EndExecution ()
 	{
 		if (endPosition.x < 0 
@@ -32,14 +35,11 @@ public abstract class Command
 	}
 	
 	public abstract void Execute ();
+	
 	#endregion
 	
-	public override string ToString ()
-	{
-		return string.Format ("[Command: EndPosition={0}]", EndPosition);
-	}
-	
 	#region Gets and Sets
+	
 	public CubeController Listener {
 		set { listener = value; }
 	}
@@ -49,7 +49,8 @@ public abstract class Command
 	}
 
 	protected Cube Cube {
-		get { return receiver;}
+		get { return cube;}
 	}
+	
 	#endregion
 }

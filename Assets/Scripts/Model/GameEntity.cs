@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Entity : MonoBehaviour {
+public class GameEntity : MonoBehaviour {
 	
 	// Use this for initialization
 	protected virtual void Start () {

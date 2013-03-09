@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Libs\iTween\Plugins\iTween.cs" />
-     <Compile Include="Assets\Scripts\Controllers\Camera\Clicker.cs" />
+     <Compile Include="Assets\Scripts\Controllers\Camera\MouseInputManager.cs" />
      <Compile Include="Assets\Scripts\Controllers\Cube\CubeController.cs" />
      <Compile Include="Assets\Scripts\Controllers\Cube\CubeControllerInput.cs" />
      <Compile Include="Assets\Scripts\Helpers\Animations\AnimationHelper.cs" />
@@ -57,7 +57,7 @@
      <Compile Include="Assets\Scripts\Model\Cubes\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Model\Cubes\Commands\Move.cs" />
      <Compile Include="Assets\Scripts\Model\Cubes\Cube.cs" />
-     <Compile Include="Assets\Scripts\Model\Entity.cs" />
+     <Compile Include="Assets\Scripts\Model\GameEntity.cs" />
      <Compile Include="Assets\Scripts\Model\Level.cs" />
      <Compile Include="Assets\Scripts\Model\MoveOptionSelector.cs" />
   </ItemGroup>

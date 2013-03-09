@@ -1,12 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Cube : Entity, IClickable{
-	
-//	/// <summary>
-//	/// The cube that is selected in the whole world.
-//	/// </summary>
-	private static Cube selectedCube;
+public class Cube : GameEntity, IClickable{
 	
 	#region Variables
 	/// <summary>
@@ -20,21 +15,22 @@ public class Cube : Entity, IClickable{
 	private Command command;
 	private int jumpHeight = 1;
 	#endregion
+		
+	#region Command Management
 	
-//	/// <summary>
-//	/// Moves Cube to the direction .
-//	/// </summary>
-//	/// <param name='nextPosition'>
-//	/// Next position.
-//	/// </param>
+	/// <summary>
+	/// Moves Cube to the direction .
+	/// </summary>
+	/// <param name='nextPosition'>
+	/// Next position.	/// </param>
     public virtual void MoveTo(Vector3Int nextPosition) {
         Level.Singleton.Entities.Remove(new Vector3Int(transform.position));
 		//TODO:Fix Animation
 		CubeAnimations.AnimateMove(gameObject, Vector3.down, nextPosition.ToVector3);
         Level.Singleton.Entities.Add(nextPosition, this);
     }
+
 	
-	#region Command Management
 	/// <summary>
 	/// Gets the options of the normal cube.
 	/// </summary>
@@ -90,20 +86,21 @@ public class Cube : Entity, IClickable{
 	
 	#endregion
 	
+	#region IClickable methods
+	
     public void NotifyClick()
     {
-        if (selectedCube != this)
-        {
-            if(selectedCube != null){
-                selectedCube.IsSelected = false;
-            }
-            selected = true;
-            selectedCube = this;
-        }
+       Level.Singleton.SelectedCube = this;
     }
+	
+	#endregion
+	
+	#region GameEntity overrides
 	
 	public override void Update(){
 	}
+	
+	#endregion
 	
 	#region Gets and Sets
 	public Command Command {

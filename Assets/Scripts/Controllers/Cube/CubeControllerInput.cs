@@ -2,49 +2,19 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class CubeControllerInput : CubeController {
-    private Dictionary<MoveOptionSelector, Command> commands;
-    public Object selectorCube;
+	
+	#region Attributes	
+    private Dictionary<MoveOptionSelector, Command> moveOptions;
     private bool initedSelectors = false;
-
+	public Object moveOptionSelector; //TODO: volverlo privado
+	#endregion
+	
+	#region CubeController
+	
     protected override void Awake()
     {
         base.Awake();
-        commands = new Dictionary<MoveOptionSelector, Command>();
-    }
-
-    public override void CommandFinished(Command command)
-    {
-        base.CommandFinished(command);
-		
-        if (Cube.IsSelected)
-        {
-            UpdateSelectors();
-        }
-    }
-
-    private void UpdateSelectors()
-    {
-        foreach(MoveOptionSelector s in commands.Keys){
-            Destroy(s.gameObject);
-        }
-        commands.Clear();
-        foreach(Command c in Cube.Options){
-            GameObject selectorGameObject = (GameObject)Instantiate(selectorCube);
-			// Add the component 
-            MoveOptionSelector selector = selectorGameObject.AddComponent<MoveOptionSelector>();
-            selectorGameObject.name = "Selector" + gameObject.name;
-            selector.Listener = this;
-            selectorGameObject.transform.position = c.EndPosition.ToVector3;
-            commands.Add(selector, c);
-        }
-    }
-
-    void OnDestroy() { 
-        foreach(MoveOptionSelector s in commands.Keys){
-            if(s != null){
-                Destroy(s.gameObject);
-            }
-        }
+        moveOptions = new Dictionary<MoveOptionSelector, Command>();
     }
 
     protected override void Update()
@@ -52,27 +22,74 @@ public class CubeControllerInput : CubeController {
         if (Cube.IsSelected)
         {
             if(!initedSelectors){
-                UpdateSelectors();
-				print ("ENTRO 1");
+                UpdateMoveOptionsSelectors();
                 initedSelectors = true;
             }
         }
         else 
         {
-            if(commands.Count > 0){
-                foreach (MoveOptionSelector s in commands.Keys)
+            if(moveOptions.Count > 0){
+                foreach (MoveOptionSelector s in moveOptions.Keys)
                 {
                     Destroy(s.gameObject);
                 }
-                commands.Clear();
+                moveOptions.Clear();
                 initedSelectors = false;
             }
         }
         base.Update();
     }
-
-    public void NotifySelection(MoveOptionSelector selector)
-    {
-        AddCommand(commands[selector]);
+	
+    void OnDestroy() { 
+        foreach(MoveOptionSelector s in moveOptions.Keys){
+            if(s != null){
+                Destroy(s.gameObject);
+            }
+        }
     }
+  
+	public override void CommandFinished(Command command)
+    {		
+        if (Cube.IsSelected)
+        {
+            UpdateMoveOptionsSelectors();
+        }
+    }
+	
+	#endregion
+	
+	#region Move Option Selectors
+	
+    private void UpdateMoveOptionsSelectors()
+    {
+       	clearMoveOptions();
+		
+        foreach(Command c in Cube.Options){
+            GameObject selectorGameObject = (GameObject)Instantiate(moveOptionSelector);
+			
+			// Add the component 
+            MoveOptionSelector selector = selectorGameObject.AddComponent<MoveOptionSelector>();
+            selectorGameObject.name = "Selector" + gameObject.name;
+            selector.Listener = this;
+            selectorGameObject.transform.position = c.EndPosition.ToVector3;
+            moveOptions.Add(selector, c);
+        }
+    }
+	
+	private void clearMoveOptions() {
+		 foreach(MoveOptionSelector s in moveOptions.Keys){
+            Destroy(s.gameObject);
+        }
+		
+        moveOptions.Clear();
+	}
+	
+	#endregion
+	
+	public void NotifyOptionSelected(MoveOptionSelector selector)
+    {
+        AddCommand(moveOptions[selector]);
+		clearMoveOptions();
+    }
+
 }

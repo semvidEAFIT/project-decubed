@@ -9,15 +9,24 @@ using System;
 public class Level : MonoBehaviour
 {
 	#region Variables
-    private Dictionary<Vector3Int, Entity> entities;
+	
+	/// <summary>
+	/// The actual selected cube.
+	/// </summary>
+	private Cube selectedCube;
+	
+    private Dictionary<Vector3Int, GameEntity> entities;
     private static int dimension = 10;
     public Rect restartButton = new Rect(0,0, Screen.width*0.1f, Screen.height *0.1f);
 	private ArrayList sensors;
     private static Level singleton;
+
+	
 	#endregion
 //			
 	#region Entities Dictionary Management
-	public void AddEntity(Entity entity, Vector3 position){
+	
+	public void AddEntity(GameEntity entity, Vector3 position){
 //		if (e is Sensor)
 //        {
 //            sensors.Add(e);
@@ -29,7 +38,7 @@ public class Level : MonoBehaviour
 		entities.Remove(new Vector3Int(position));
 	}
 	
-	public Entity getEntity(Vector3 position){
+	public GameEntity getEntity(Vector3 position){
 		return entities[new Vector3Int(position)];
 	}
 	
@@ -41,11 +50,12 @@ public class Level : MonoBehaviour
 	public bool ContainsElement(Vector3Int position){
 		return entities.ContainsKey(position);
 	}
+	
 	#endregion
 	
 	 void Awake()
     {
-        entities = new Dictionary<Vector3Int, Entity>(new Vector3EqualityComparer());
+        entities = new Dictionary<Vector3Int, GameEntity>(new Vector3EqualityComparer());
     }
 //	
 //	#region Monobehavious Methods
@@ -94,9 +104,9 @@ public class Level : MonoBehaviour
         get { return Level.dimension; }
     }
 
-    public Dictionary<Vector3Int, Entity> Entities
+    public Dictionary<Vector3Int, GameEntity> Entities
     {
-        get {return entities; }
+        get { return entities; }
     }
 	
 	public static Level Singleton
@@ -110,5 +120,28 @@ public class Level : MonoBehaviour
             return singleton;
         }
     }
+	
+	/// <summary>
+	/// The cube that is selected in the whole world.
+	/// </summary>
+	public Cube SelectedCube
+    {
+        set
+        {
+            if (selectedCube != value)
+       	 	{
+            	if(selectedCube != null){
+            	    selectedCube.IsSelected = false;
+            	}
+            	value.IsSelected = true;
+            	selectedCube = value;
+			}
+        }	
+		
+		get { return selectedCube; }
+    }
+	
+	
+	
 	#endregion
 }

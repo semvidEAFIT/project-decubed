@@ -1,8 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Model/MoveOptionSelector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Cube/CubeControllerInput.cs">
     <Files>
-      <File FileName="Assets/Scripts/Model/MoveOptionSelector.cs" Line="4" Column="32" />
+      <File FileName="Assets/Scripts/Interfaces/IClickable.cs" Line="3" Column="21" />
+      <File FileName="Assets/Scripts/Controllers/Cube/CubeController.cs" Line="58" Column="41" />
+      <File FileName="Assets/Scripts/Controllers/Cube/CubeControllerInput.cs" Line="4" Column="50" />
+      <File FileName="Assets/Scripts/Model/Cubes/Cube.cs" Line="88" Column="22" />
+      <File FileName="Assets/Scripts/Model/GameEntity.cs" Line="5" Column="2" />
+      <File FileName="Assets/Scripts/Model/MoveOptionSelector.cs" Line="12" Column="40" />
+      <File FileName="Assets/Scripts/Model/Cubes/Commands/Command.cs" Line="31" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
