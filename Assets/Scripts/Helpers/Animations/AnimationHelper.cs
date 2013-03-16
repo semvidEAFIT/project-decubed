@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AnimationHelper : MonoBehaviour
+public class AnimationHelper 
 { //TODO quitar Monobehavior
 	
 	public static float offset = 0.4f;
@@ -273,7 +273,7 @@ public class AnimationHelper : MonoBehaviour
 		Vector3 directionAxis = -down;// movement is countrary to down
 		Vector3 upMovement = Vector3.Dot (directionAxis, finalMovement) * directionAxis;// MoveDirection*Quantity + offset
 		Vector3 sideDirection = (finalMovement - upMovement).normalized;
-		Vector3 sideMovement = finalMovement - upMovement;
+		//Vector3 sideMovement = finalMovement - upMovement;
 		Vector3 rotationAxis; // = Vector3.Cross (sideDirection, down) * 180;
 		//Values when is a falling movement
 		iTween.EaseType rotationEaseType = iTween.EaseType.linear;
@@ -339,7 +339,6 @@ public class AnimationHelper : MonoBehaviour
 	public void RotationFinished ()
 	{
 		if (originTemp != null) {
-			print ("entro");
 			rotationGameObject.transform.parent = null;
 			rotationGameObject = null;
 			MonoBehaviour.Destroy (originTemp);
