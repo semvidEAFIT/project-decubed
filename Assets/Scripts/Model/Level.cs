@@ -14,13 +14,17 @@ public class Level : MonoBehaviour
 	/// The actual selected cube.
 	/// </summary>
 	private Cube selectedCube;
-	
-    private Dictionary<Vector3Int, GameEntity> entities;
-    private static int dimension = 10;
-    public Rect restartButton = new Rect(0,0, Screen.width*0.1f, Screen.height *0.1f);
 	private ArrayList sensors;
+    private Dictionary<Vector3Int, GameEntity> entities;
+    public Rect restartButton = new Rect(0,0, Screen.width*0.1f, Screen.height *0.1f);
+	
     private static Level singleton;
-
+	
+	/// <summary>
+	/// x -> inf limit in y and x.
+	/// y -> sup limit in y and x
+	/// </summary>
+	private static Vector2 dimension = new Vector2(0, 10);
 	
 	#endregion
 //			
@@ -53,11 +57,16 @@ public class Level : MonoBehaviour
 	
 	#endregion
 	
-	 void Awake()
+	#region Monobehavious Methods
+	
+	void Awake()
     {
         entities = new Dictionary<Vector3Int, GameEntity>(new Vector3EqualityComparer());
     }
-//	
+
+	#endregion
+	
+	//	
 //	#region Monobehavious Methods
 //    void Awake()
 //    {
@@ -99,7 +108,7 @@ public class Level : MonoBehaviour
 	
 	#region Gets and Sets
 	
-    public static int Dimension
+    public static Vector2 Dimension
     {
         get { return Level.dimension; }
     }
@@ -144,4 +153,10 @@ public class Level : MonoBehaviour
 	
 	
 	#endregion
+
+	public bool IsInDimension (Vector3 position)
+	{
+		return position.x >= dimension.x && position.x <= dimension.y && // Check x
+			position.z >= dimension.x && position.z <= dimension.y; // Check y
+	}
 }

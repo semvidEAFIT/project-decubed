@@ -112,11 +112,15 @@ public class Cube : GameEntity, IClickable{
 		}
 	}
 	
-	public virtual bool IsSelected
-    {
-        get { return selected && CubeHelper.IsFree(transform.position + Vector3.up); }
-        set { selected = value; }
-    }
+	public virtual bool IsSelected {
+		get { 
+			Vector3Int upPosition = new Vector3Int (transform.position + Vector3.up);
+			
+			//The cube can't be selected if it have another cube on it
+			return selected && CubeHelper.IsFree (upPosition); 
+		}
+		set { selected = value; }
+	}
 
 	public int JumpHeight {
 		get {

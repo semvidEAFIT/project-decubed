@@ -1,15 +1,35 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Controllers/Cube/CubeControllerInput.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controllers\Camera\MouseInputManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Interfaces/IClickable.cs" Line="3" Column="21" />
-      <File FileName="Assets/Scripts/Controllers/Cube/CubeController.cs" Line="58" Column="41" />
-      <File FileName="Assets/Scripts/Controllers/Cube/CubeControllerInput.cs" Line="4" Column="50" />
-      <File FileName="Assets/Scripts/Model/Cubes/Cube.cs" Line="88" Column="22" />
-      <File FileName="Assets/Scripts/Model/GameEntity.cs" Line="5" Column="2" />
-      <File FileName="Assets/Scripts/Model/MoveOptionSelector.cs" Line="12" Column="40" />
-      <File FileName="Assets/Scripts/Model/Cubes/Commands/Command.cs" Line="31" Column="27" />
+      <File FileName="Assets\Scripts\Controllers\Camera\MouseInputManager.cs" Line="14" Column="73" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Controllers" expanded="True">
+                  <Node name="Camera" expanded="True">
+                    <Node name="MouseInputManager.cs" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="Helpers" expanded="True" />
+                <Node name="Model" expanded="True">
+                  <Node name="Cubes" expanded="True">
+                    <Node name="Commands" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

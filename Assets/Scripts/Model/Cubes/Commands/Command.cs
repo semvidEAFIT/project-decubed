@@ -25,12 +25,6 @@ public abstract class Command
 	
 	public virtual void EndExecution ()
 	{
-		if (endPosition.x < 0 
-			|| endPosition.x >= Level.Dimension 
-			|| endPosition.z < 0 
-			|| endPosition.z >= Level.Dimension) {
-			Cube.FallOutOfBounds (endPosition.ToVector3);
-		}
 		listener.CommandFinished (this);
 	}
 	

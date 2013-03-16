@@ -20,26 +20,24 @@ public class CubeHelper
 	/// </param>
 	public static Vector3Int GetTopPosition (Vector3 position)
 	{
-		Vector3Int finalPosition = new Vector3Int(position);
-		bool occupied = Level.Singleton.ContainsElement(finalPosition);
+		Vector3Int finalPosition = new Vector3Int (position);
+		Level level = Level.Singleton;
+		bool occupied = Level.Singleton.ContainsElement (finalPosition);
 		
-		if (occupied){
+		if (occupied) {
 			while (occupied) {
 				finalPosition.y++;
-				Debug.Log("Entro 1 " + position);
-				occupied = Level.Singleton.ContainsElement (finalPosition);
-				Debug.Log("Entro 2" + occupied);
+				occupied = level.ContainsElement (finalPosition);
 			}
-		}else{
+		} else {
 			
 			while (!occupied) {
 				finalPosition.y--;
-				occupied = Level.Singleton.ContainsElement (finalPosition);
+				occupied = level.ContainsElement (finalPosition);
 				
-				if (finalPosition.y < 0.5)//TODO:Change floor check
-                {
-                    break;
-                }
+				if (finalPosition.y < 0.5) {//TODO:Change floor check
+					break;
+				}
 			}
 			finalPosition.y++;
 		}
@@ -50,17 +48,24 @@ public class CubeHelper
 	/// <summary>
 	/// Checks if the position given is available based on the jump power, Returns null if its not available
 	/// </summary>
-	public static bool CheckAvailablePosition(Vector3 position, out Vector3Int finalPosition, int height){
-		finalPosition = GetTopPosition(position);
-		return (finalPosition.y - Mathf.RoundToInt(position.y) <= height);
-	}
-	
-	//TODO Cambiar a PositionIsAvailable
-	public static bool IsFree (Vector3 position)
+	public static bool CheckAvailablePosition (Vector3 position, out Vector3Int finalPosition, int height)
 	{
-		return !Level.Singleton.ContainsElement (position);
+		if (Level.Singleton.IsInDimension (position)) {
+			
+			finalPosition = GetTopPosition (position);
+			return (finalPosition.y - Mathf.RoundToInt (position.y) <= height);
+			
+		} else {
+			finalPosition = null;
+			return false;
+		}
 	}
-//
+
+	public static bool IsFree (Vector3Int position)
+	{
+		return !Level.Singleton.ContainsElement(position);
+	}
+	//
 //	public static Vector3 GetLastPositionInDirection (Vector3 position, Vector3 direction)
 //	{
 //		int diff = GetDifferenceInDirection (position, direction.normalized);
