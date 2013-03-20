@@ -8,7 +8,8 @@ using System.Collections;
 public class MoveOptionSelector : MonoBehaviour, IClickable {
 
     private CubeControllerInput listener;
-
+	private Cube cube;
+	
     public CubeControllerInput Listener
     {
         set { listener = value; }
@@ -18,4 +19,13 @@ public class MoveOptionSelector : MonoBehaviour, IClickable {
     {	
         listener.NotifyOptionSelected(this);
     }
+
+	public Cube Cube {
+		get {
+			return this.cube;
+		}
+		set {
+			cube = value;
+		}
+	}
 }

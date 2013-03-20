@@ -69,6 +69,7 @@ public class CubeControllerInput : CubeController {
 			
 			// Add the component 
             MoveOptionSelector selector = selectorGameObject.AddComponent<MoveOptionSelector>();
+			selector.Cube = Cube;
             selectorGameObject.name = "Selector" + gameObject.name;
             selector.Listener = this;
             selectorGameObject.transform.position = c.EndPosition.ToVector3;
@@ -80,7 +81,6 @@ public class CubeControllerInput : CubeController {
 		 foreach(MoveOptionSelector s in moveOptions.Keys){
             Destroy(s.gameObject);
         }
-		
         moveOptions.Clear();
 	}
 	
