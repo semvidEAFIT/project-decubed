@@ -7,11 +7,11 @@ using System.Collections;
 /// </summary>
 public class MouseInputManager : MonoBehaviour {
 	
-	CameraDrive camera;
+	CameraDrive gameCamera;
 	
 	void Start ()
 	{
-		camera = gameObject.GetComponent<CameraDrive> ();
+		gameCamera = gameObject.GetComponent<CameraDrive> ();
 	}
 	
 	// Update is called once per frame
@@ -31,7 +31,7 @@ public class MouseInputManager : MonoBehaviour {
 					if (m is IClickable) {
 						MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
 						if (selector != null) {
-							camera.LookingObject = selector.Cube.gameObject;
+							gameCamera.LookingObject = selector.Cube.gameObject;
 							clickFound = true;
 						}
 						((IClickable)m).NotifyClick ();
@@ -39,7 +39,7 @@ public class MouseInputManager : MonoBehaviour {
 					} 
 				}
 				if (!clickFound) {
-					camera.LookingObject = null;
+					gameCamera.LookingObject = null;
 				}
 			}
 		}
