@@ -13,7 +13,7 @@ public class Cube : GameEntity, IClickable{
     /// The current command that is executing, if its null then there.
     /// </summary>
 	private Command command;
-	private int jumpHeight = 1;
+	private int jumpHeight;
 	#endregion
 		
 	#region Command Management
@@ -36,8 +36,7 @@ public class Cube : GameEntity, IClickable{
 	/// <value>
 	/// The options of commands of the chosen cube.
 	/// </value>
-    public virtual Command[] Options{ 
-        get {
+    public virtual Command[] GetOptions(){ 
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -53,9 +52,10 @@ public class Cube : GameEntity, IClickable{
 				options.Add(new Move(this,pos));
 			}
             return options.ToArray();
-        }
     }
 	
+
+		
 	public void EndExecution(){
 		OrganizeTransform();
 		if(command != null){
@@ -96,6 +96,15 @@ public class Cube : GameEntity, IClickable{
 	
 	#region GameEntity overrides
 	
+	public void Awake(){
+		this.jumpHeight = getJumpHeight();
+	}
+	
+	public virtual int getJumpHeight(){
+		return 1;
+	}
+		
+	
 	public override void Update(){
 	}
 	
@@ -116,19 +125,13 @@ public class Cube : GameEntity, IClickable{
 			Vector3Int upPosition = new Vector3Int (transform.position + Vector3.up);
 			
 			//The cube can't be selected if it have another cube on it
+			
 			return selected && CubeHelper.IsFree (upPosition); 
 		}
 		set { selected = value; }
 	}
 
-	public int JumpHeight {
-		get {
-			return this.jumpHeight;
-		}
-		set {
-			jumpHeight = value;
-		}
-	}
+	
 	#endregion
 	
 	#region Helper Methods

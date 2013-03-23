@@ -64,7 +64,7 @@ public class CubeControllerInput : CubeController {
     {
        	clearMoveOptions();
 		
-        foreach(Command c in Cube.Options){
+        foreach(Command c in Cube.GetOptions()){
             GameObject selectorGameObject = (GameObject)Instantiate(moveOptionSelector);
 			
 			// Add the component 
