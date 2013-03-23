@@ -18,8 +18,7 @@ public class Level : MonoBehaviour
 	private ArrayList sensors;
     private Dictionary<Vector3Int, GameEntity> entities;
 	private Dictionary<Vector3Int, List<BasicSensor>> sensorSpaces; // Dictionary that determines which spaces activate the sensors
-	
-    public Rect restartButton = new Rect(0,0, Screen.width*0.1f, Screen.height *0.1f);
+	private int sensorsLeft = 0;
 	
     private static Level singleton;
 	

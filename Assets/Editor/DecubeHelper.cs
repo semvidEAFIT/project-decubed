@@ -16,7 +16,6 @@ public class DecubeHelper : EditorWindow {
 	
 	void OnGUI ()
 	{
-		
 		GUILayout.Label ("Adding Cubes", EditorStyles.boldLabel);
 
 		this.newPosition = EditorGUILayout.Vector3Field ("New Position", newPosition);
@@ -28,7 +27,6 @@ public class DecubeHelper : EditorWindow {
 			}
 		}
 		prefab = (GameObject)EditorGUILayout.ObjectField (prefab, typeof(GameObject), true);
-		
 		
 		GUILayout.Label ("Moving Cubes", EditorStyles.boldLabel);
 //		GUILayout.Label ("Move cube with Arrows and w and s keys of selected cubes", EditorStyles.label);
