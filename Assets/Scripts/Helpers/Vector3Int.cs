@@ -55,11 +55,16 @@ public class Vector3Int {
 	
 	public override bool Equals (object v)
 	{
-		if (v != null && v is Vector3Int){
+		if (v != null && v is Vector3Int) {
 			Vector3Int v2 = (Vector3Int)v;
 			return this.x == v2.x && this.y == v2.y && this.z == v2.z;
 		}
 		return false;
+	}
+	
+	public Vector3Int Add (Vector3 v3)
+	{
+		return new Vector3Int (v3 + this.ToVector3);
 	}
 	
 	/// <summary>

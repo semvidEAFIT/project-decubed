@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 using System;
@@ -16,6 +17,8 @@ public class Level : MonoBehaviour
 	private Cube selectedCube;
 	private ArrayList sensors;
     private Dictionary<Vector3Int, GameEntity> entities;
+	private Dictionary<Vector3Int, List<BasicSensor>> sensorSpaces; // Dictionary that determines which spaces activate the sensors
+	
     public Rect restartButton = new Rect(0,0, Screen.width*0.1f, Screen.height *0.1f);
 	
     private static Level singleton;
@@ -30,16 +33,44 @@ public class Level : MonoBehaviour
 //			
 	#region Entities Dictionary Management
 	
-	public void AddEntity(GameEntity entity, Vector3 position){
-//		if (e is Sensor)
-//        {
-//            sensors.Add(e);
-//        }
-		entities.Add(new Vector3Int(position), entity);
+	public void AddEntity (GameEntity entity, Vector3 position)
+	{
+		AddEntity (entity, new Vector3Int (position));
 	}
+	
+	public void AddEntity (GameEntity entity, Vector3Int position)
+	{
+		entities.Add (position, entity);
+		if (entity is BasicSensor) {
+			AddSensor ((BasicSensor)entity);
+		} else {
+			if (sensorSpaces.ContainsKey (position)) {
+				foreach (BasicSensor s in sensorSpaces[position]) {
+					s.NotifyPressed (position);
+				}
+			}
+		}
+	}
+	
+	public void RemoveEntity (Vector3 position)
+	{
+		RemoveEntity (new Vector3Int (position));
 		
-	public void RemoveEntity(Vector3 position){
-		entities.Remove(new Vector3Int(position));
+	}
+	
+	public void RemoveEntity (Vector3Int position)
+	{
+		GameEntity temp = entities [position];
+		entities.Remove (position);
+		if (temp is BasicSensor) {
+			RemoveSensor ((BasicSensor)temp);
+		} else {
+			if (sensorSpaces.ContainsKey (position)) {
+				foreach (BasicSensor s in sensorSpaces[position]) {
+					s.NotifyUnpressed (position);
+				}
+			}
+		}
 	}
 	
 	public GameEntity getEntity(Vector3 position){
@@ -57,12 +88,35 @@ public class Level : MonoBehaviour
 	
 	#endregion
 	
+	#region Sensor Spaces Management
+	
+	public void AddSensor (BasicSensor sensor)
+	{
+		foreach (Vector3 direction in sensor.Directions) {
+			Vector3Int pos = new Vector3Int (sensor.transform.position + direction);
+			if (!sensorSpaces.ContainsKey (pos)) {
+				sensorSpaces [pos] = new List<BasicSensor> ();
+			}
+			sensorSpaces [pos].Add (sensor);
+		}
+	}
+	
+	public void RemoveSensor (BasicSensor sensor)
+	{
+		foreach (Vector3 direction in sensor.Directions) {
+			Vector3Int pos = new Vector3Int (sensor.transform.position + direction);
+			sensorSpaces [pos].Remove (sensor);
+		}
+	}
+	#endregion
+	
 	#region Monobehavious Methods
 	
-	void Awake()
-    {
-        entities = new Dictionary<Vector3Int, GameEntity>(new Vector3EqualityComparer());
-    }
+	void Awake ()
+	{
+		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
+		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
+	}
 
 	#endregion
 	
@@ -113,10 +167,9 @@ public class Level : MonoBehaviour
         get { return Level.dimension; }
     }
 
-    public Dictionary<Vector3Int, GameEntity> Entities
-    {
-        get { return entities; }
-    }
+//    public Dictionary<Vector3Int, GameEntity> Entities {
+//		get { return entities; }
+//	}
 	
 	public static Level Singleton
     {

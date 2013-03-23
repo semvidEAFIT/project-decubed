@@ -24,12 +24,11 @@ public class Cube : GameEntity, IClickable{
 	/// <param name='nextPosition'>
 	/// Next position.	/// </param>
     public virtual void MoveTo(Vector3Int nextPosition) {
-        Level.Singleton.Entities.Remove(new Vector3Int(transform.position));
+        Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 		//TODO:Fix Animation
 		CubeAnimations.AnimateMove(gameObject, Vector3.down, nextPosition.ToVector3);
-        Level.Singleton.Entities.Add(nextPosition, this);
+        Level.Singleton.AddEntity(this, nextPosition);
     }
-
 	
 	/// <summary>
 	/// Gets the options of the normal cube.
