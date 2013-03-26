@@ -28,7 +28,7 @@ public class CubeControllerInput : CubeController {
         }
         else 
         {
-            if(moveOptions.Count > 0){
+            if(moveOptions.Count >= 0){
                 foreach (MoveOptionSelector s in moveOptions.Keys)
                 {
                     Destroy(s.gameObject);

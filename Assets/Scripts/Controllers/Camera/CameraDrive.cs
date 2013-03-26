@@ -36,6 +36,9 @@ public class CameraDrive : MonoBehaviour {
 	
 	protected virtual void Update ()
 	{
+		if(lookingObject == null){
+			lookingObject = centerObject;
+		}
 		if (currentLookingPosition != lookingObject.transform.position) {
 			currentLookingPosition = Vector3.Lerp (currentLookingPosition, lookingObject.transform.position, Time.deltaTime/4f);
 		}

@@ -61,7 +61,10 @@ public class Cube : GameEntity, IClickable{
 		if(command != null){
 			command.EndExecution();
 		}
+		OnEndExecution();
 	}
+	
+	public virtual void OnEndExecution(){}
 	
 	public void OrganizeTransform(){
 		Transform obj = gameObject.transform.parent;
@@ -75,8 +78,10 @@ public class Cube : GameEntity, IClickable{
 	
     public void FallOutOfBounds(Vector3 outOfBouncePosition)
     {
-		//TODO Arreglar Esto
-//		CubeAnimations.AnimateSlide(gameObject,outOfBouncePosition + new Vector3(0,-10,0), "KillCube", null);
+		
+		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
+		//CubeAnimations.AnimateSlide(gameObject,outOfBouncePosition + new Vector3(0,-10,0), "KillCube", null);
+		Destroy(this.gameObject);
     }
 	
 	public void KillCube(){
@@ -84,6 +89,25 @@ public class Cube : GameEntity, IClickable{
 	}
 	
 	#endregion
+	
+	public virtual void Gravity(Vector3Int last){
+		Vector3Int below = new Vector3Int(transform.position);
+		while(true){
+			if(below.y > 1 && (CubeHelper.IsFree(below)||below.y==last.y)){
+				below = new Vector3Int(below.ToVector3+Vector3.down);
+				
+			}else{	
+				break;
+			}
+		}
+		//TODO: cambiar por animacion
+		if(CubeHelper.IsFree(below)){
+			Level.Singleton.RemoveEntity(last);
+			Level.Singleton.AddEntity(this,below);
+			transform.position = below.ToVector3;
+		}
+		
+	}
 	
 	#region IClickable methods
 	
@@ -97,10 +121,10 @@ public class Cube : GameEntity, IClickable{
 	#region GameEntity overrides
 	
 	public void Awake(){
-		this.jumpHeight = getJumpHeight();
+		this.jumpHeight = GetJumpHeight();
 	}
 	
-	public virtual int getJumpHeight(){
+	public virtual int GetJumpHeight(){
 		return 1;
 	}
 		

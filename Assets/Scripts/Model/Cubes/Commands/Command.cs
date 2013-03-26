@@ -40,6 +40,7 @@ public abstract class Command
 	
 	public Vector3Int EndPosition {
 		get { return endPosition; }
+		set { endPosition = value; }
 	}
 
 	protected Cube Cube {
