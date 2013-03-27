@@ -6,30 +6,32 @@ public class Island : MonoBehaviour
 	public string levelName;
 	public bool completed;
 	public bool available;
+	private bool islandOut;
 	public GameObject[] requirements;
-	public Vector3 initalPosition;
-	public Vector3 finalPosition;
+	public Vector3 initialPosition;
+	public Vector3 upDirection;
+	private Vector3 finalPosition;
 	
 	// Use this for initialization
 	void Start ()
 	{
+		islandOut = false;
 		available = false;
-		initalPosition = transform.position;
-		LevelSelector.Instance.AddIsland(this);
+		finalPosition = transform.position;
+		initialPosition = finalPosition + upDirection;
+		LevelSelector.Instance.AddIsland (this);
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (available) {
-			if (completed) {
-				if (transform.position != finalPosition) {
-					transform.position = Vector3.Lerp (transform.position, finalPosition, Time.deltaTime);
-				}
-			} else {
-				if (transform.position != initalPosition) {
-					transform.position = Vector3.Lerp (transform.position, initalPosition, Time.deltaTime);
-				}
+		if ( (!completed) || (islandOut && completed)) {
+			if (transform.position != initialPosition) {
+				transform.position = Vector3.Lerp (transform.position, initialPosition, Time.deltaTime);
+			}
+		} else {
+			if (transform.position != finalPosition) {
+				transform.position = Vector3.Lerp (transform.position, finalPosition, Time.deltaTime);
 			}
 		}
 	}
@@ -46,16 +48,32 @@ public class Island : MonoBehaviour
 					}
 				}
 			}
-			if (allCompleted) {
-				SetAvailable ();
-			}
+			SetAvailable (allCompleted);
+		} else {
+			SetAvailable (completed);
 		}
 	}
 	
-	public void SetAvailable ()
+	public void SetAvailable (bool available)
 	{
-		available = true;
-		
+		this.available = available;
+	}
+	
+	void OnMouseDown ()
+	{
+		if (available) {
+			LevelSelector.Instance.GoToLevel (this);
+		}
+	}
+	
+	void OnMouseEnter ()
+	{
+		this.islandOut = true;
+	}
+	
+	void OnMouseExit ()
+	{
+		this.islandOut = false;
 	}
 	
 	#region Get and Sets
@@ -77,12 +95,12 @@ public class Island : MonoBehaviour
 		}
 	}
 
-	public Vector3 InitalPosition {
+	public Vector3 InitialPosition {
 		get {
-			return this.initalPosition;
+			return this.initialPosition;
 		}
 		set {
-			initalPosition = value;
+			initialPosition = value;
 		}
 	}
 
