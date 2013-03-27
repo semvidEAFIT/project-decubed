@@ -65,6 +65,14 @@ public class CubeHelper
 	{
 		return !Level.Singleton.ContainsElement(position);
 	}
+	
+	public static List<Command> GetListOptions(Command [] commands){
+		List<Command> options = new List<Command>();
+		foreach (Command c in commands){
+			options.Add(c);
+		}
+		return options;
+	}
 	//
 //	public static Vector3 GetLastPositionInDirection (Vector3 position, Vector3 direction)
 //	{

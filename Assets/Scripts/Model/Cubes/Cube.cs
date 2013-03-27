@@ -13,7 +13,7 @@ public class Cube : GameEntity, IClickable{
     /// The current command that is executing, if its null then there.
     /// </summary>
 	private Command command;
-	private int jumpHeight = 1;
+	private int jumpHeight;
 	#endregion
 		
 	#region Command Management
@@ -36,8 +36,7 @@ public class Cube : GameEntity, IClickable{
 	/// <value>
 	/// The options of commands of the chosen cube.
 	/// </value>
-    public virtual Command[] Options{ 
-        get {
+    public virtual Command[] GetOptions(){ 
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -53,15 +52,22 @@ public class Cube : GameEntity, IClickable{
 				options.Add(new Move(this,pos));
 			}
             return options.ToArray();
-        }
     }
 	
+
+		
 	public void EndExecution(){
 		OrganizeTransform();
 		if(command != null){
 			command.EndExecution();
 		}
+		OnEndExecution();
 	}
+	
+	/// <summary>
+	/// Raises the end execution event.
+	/// </summary>
+	public virtual void OnEndExecution(){}
 	
 	public void OrganizeTransform(){
 		Transform obj = gameObject.transform.parent;
@@ -75,8 +81,10 @@ public class Cube : GameEntity, IClickable{
 	
     public void FallOutOfBounds(Vector3 outOfBouncePosition)
     {
-		//TODO Arreglar Esto
-//		CubeAnimations.AnimateSlide(gameObject,outOfBouncePosition + new Vector3(0,-10,0), "KillCube", null);
+		
+		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
+		//TODO animar 	
+		Destroy(this.gameObject);
     }
 	
 	public void KillCube(){
@@ -84,6 +92,31 @@ public class Cube : GameEntity, IClickable{
 	}
 	
 	#endregion
+	/// <summary>
+	/// Make the cube, with position currentPosition, fall.
+	/// </summary>
+	/// <param name='currentPosition'>
+	/// Last.
+	/// </param>
+	public virtual void Gravity(Vector3Int currentPosition){
+		Vector3Int below = new Vector3Int(transform.position);
+		while(true){
+			Debug.Log("below:"+below.x+","+below.y+","+below.z);
+			if(below.y > 1 && (CubeHelper.IsFree(below)||below.y==currentPosition.y)){
+				below = new Vector3Int(below.ToVector3+Vector3.down);
+			}else{
+				break;
+			}
+		}
+		//TODO: cambiar por animacion
+		Debug.Log("final below:"+below.x+","+below.y+","+below.z);
+		//if(CubeHelper.IsFree(below)){
+			Level.Singleton.RemoveEntity(currentPosition);
+			Level.Singleton.AddEntity(this,below);
+			transform.position = below.ToVector3;
+		//}
+		
+	}
 	
 	#region IClickable methods
 	
@@ -95,6 +128,15 @@ public class Cube : GameEntity, IClickable{
 	#endregion
 	
 	#region GameEntity overrides
+	
+	public void Awake(){
+		this.jumpHeight = GetJumpHeight();
+	}
+	
+	public virtual int GetJumpHeight(){
+		return 1;
+	}
+		
 	
 	public override void Update(){
 	}
@@ -116,19 +158,13 @@ public class Cube : GameEntity, IClickable{
 			Vector3Int upPosition = new Vector3Int (transform.position + Vector3.up);
 			
 			//The cube can't be selected if it have another cube on it
+			
 			return selected && CubeHelper.IsFree (upPosition); 
 		}
 		set { selected = value; }
 	}
 
-	public int JumpHeight {
-		get {
-			return this.jumpHeight;
-		}
-		set {
-			jumpHeight = value;
-		}
-	}
+	
 	#endregion
 	
 	#region Helper Methods

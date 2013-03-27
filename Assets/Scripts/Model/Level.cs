@@ -18,7 +18,8 @@ public class Level : MonoBehaviour
 	private ArrayList sensors;
     private Dictionary<Vector3Int, GameEntity> entities;
 	private Dictionary<Vector3Int, List<BasicSensor>> sensorSpaces; // Dictionary that determines which spaces activate the sensors
-	private int sensorsLeft = 0;
+	public int sensorsLeft = 0;
+	public int stepCount = 0;
 	
     private static Level singleton;
 	
@@ -42,6 +43,7 @@ public class Level : MonoBehaviour
 		entities.Add (position, entity);
 		if (entity is BasicSensor) {
 			AddSensor ((BasicSensor)entity);
+			sensorsLeft += 1;
 		} else {
 			if (sensorSpaces.ContainsKey (position)) {
 				foreach (BasicSensor s in sensorSpaces[position]) {
@@ -73,6 +75,7 @@ public class Level : MonoBehaviour
 	}
 	
 	public GameEntity getEntity(Vector3 position){
+		Debug.Log(position.x+","+position.y+","+position.z);
 		return entities[new Vector3Int(position)];
 	}
 	
@@ -107,6 +110,15 @@ public class Level : MonoBehaviour
 			sensorSpaces [pos].Remove (sensor);
 		}
 	}
+	
+	public void SensorActivated(){
+		//TODO revisar si termino nivel
+		sensorsLeft --;
+	}
+	
+	public void SensorDeactivated(){
+		sensorsLeft++;
+	}
 	#endregion
 	
 	#region Monobehavious Methods
@@ -116,48 +128,18 @@ public class Level : MonoBehaviour
 		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
 		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
 	}
+	
+	
 
 	#endregion
 	
-	//	
-//	#region Monobehavious Methods
-//    void Awake()
-//    {
-//        entities = new Dictionary<Vector3Int, Entity>(new Vector3EqualityComparer());
-//        sensors = new ArrayList();
-//    }
-//	
-//	void Start(){
-//	}
-//
-//    void OnDestroy()
-//    {
-//        singleton = null;
-//    }
-//
-//    void OnGUI() { 
-//        if(GUI.Button(restartButton, "Restart")){
-//            Application.LoadLevel(Application.loadedLevelName);    
-//        }
-//    }
-//	#endregion
-//	
-////	public void NotifyChangePressed(Sensor s)
-////    {
-////        if (s.IsPressed)
-////        {
-////            sensors.Remove(s);
-////            if(sensors.Count == 0){
-////                //GameController.Singleton.NotifyEndLevel(Application.loadedLevelName);
-////				//Application.LoadLevel(UnityEngine.Random.Range(1,Application.levelCount-1));
-////				Debug.Log("Termino Juego");
-////				//TODO Terminar Juego
-////            }
-////        } else if(!sensors.Contains(s)){
-////                sensors.Add(s);
-////        }
-////    }
-//	
+	#region Steps Management
+	
+	public void addStep(){
+		stepCount++;
+	}
+	
+	#endregion
 	
 	#region Gets and Sets
 	

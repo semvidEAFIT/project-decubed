@@ -28,7 +28,9 @@ public abstract class Command
 		listener.CommandFinished (this);
 	}
 	
-	public abstract void Execute ();
+	public virtual void Execute (){
+		Level.Singleton.addStep();
+	}
 	
 	#endregion
 	
@@ -40,6 +42,7 @@ public abstract class Command
 	
 	public Vector3Int EndPosition {
 		get { return endPosition; }
+		set { endPosition = value; }
 	}
 
 	protected Cube Cube {
