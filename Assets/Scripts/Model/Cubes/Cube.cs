@@ -64,6 +64,9 @@ public class Cube : GameEntity, IClickable{
 		OnEndExecution();
 	}
 	
+	/// <summary>
+	/// Raises the end execution event.
+	/// </summary>
 	public virtual void OnEndExecution(){}
 	
 	public void OrganizeTransform(){
@@ -80,7 +83,7 @@ public class Cube : GameEntity, IClickable{
     {
 		
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
-		//CubeAnimations.AnimateSlide(gameObject,outOfBouncePosition + new Vector3(0,-10,0), "KillCube", null);
+		//TODO animar 	
 		Destroy(this.gameObject);
     }
 	
@@ -89,23 +92,29 @@ public class Cube : GameEntity, IClickable{
 	}
 	
 	#endregion
-	
-	public virtual void Gravity(Vector3Int last){
+	/// <summary>
+	/// Make the cube, with position currentPosition, fall.
+	/// </summary>
+	/// <param name='currentPosition'>
+	/// Last.
+	/// </param>
+	public virtual void Gravity(Vector3Int currentPosition){
 		Vector3Int below = new Vector3Int(transform.position);
 		while(true){
-			if(below.y > 1 && (CubeHelper.IsFree(below)||below.y==last.y)){
+			Debug.Log("below:"+below.x+","+below.y+","+below.z);
+			if(below.y > 1 && (CubeHelper.IsFree(below)||below.y==currentPosition.y)){
 				below = new Vector3Int(below.ToVector3+Vector3.down);
-				
-			}else{	
+			}else{
 				break;
 			}
 		}
 		//TODO: cambiar por animacion
-		if(CubeHelper.IsFree(below)){
-			Level.Singleton.RemoveEntity(last);
+		Debug.Log("final below:"+below.x+","+below.y+","+below.z);
+		//if(CubeHelper.IsFree(below)){
+			Level.Singleton.RemoveEntity(currentPosition);
 			Level.Singleton.AddEntity(this,below);
 			transform.position = below.ToVector3;
-		}
+		//}
 		
 	}
 	

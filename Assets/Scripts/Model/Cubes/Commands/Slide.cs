@@ -11,6 +11,7 @@ public class Slide : Command {
 	
 	public override void Execute()
     {
+		base.Execute();
 		if(SlideTo()){
 			Cube.MoveTo(EndPosition);
 		}
@@ -25,8 +26,12 @@ public class Slide : Command {
 				Cube.FallOutOfBounds(next.ToVector3);
 				return false;
 				
-		}else{
-			return true;
 		}
+		if(Level.Singleton.getEntity(next.ToVector3) is RockCube ){
+			IceCube ic = (IceCube)Cube;
+			ic.Break();
+		}
+		return true;
+		
 	}
 }

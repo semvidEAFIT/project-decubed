@@ -8,6 +8,7 @@ public class Move : Command {
 
     public override void Execute()
     {
+		base.Execute();
 		Cube.MoveTo(EndPosition);
     }
 }

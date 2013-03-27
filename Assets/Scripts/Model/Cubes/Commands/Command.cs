@@ -28,7 +28,9 @@ public abstract class Command
 		listener.CommandFinished (this);
 	}
 	
-	public abstract void Execute ();
+	public virtual void Execute (){
+		Level.Singleton.addStep();
+	}
 	
 	#endregion
 	

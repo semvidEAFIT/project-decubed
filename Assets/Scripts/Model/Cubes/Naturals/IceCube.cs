@@ -3,8 +3,12 @@ using System.Collections.Generic;
 
 public class IceCube : Cube {
 	
+	private Vector3Int nextPosition;
+	private bool breakIce = false;
+	
 	public override void MoveTo (Vector3Int nextPosition)
 	{
+		this.nextPosition = nextPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 		//TODO:Fix Animation
 		transform.position = nextPosition.ToVector3;
@@ -29,6 +33,19 @@ public class IceCube : Cube {
 				options.Add(new Slide(this,pos,new Vector3Int(Vector3.left)));
 			}
             return options.ToArray();
+	}
+	
+	public void Break(){
+		breakIce = true;
+	}
+	
+	public override void OnEndExecution ()
+	{
+		if(breakIce){
+			//TODO animacion
+			Level.Singleton.RemoveEntity(transform.position);
+			Destroy(this.gameObject);
+		}
 	}
 	
 }

@@ -22,7 +22,7 @@ public class CloudCube : Cube {
 	
 	public override Command[] GetOptions(){ 
 		List<Command> commands = new List<Command>();
-		if(!stuck){
+		if(!stuck || !CubeHelper.IsFree(new Vector3Int(transform.position+Vector3.down))){
 			commands = CubeHelper.GetListOptions(base.GetOptions());	
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,GetJumpHeight())){
