@@ -18,6 +18,7 @@ public class UserSettings {
 	#endregion
 	
 	private List<Player> players;
+	private Player currentPlayer;
 	
 	private UserSettings ()
 	{
@@ -28,10 +29,18 @@ public class UserSettings {
 	{
 		if (PlayerPrefs.HasKey ("players")) {
 			string jsonObject = PlayerPrefs.GetString ("players");
+			int idPlayer = 0;
+			if (PlayerPrefs.HasKey ("currentPlayer")) {
+				idPlayer = PlayerPrefs.GetInt ("currentPlayer");
+			}
 			JSONArray array = JSONArray.Parse (jsonObject);
 			for (int i = 0; i < array.Length; i++) {
 				JSONObject obj = array [i].Obj;
-				players.Add (getPlayer (obj));
+				Player p = getPlayer (obj);
+				players.Add (p);
+				if (p.Id == idPlayer) {
+					currentPlayer = p;
+				}
 			}
 		} else {
 			players = new List<Player> ();
@@ -59,6 +68,7 @@ public class UserSettings {
 		PlayerPrefs.Save ();
 	}
 	
+	#region Factory
 	private static Player getPlayer (JSONObject obj)
 	{
 		JSONArray array = obj.GetArray ("levels");
@@ -71,7 +81,6 @@ public class UserSettings {
 		return new Player ((int)obj.GetNumber ("id"), obj.GetString ("name"), levels);
 	}
 	
-	
 	private static LevelData getLevelData (JSONObject level)
 	{
 		return new LevelData (
@@ -79,4 +88,23 @@ public class UserSettings {
 			(int)level.GetNumber ("stepCount")
 			);
 	}
+	#endregion
+	
+	#region Get and Sets
+	
+	public List<Player> Players {
+		get {
+			return this.players;
+		}
+	}
+
+	public Player CurrentPlayer {
+		get {
+			return this.currentPlayer;
+		}
+		set {
+			currentPlayer = value;
+		}
+	}
+	#endregion
 }
