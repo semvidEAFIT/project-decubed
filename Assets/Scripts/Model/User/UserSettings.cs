@@ -27,13 +27,16 @@ public class UserSettings {
 	
 	private void LoadPlayerData ()
 	{
+		players = new List<Player> ();
 		if (PlayerPrefs.HasKey ("players")) {
+			Debug.Log ("Players found");
 			string jsonObject = PlayerPrefs.GetString ("players");
 			int idPlayer = 0;
 			if (PlayerPrefs.HasKey ("currentPlayer")) {
 				idPlayer = PlayerPrefs.GetInt ("currentPlayer");
 			}
 			JSONArray array = JSONArray.Parse (jsonObject);
+
 			for (int i = 0; i < array.Length; i++) {
 				JSONObject obj = array [i].Obj;
 				Player p = getPlayer (obj);
@@ -42,8 +45,13 @@ public class UserSettings {
 					currentPlayer = p;
 				}
 			}
+			Debug.Log ("Players Count" + players);
+			Debug.Log ("Players Count: " + players.Count);
 		} else {
-			players = new List<Player> ();
+			
+			players.Add (new Player (1, "Player 1", new Dictionary<string,LevelData> ()));
+			players.Add (new Player (2, "Player 2", new Dictionary<string,LevelData> ()));
+			players.Add (new Player (3, "Player 3", new Dictionary<string,LevelData> ()));
 		}
 	}
 	
@@ -68,6 +76,14 @@ public class UserSettings {
 		PlayerPrefs.Save ();
 	}
 	
+	public int getNextId (){
+		int id = 0;
+		foreach (Player p in players  ){
+			id = Mathf.Max(id ,p.Id);
+		}
+		return id+1;
+	}
+	
 	#region Factory
 	private static Player getPlayer (JSONObject obj)
 	{
@@ -78,7 +94,7 @@ public class UserSettings {
 			LevelData lData = getLevelData (lvl);
 			levels.Add (lData.Id, lData);
 		}
-		return new Player ((int)obj.GetNumber ("id"), obj.GetString ("name"), levels);
+		return new Player ((int)obj.GetNumber("id"), obj.GetString("name"), levels);
 	}
 	
 	private static LevelData getLevelData (JSONObject level)
