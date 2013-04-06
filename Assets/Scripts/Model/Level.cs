@@ -186,6 +186,12 @@ public class Level : MonoBehaviour
 	
 	
 	
+
+	public Dictionary<Vector3Int, List<BasicSensor>> SensorSpaces {
+		get {
+			return this.sensorSpaces;
+		}
+	}
 	#endregion
 
 	public bool IsInDimension (Vector3 position)
