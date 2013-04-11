@@ -21,6 +21,5 @@ public class EducationalCube : EducationalCubeHelper{
 			count = 0;
 			break;
 		}
-		
 	}
 }

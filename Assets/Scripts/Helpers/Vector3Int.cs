@@ -87,4 +87,9 @@ public class Vector3Int {
 
         return (int.Parse(hashCode));
 	}
+	
+	public override string ToString ()
+	{
+		return string.Format ("[Vector3Int: x={0}, y={1}, z={2}]", x, y, z);
+	}
 }

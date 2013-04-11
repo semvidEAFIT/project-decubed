@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
 using System;
@@ -9,6 +8,7 @@ using System;
 /// </summary>
 public class Level : MonoBehaviour
 {
+	
 	#region Variables
 	
 	/// <summary>
@@ -30,7 +30,7 @@ public class Level : MonoBehaviour
 	private static Vector2 dimension = new Vector2(0, 10);
 	
 	#endregion
-//			
+
 	#region Entities Dictionary Management
 	
 	public void AddEntity (GameEntity entity, Vector3 position)
@@ -63,6 +63,7 @@ public class Level : MonoBehaviour
 	{
 		GameEntity temp = entities [position];
 		entities.Remove (position);
+	
 		if (temp is BasicSensor) {
 			RemoveSensor ((BasicSensor)temp);
 		} else {
@@ -71,21 +72,23 @@ public class Level : MonoBehaviour
 					s.NotifyUnpressed (position);
 				}
 			}
-		}
+		}	
 	}
 	
-	public GameEntity getEntity(Vector3 position){
-		Debug.Log(position.x+","+position.y+","+position.z);
-		return entities[new Vector3Int(position)];
+	public GameEntity getEntity (Vector3 position)
+	{
+		return entities [new Vector3Int (position)];
 	}
 	
 	///TODO: REvisar si borrar o no
-	public bool ContainsElement(Vector3 position){
-		return entities.ContainsKey(new Vector3Int(position));
+	public bool ContainsElement (Vector3 position)
+	{
+		return entities.ContainsKey (new Vector3Int (position));
 	}
 	
-	public bool ContainsElement(Vector3Int position){
-		return entities.ContainsKey(position);
+	public bool ContainsElement (Vector3Int position)
+	{
+		return entities.ContainsKey (position);
 	}
 	
 	#endregion
@@ -147,10 +150,6 @@ public class Level : MonoBehaviour
     {
         get { return Level.dimension; }
     }
-
-//    public Dictionary<Vector3Int, GameEntity> Entities {
-//		get { return entities; }
-//	}
 	
 	public static Level Singleton
     {

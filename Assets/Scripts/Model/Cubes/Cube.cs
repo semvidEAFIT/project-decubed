@@ -23,12 +23,15 @@ public class Cube : GameEntity, IClickable{
 	/// </summary>
 	/// <param name='nextPosition'>
 	/// Next position.	/// </param>
-    public virtual void MoveTo(Vector3Int nextPosition) {
-        Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
-		//TODO:Fix Animation
-		CubeAnimations.AnimateMove(gameObject, Vector3.down, nextPosition.ToVector3);
-        Level.Singleton.AddEntity(this, nextPosition);
-    }
+    public virtual void MoveTo (Vector3Int nextPosition)
+	{
+		if (!Level.Singleton.ContainsElement (nextPosition)) {
+			Level.Singleton.RemoveEntity (new Vector3Int (transform.position));
+			//TODO:Fix Animation
+			Level.Singleton.AddEntity (this, nextPosition);
+			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
+		}
+	}
 	
 	/// <summary>
 	/// Gets the options of the normal cube.
@@ -137,10 +140,6 @@ public class Cube : GameEntity, IClickable{
 		return 1;
 	}
 		
-	
-	public override void Update(){
-	}
-	
 	#endregion
 	
 	#region Gets and Sets
