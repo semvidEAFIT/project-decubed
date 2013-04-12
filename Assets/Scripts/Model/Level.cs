@@ -32,8 +32,8 @@ public class Level : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		if (sensorsLeft == 0){   
-			GUI.Label( new Rect( 10, 20, Screen.width - 20,40), "Level Completed");
+		if (sensorsLeft == 0){      
+			GUI.Label( new Rect(  0, 20, Screen.width - 20,40), "Level Completed");
 		}
 	}
 
