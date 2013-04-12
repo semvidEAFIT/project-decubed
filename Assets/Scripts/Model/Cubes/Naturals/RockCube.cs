@@ -3,12 +3,12 @@ using System.Collections;
 
 public class RockCube : Cube {
 	
-	private Vector3Int nextPosition;
+//	private Vector3Int nextPosition;
 	
 	public override void MoveTo (Vector3Int nextPosition)
 	{
 		base.MoveTo (nextPosition);
-		this.nextPosition=nextPosition;
+	//	this.nextPosition=nextPosition;
 	}
 	
 	public override int GetJumpHeight ()

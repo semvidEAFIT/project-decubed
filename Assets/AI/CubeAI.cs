@@ -3,17 +3,12 @@ using System.Collections;
 
 public class CubeAI : CubeAIBase {
 	
-	
-	
-	public override void main ()
+	public override void StartCube ()
 	{
 		while(true){
-			while (IsAvailable(Right)) {
 				Move (Right);
-			}
-			while (IsAvailable(Foward)) {
 				Move (Foward);
-			}
+
 		}
 	}
 	

@@ -20,7 +20,6 @@ public class Level : MonoBehaviour
 	private Dictionary<Vector3Int, List<BasicSensor>> sensorSpaces; // Dictionary that determines which spaces activate the sensors
 	public int sensorsLeft = 0;
 	public int stepCount = 0;
-	
     private static Level singleton;
 	
 	/// <summary>
@@ -30,6 +29,13 @@ public class Level : MonoBehaviour
 	private static Vector2 dimension = new Vector2(0, 10);
 	
 	#endregion
+	
+	void OnGUI ()
+	{
+		if (sensorsLeft == 0){   
+			GUI.Label( new Rect( 10, 20, Screen.width - 20,40), "Level Completed");
+		}
+	}
 
 	#region Entities Dictionary Management
 	
@@ -114,9 +120,16 @@ public class Level : MonoBehaviour
 		}
 	}
 	
-	public void SensorActivated(){
+	public void SensorActivated ()
+	{
+		
 		//TODO revisar si termino nivel
+		
 		sensorsLeft --;
+		
+		if (sensorsLeft == 0){  
+			
+		}
 	}
 	
 	public void SensorDeactivated(){

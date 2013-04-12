@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class PlayerSelection : MonoBehaviour {
 	
 	private UserSettings settings;
-	private string tPlayerName;
 	private Player selectedPlayer;
 	public GUISkin skin;
 	public Texture2D logo;
@@ -12,7 +11,6 @@ public class PlayerSelection : MonoBehaviour {
 	void Awake ()
 	{
 		settings = UserSettings.Instance;
-		this.tPlayerName = "";
 	}
 	
 	// Use this for initialization
@@ -33,7 +31,6 @@ public class PlayerSelection : MonoBehaviour {
 		
 		int boxWidth = 380;
 		int boxHeight = 170;
-		int height = 0;
 		GUI.BeginGroup (new Rect (Screen.width / 2 - boxWidth / 2, 2 * (Screen.height / 3) - boxHeight / 2, boxWidth, boxHeight));
 		
 		GUI.Box (new Rect (0, 0, boxWidth, boxHeight), "Select a game");

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 public class IceCube : Cube {
 	
-	private Vector3Int nextPosition;
+//	private Vector3Int nextPosition;
 	private bool breakIce = false;
 	
 	public override void MoveTo (Vector3Int nextPosition)
 	{
-		this.nextPosition = nextPosition;
+		//this.nextPosition = nextPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 		//TODO:Fix Animation
 		transform.position = nextPosition.ToVector3;

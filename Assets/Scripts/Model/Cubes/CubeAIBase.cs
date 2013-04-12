@@ -17,7 +17,7 @@ public abstract class CubeAIBase : Cube {
 	private Vector3 moveToVector;
 
 	// Use this for initialization
-	void Start ()
+	public override void Start ()
 	{
 		moveToVector = Vector3.zero;
 		conditional = Conditionals.None;
@@ -26,7 +26,7 @@ public abstract class CubeAIBase : Cube {
 		id = 0;
 		base.Start ();
 		IsSelected = true;
-		thread = new Thread (new ThreadStart (this.main));
+		thread = new Thread (new ThreadStart (this.StartCube));
 		thread.Start ();
 	}
 	
@@ -73,7 +73,7 @@ public abstract class CubeAIBase : Cube {
 		}
 	}
 	
-	public abstract void main ();
+	public abstract void StartCube ();
 	
 	public void Move (Vector3 direction)
 	{
@@ -127,7 +127,7 @@ public abstract class CubeAIBase : Cube {
 	}
 	
 	private bool nextToCube(Vector3 direction){
-		if(Level.Singleton.getEntity(Position+direction) is EducationalCube){
+		if(Level.Singleton.getEntity(Position+direction) is CubeAI){
 			return true;
 		}
 		return false;

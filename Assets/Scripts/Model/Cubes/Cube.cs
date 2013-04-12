@@ -15,7 +15,8 @@ public class Cube : GameEntity, IClickable{
 	private Command command;
 	private int jumpHeight;
 	#endregion
-		
+	
+	
 	#region Command Management
 	
 	/// <summary>

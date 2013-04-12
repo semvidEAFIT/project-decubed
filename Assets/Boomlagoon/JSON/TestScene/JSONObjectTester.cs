@@ -101,7 +101,7 @@ public class JSONObjectTester : MonoBehaviour {
 		//JSONObject usage example:
 
 		//Parse string into a JSONObject:
-		JSONObject jsonObject = JSONObject.Parse(stringToEvaluate);
+		JSONObject.Parse(stringToEvaluate);
 
 		//You can also create an "empty" JSONObject
 		JSONObject emptyObject = new JSONObject();
