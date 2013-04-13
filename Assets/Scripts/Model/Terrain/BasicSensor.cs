@@ -17,13 +17,13 @@ public class BasicSensor : GameEntity {
 	
 	}
 	
-	public void NotifyPressed (Vector3Int position)
+	public virtual void NotifyPressed (Vector3Int position)
 	{
 		this.pressed = true;
 		Level.Singleton.SensorActivated();
 	}
 	
-	public void NotifyUnpressed (Vector3Int position)
+	public virtual void NotifyUnpressed (Vector3Int position)
 	{
 		this.pressed = false;
 		Level.Singleton.SensorDeactivated();
