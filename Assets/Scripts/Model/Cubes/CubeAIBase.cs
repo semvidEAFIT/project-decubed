@@ -27,12 +27,15 @@ public abstract class CubeAIBase : Cube {
 		base.Start ();
 		IsSelected = true;
 		thread = new Thread (new ThreadStart (this.StartCube));
-		thread.Start ();
+		//thread.Start ();
 	}
 	
 	// Update is called once per frame
 	public override void Update ()
 	{
+		if (thread.ThreadState == ThreadState.Unstarted && Input.GetKeyDown( KeyCode.Space)){  
+			thread.Start();
+		}
 		if (thread.ThreadState == ThreadState.WaitSleepJoin) {
 			if (moveToVector != Vector3.zero) {
 				MoveTo (moveToVector);

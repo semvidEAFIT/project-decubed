@@ -124,7 +124,6 @@ public class Level : MonoBehaviour
 	{
 		
 		//TODO revisar si termino nivel
-		
 		sensorsLeft --;
 		
 		if (sensorsLeft == 0){  
