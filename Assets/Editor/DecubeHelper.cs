@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class DecubeHelper : EditorWindow {
 	
@@ -120,9 +121,7 @@ public class DecubeHelper : EditorWindow {
 					FixGameObjects();
 				}
 				if (GUILayout.Button (new GUIContent ("Correct All GameObjects"))) {
-					foreach (Transform t in Selection.transforms) {
-						t.position = new Vector3 (Mathf.Round (t.position.x), Mathf.Round (t.position.y), Mathf.Round (t.position.z));
-					}
+					FixAllGameObjects();
 				}
 				
 				if (GUILayout.Button (new GUIContent ("Clone"))) {
@@ -132,6 +131,32 @@ public class DecubeHelper : EditorWindow {
 				}
 			GUILayout.EndVertical ();
 		GUILayout.EndArea ();
+	}
+	
+	
+	void FixAllGameObjects(){
+		GameObject[] gos = (GameObject[])FindObjectsOfType(typeof(GameObject));
+		List<Vector3> positions = new List<Vector3>();
+		foreach (GameObject g in gos) {
+			if (g.tag == "decubePrefab"){
+				Transform t = g.transform;
+				if (positions.Contains(t.position)){
+					DestroyImmediate(g);
+				}else{
+					positions.Add(t.position);
+					t.position = new Vector3 (
+						Mathf.Round (t.position.x), 
+						Mathf.Round (t.position.y), 
+						Mathf.Round (t.position.z)
+					);
+					t.rotation = Quaternion.Euler(
+						FixRotation90(t.rotation.eulerAngles.x),
+						FixRotation90(t.rotation.eulerAngles.y),
+						FixRotation90(t.rotation.eulerAngles.z)
+					);
+				}
+			}
+		}
 	}
 	
 	void FixGameObjects(){
