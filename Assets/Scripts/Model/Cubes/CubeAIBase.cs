@@ -5,7 +5,7 @@ using System.Threading;
 
 public abstract class CubeAIBase : Cube {
 	
-	private enum Conditionals {None, PositionAvailable, PressingSensor, NextToCube}
+	private enum Conditionals {None, PositionAvailable, PressingSensor, NextToCube, GameOver}
 	private Conditionals conditional;
 	private Vector3 variable1;
 	private bool result;
@@ -52,6 +52,9 @@ public abstract class CubeAIBase : Cube {
 				case Conditionals.PressingSensor:
 					result = isPressingSensor ();
 					break;
+				case Conditionals.GameOver:
+					result = isGameOver();
+					break;
 				}
 				conditional = Conditionals.None;
 				moveEvent.Set ();
@@ -94,6 +97,7 @@ public abstract class CubeAIBase : Cube {
 		return false;
 	}
 	
+	#region AI Methods
 	public bool IsAvailable (Vector3 direction)
 	{
 		conditional = Conditionals.PositionAvailable;
@@ -109,7 +113,7 @@ public abstract class CubeAIBase : Cube {
 		return result;
 	}
 	
-	public bool isNextToCube (Vector3 direction)
+	public bool IsNextToCube (Vector3 direction)
 	{
 		conditional = Conditionals.NextToCube;
 		variable1 = direction;
@@ -117,6 +121,14 @@ public abstract class CubeAIBase : Cube {
 		return result;
 	}
 	
+	public bool IsGameOver(){
+		conditional = Conditionals.GameOver;
+		moveEvent.WaitOne();
+		return result;
+	}
+	#endregion
+	
+	#region Internal methods
 	private bool isAvailable (Vector3 direction)
 	{
 		if (PositionOutOfLimits(direction)){
@@ -129,13 +141,15 @@ public abstract class CubeAIBase : Cube {
 		return Level.Singleton.SensorSpaces.ContainsKey(new Vector3Int(Position));
 	}
 	
-	private bool nextToCube(Vector3 direction){
-		if(Level.Singleton.getEntity(Position+direction) is CubeAI){
-			return true;
-		}
-		return false;
+	private bool isNextToCube(Vector3 direction){
+		return (Level.Singleton.getEntity(Position+direction) is CubeAI);
 	}
 	
+	private bool isGameOver(){
+		return Level.Singleton.sensorsLeft == 0;
+	}
+	
+	#endregion
 	public void setId(int id){
 		if (id == 0){
 			this.id = id;
@@ -152,6 +166,10 @@ public abstract class CubeAIBase : Cube {
 		moveEvent.Set ();
 	}
 	
+	public static Vector3 RotateRight(Vector3 direction){
+		return Quaternion.AngleAxis(90, Vector3.up) * direction;
+	}
+	
 	
 	#region Get and Sets
 	public Vector3 Position{
@@ -166,7 +184,7 @@ public abstract class CubeAIBase : Cube {
 		}
 	}
 
-	public Vector3 Foward {
+	public Vector3 Forward {
 		get {
 			return Vector3.forward;
 		}

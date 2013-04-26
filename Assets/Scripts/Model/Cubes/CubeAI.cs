@@ -8,7 +8,7 @@ public class CubeAI : CubeAIBase {
 		Move (5, Right);
 		Move (5, Backward);
 		Move (5, Left);
-		Move (5, Foward);
+		Move (5, Forward);
 	}	
 	
 	public void Move (int times, Vector3 direction)

@@ -5,39 +5,43 @@ using System.Collections;
 public class SpriteSheet : MonoBehaviour {
 	
 	public int materialIndex;
-	public int[] sequenceFrameCount;
+	public List<int> sequenceFrameCount = new List<int>();
 	
-	private bool loop;
-	private bool reverse;
-	private bool active = true;
-	private bool smoothTransition; // This is when the sequence changes based on the get and sets
-	
+	public bool loop;
+	public bool reverse;
+	public bool running = true;
+	public bool smoothTransition; // This is when the sequence changes based on the get and sets
+	private bool smoothActive = false;
 	public int frameWidth;
 	public int frameHeight;
-	public int currentSequence = 0;
+	public int currentSequence;
 	public int currentFrame;
 	
-	public float fps = 15f;
+	public float fps;
 	
 	private SpriteSequence[] sequences;
 	private int colCount;
 	private int rowCount;
-	private int currentRow;
-	private int currentCol;
+	public int currentRow;
+	public int currentCol;
 	
 	private List<ISpriteSheet> listeners;
 	
 	// Use this for initialization
 	void Start () {
-		colCount = renderer.materials[materialIndex].mainTexture.width / frameWidth;
-		rowCount = renderer.materials[materialIndex].mainTexture.height / frameHeight;
-		sequences = new SpriteSequence[sequenceFrameCount.Length];
+		if (frameWidth != 0){
+			colCount = renderer.materials[materialIndex].mainTexture.width / frameWidth;
+		}
+		if (frameHeight != 0){
+			rowCount = renderer.materials[materialIndex].mainTexture.height / frameHeight;
+		}
+		sequences = new SpriteSequence[sequenceFrameCount.Count];
 		int counter = 0;
 		for (int i =0 ; i < sequences.Length ; i++){
 			sequences[i] = new SpriteSequence(counter, counter + sequenceFrameCount[i] - 1);
 			counter += sequenceFrameCount[i];
 		}
-		renderer.materials[materialIndex].SetTextureScale("_MainTex", new Vector2(1f/colCount,1f/rowCount));
+		//renderer.materials[materialIndex].SetTextureScale("_MainTex", new Vector2(1f/colCount,1f/rowCount));
 		StartCoroutine(UpdateSprite());
 	}
 	
@@ -50,7 +54,7 @@ public class SpriteSheet : MonoBehaviour {
 	private IEnumerator UpdateSprite()
     {
     	while (true){
-	    	if (active){
+	    	if (running){
 	    		SpriteSequence sequence = sequences[currentSequence];
 	    		if (currentFrame < sequence.InitFrame || currentFrame > sequence.EndFrame){
 	    			currentFrame = sequence.InitFrame;
@@ -94,81 +98,6 @@ public class SpriteSheet : MonoBehaviour {
     	currentCol = currentFrame % colCount;
     	currentRow = currentFrame / colCount;
     }
-    
-    #region Get and Sets
-    
-   	
-   	public int MaterialIndex {
-		get {
-			return this.materialIndex;
-		}
-		set {
-			materialIndex = value;
-		}
-	}
-
-	public int[] SequenceFrameCount {
-		get {
-			return this.sequenceFrameCount;
-		}
-		set {
-			sequenceFrameCount = value;
-		}
-	}
-
-	public bool Loop {
-		get {
-			return this.loop;
-		}
-		set {
-			loop = value;
-		}
-	}
-
-	public bool Reverse {
-		get {
-			return this.reverse;
-		}
-		set {
-			reverse = value;
-		}
-	}
-
-	public bool Active {
-		get {
-			return this.active;
-		}
-		set {
-			active = value;
-		}
-	}
-
-	public bool SmoothTransition {
-		get {
-			return this.smoothTransition;
-		}
-		set {
-			smoothTransition = value;
-		}
-	}
-
-	public int FrameWidth {
-		get {
-			return this.frameWidth;
-		}
-		set {
-			frameWidth = value;
-		}
-	}
-
-	public int FrameHeight {
-		get {
-			return this.frameHeight;
-		}
-		set {
-			frameHeight = value;
-		}
-	}
 
 	public int CurrentSequence {
 		get {
@@ -178,53 +107,4 @@ public class SpriteSheet : MonoBehaviour {
 			currentSequence = value;
 		}
 	}
-
-	public int CurrentFrame {
-		get {
-			return this.currentFrame;
-		}
-		set {
-			currentFrame = value;
-		}
-	}
-
-	public float Fps {
-		get {
-			return this.fps;
-		}
-		set {
-			fps = value;
-		}
-	}
-	
-	public SpriteSequence[] Sequences {
-		get {
-			return this.sequences;
-		}
-	}
-
-	public int ColCount {
-		get {
-			return this.colCount;
-		}
-	}
-
-	public int RowCount {
-		get {
-			return this.rowCount;
-		}
-	}
-
-	public int CurrentRow {
-		get {
-			return this.currentRow;
-		}
-	}
-
-	public int CurrentCol {
-		get {
-			return this.currentCol;
-		}
-	}
-    #endregion
 }
