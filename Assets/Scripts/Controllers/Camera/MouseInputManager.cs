@@ -20,26 +20,31 @@ public class MouseInputManager : MonoBehaviour {
 		bool clickFound = false;
 		if (Input.GetMouseButtonDown (0)) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hitInfo;
-			Physics.Raycast (ray, out hitInfo, Mathf.Infinity);
 			
-			if (hitInfo.transform != null) {
-				
-				MonoBehaviour[] scripts = hitInfo.transform.GetComponents<MonoBehaviour> ();
-				foreach (MonoBehaviour m in scripts) {
-
-					if (m is IClickable) {
-						MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
-						if (selector != null) {
-							gameCamera.LookingObject = selector.Cube.gameObject;
-							clickFound = true;
-						}
-						((IClickable)m).NotifyClick ();
+			//Physics.Raycast (ray, out hitInfo, Mathf.Infinity);
+			bool shouldBreak = false;
+			RaycastHit[] hitsInfo = Physics.RaycastAll(ray,Mathf.Infinity);
+			foreach (RaycastHit hitInfo in hitsInfo){
+				if (hitInfo.transform != null) {
+					MonoBehaviour[] scripts = hitInfo.transform.GetComponents<MonoBehaviour> ();
+					foreach (MonoBehaviour m in scripts) {
+						if (m is IClickable) {
+							MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
+							if (selector != null) {
+								gameCamera.LookingObject = selector.Cube.gameObject;
+								clickFound = true;
+							}
+							((IClickable)m).NotifyClick ();
+							shouldBreak = true;
+							break;
+						} 
+					}
+					if (!clickFound) {
+						gameCamera.LookingObject = null;
+					}
+					if (shouldBreak){
 						break;
-					} 
-				}
-				if (!clickFound) {
-					gameCamera.LookingObject = null;
+					}
 				}
 			}
 		}

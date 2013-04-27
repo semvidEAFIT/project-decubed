@@ -32,7 +32,7 @@ public class DecubeHelper : EditorWindow {
 	void MoveGameObject(Vector3 direction){
 		if (clone){
 			foreach (Transform t in Selection.transforms) {
-				GameObject go = (GameObject)Instantiate(t.gameObject);
+				Instantiate(t.gameObject);
 				t.position += direction;
 			}
 		} else{
@@ -72,19 +72,13 @@ public class DecubeHelper : EditorWindow {
 			
 			GUILayout.BeginHorizontal ();
 				if (GUILayout.Button (new GUIContent ("-x"))) {
-					foreach (Transform t in Selection.transforms) {
-						RotateAround(Vector3.left);
-					}
+					RotateAround(Vector3.left);
 				}
 				if (GUILayout.Button (new GUIContent ("-y"))) {
-					foreach (Transform t in Selection.transforms) {
-						RotateAround(Vector3.down);
-					}
+					RotateAround(Vector3.down);
 				}
 				if (GUILayout.Button (new GUIContent ("-z"))) {
-					foreach (Transform t in Selection.transforms) {
-						RotateAround(Vector3.back);
-					}
+					RotateAround(Vector3.back);
 				}
 			GUILayout.EndHorizontal ();
 		GUILayout.EndArea ();

@@ -11,11 +11,14 @@ public class SpriteSheet : MonoBehaviour {
 	public bool reverse;
 	public bool running = true;
 	public bool smoothTransition; // This is when the sequence changes based on the get and sets
-	private bool smoothActive = false;
+	private bool smooth = false;
+	private int nextSequence;
+	private bool notifyEnd;
 	public int frameWidth;
 	public int frameHeight;
 	public int currentSequence;
 	public int currentFrame;
+	public int lastFrame;
 	
 	public float fps;
 	
@@ -26,6 +29,10 @@ public class SpriteSheet : MonoBehaviour {
 	public int currentCol;
 	
 	private List<ISpriteSheet> listeners;
+	
+	void Awake() {
+		listeners = new List<ISpriteSheet>();
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -50,39 +57,61 @@ public class SpriteSheet : MonoBehaviour {
 	
 	}
 	
-	
 	private IEnumerator UpdateSprite()
     {
     	while (true){
 	    	if (running){
 	    		SpriteSequence sequence = sequences[currentSequence];
+	    		// Checks current frame is within the current sequence
 	    		if (currentFrame < sequence.InitFrame || currentFrame > sequence.EndFrame){
 	    			currentFrame = sequence.InitFrame;
-	    		} 
-	    		if (loop){
+	    		}
+	    		if (smoothTransition && smooth){
+	    			if (!reverse){
+	    				if (sequence.InitFrame < currentFrame){
+		    				addFrame(-1);
+		    			}
+	    			}else{
+		    			if (sequence.EndFrame > currentFrame){
+		    				addFrame(1);
+		    			}
+	    			}
+	    		} else if (loop){
 	    			if (reverse){
 	    				if (currentFrame <= sequence.InitFrame){
 	    					currentFrame = sequence.EndFrame;
 	    				}else{
-	    					currentFrame--;
+	    					addFrame(-1);
 	    				}
 	    			}else{
 	    				if (currentFrame >= sequence.EndFrame){
 	    					currentFrame = sequence.InitFrame;
 	    				}else{
-	    					currentFrame++;
+	    					addFrame(1);
 	    				}
 	    			}
 	    		}else{
 	    			if (reverse){
 	    				if (sequence.InitFrame < currentFrame){
-		    				currentFrame--;
+		    				addFrame(-1);
 		    			}
 	    			}else{
 		    			if (sequence.EndFrame > currentFrame){
-		    				currentFrame++;
+		    				addFrame(1);
 		    			}
 	    			}
+	    		}
+	    		
+	    		if ( smooth && (sequence.EndFrame == currentFrame || sequence.InitFrame == currentFrame)){
+	    			currentSequence = nextSequence;
+	    				smooth = false;
+	    		}
+	    		
+	    		if ( ((sequence.EndFrame == currentFrame && !reverse) 
+	    				||  (sequence.InitFrame == currentFrame && reverse))
+	    				&& (loop || (reverse && lastFrame != currentFrame))
+	    				){
+	    				NotifySequenceEnded();
 	    		}
 		    	UpdateFramePosition();
 		    	
@@ -92,6 +121,12 @@ public class SpriteSheet : MonoBehaviour {
 	    	}
 	    	yield return new WaitForSeconds(1f / fps);
     	}
+    }
+    
+    private void addFrame(int frameNumber){
+    	lastFrame = currentFrame;
+    	currentFrame += frameNumber;
+    	
     }
     
     private void UpdateFramePosition(){
@@ -104,7 +139,30 @@ public class SpriteSheet : MonoBehaviour {
 			return this.currentSequence;
 		}
 		set {
-			currentSequence = value;
+			if (value != currentSequence){
+				if (smoothTransition){
+					smooth = true;
+					nextSequence = value;
+				}else{
+					currentSequence = value;
+				}
+			}
+		}
+	}
+	
+	public void AddSpriteSheetListener(ISpriteSheet listener){
+		if (!listeners.Contains(listener)){
+			listeners.Add(listener);
+		}
+	}
+	
+	public void RemoveSpriteSheetListener(ISpriteSheet listener){
+		listeners.Remove(listener);
+	}
+	
+	public void NotifySequenceEnded(){
+		foreach (ISpriteSheet iSpriteSheet in listeners){
+			iSpriteSheet.SequenceEnded(this);
 		}
 	}
 }
