@@ -369,7 +369,7 @@ public class AnimationHelper
 	{
 		Vector3 direction = finalPosition - gameObject.transform.position;
 		float time = direction.magnitude * 0.2f;
-		Hashtable hs = getBasicHs (direction, time, delay, iTween.EaseType.spring);
+		Hashtable hs = getBasicHs (direction, time, delay, iTween.EaseType.linear);
         if (onCompleteMethod != null && onCompleteMethod.Length > 0)
         {
             hs.Add("onComplete", onCompleteMethod);

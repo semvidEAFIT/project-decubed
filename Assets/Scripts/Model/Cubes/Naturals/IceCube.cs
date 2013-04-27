@@ -5,16 +5,26 @@ public class IceCube : Cube {
 	
 //	private Vector3Int nextPosition;
 	private bool breakIce = false;
+	private Vector3Int endPosition;
+	private Vector3Int nextPosition;
+	public bool comandEnded = false;
 	
-	public override void MoveTo (Vector3Int nextPosition)
+	public override void MoveTo (Vector3Int endPosition)
 	{
+		this.endPosition = endPosition;
 		//this.nextPosition = nextPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 		//TODO:Fix Animation
-		transform.position = nextPosition.ToVector3;
-        Level.Singleton.AddEntity(this, nextPosition);
-		Gravity(nextPosition);
-		EndExecution();
+		//transform.position = endPosition.ToVector3;
+        Level.Singleton.AddEntity(this, endPosition);
+		//CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
+		if(NextPosition.y == new Vector3Int(transform.position).y){
+			CubeAnimations.AnimateSlide(gameObject,endPosition.ToVector3);
+		}else{
+			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
+		}
+		//Gravity(endPosition);
+		//EndExecution();
 	}
 	
 	public override Command[] GetOptions(){ 
@@ -39,13 +49,40 @@ public class IceCube : Cube {
 		breakIce = true;
 	}
 	
-	public override void OnEndExecution ()
+	public override void EndExecution ()
 	{
-		if(breakIce){
-			//TODO animacion
-			Level.Singleton.RemoveEntity(transform.position);
-			Destroy(this.gameObject);
+		OrganizeTransform();
+		if(Command != null && endPosition.ToVector3 ==  new Vector3Int(transform.position).ToVector3){
+			//fix
+			Command.EndExecution();
+			comandEnded = false;
 		}
+		OnEndExecution();
 	}
 	
+	public override void OnEndExecution ()
+	{
+		if(breakIce &&  endPosition.ToVector3 == new Vector3Int(transform.position).ToVector3){
+			Level.Singleton.RemoveEntity(endPosition);
+			Destroy(this.gameObject);
+		}else if( endPosition.z != transform.position.z || endPosition.x != transform.position.x){
+			CubeAnimations.AnimateSlide(gameObject, new Vector3Int(endPosition.x,Mathf.RoundToInt(transform.position.y),endPosition.z).ToVector3);
+		}else if( endPosition.y < transform.position.y){
+			CubeAnimations.AnimateMove (gameObject, Vector3.down, endPosition.ToVector3);
+		}
+		Vector3Int next = new Vector3Int(transform.position);
+		if(!breakIce && next.x > 10 || next.x < 0 || next.z > 10 || next.z < 0){
+			Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
+			Destroy(gameObject);
+		}
+		
+	}
+	
+	public Vector3Int NextPosition {
+		get {
+			return this.nextPosition;
+		}set{
+			this.nextPosition = value;
+		}
+	}
 }

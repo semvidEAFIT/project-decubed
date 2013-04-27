@@ -60,9 +60,10 @@ public class Cube : GameEntity, IClickable{
 	
 
 		
-	public void EndExecution(){
+	public virtual void EndExecution(){
 		OrganizeTransform();
 		if(command != null){
+			//fix
 			command.EndExecution();
 		}
 		OnEndExecution();
