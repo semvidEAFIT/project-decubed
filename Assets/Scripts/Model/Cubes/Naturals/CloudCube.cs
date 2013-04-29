@@ -62,4 +62,9 @@ public class CloudCube : Cube {
 		}
 		return commands.ToArray();
 	}
+	
+	public void Subir(){
+		Debug.Log("subir" );
+		CubeAnimations.AnimateMove (gameObject, Vector3.down, transform.position+Vector3.up);
+	}
 }

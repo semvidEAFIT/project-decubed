@@ -104,22 +104,15 @@ public class Cube : GameEntity, IClickable{
 	/// Last.
 	/// </param>
 	public virtual void Gravity(Vector3Int currentPosition){
-		Vector3Int below = new Vector3Int(transform.position);
-		while(true){
-			Debug.Log("below:"+below.x+","+below.y+","+below.z);
-			if(below.y > 1 && (CubeHelper.IsFree(below)||below.y==currentPosition.y)){
-				below = new Vector3Int(below.ToVector3+Vector3.down);
-			}else{
-				break;
-			}
+		Level.Singleton.RemoveEntity(currentPosition);
+		if(CubeHelper.IsFree(new Vector3Int( currentPosition.ToVector3 +Vector3.down)) && currentPosition.y > 1){
+			currentPosition.y = currentPosition.y-1;
+			Level.Singleton.AddEntity (this,currentPosition);
+			Gravity(currentPosition);
+		}else{
+			Level.Singleton.AddEntity(this,currentPosition);
+			CubeAnimations.AnimateMove (gameObject, Vector3.down, currentPosition.ToVector3);
 		}
-		//TODO: cambiar por animacion
-		Debug.Log("final below:"+below.x+","+below.y+","+below.z);
-		//if(CubeHelper.IsFree(below)){
-			Level.Singleton.RemoveEntity(currentPosition);
-			Level.Singleton.AddEntity(this,below);
-			transform.position = below.ToVector3;
-		//}
 		
 	}
 	
