@@ -95,6 +95,7 @@ public class CubeControllerInput : CubeController {
 	public void NotifyMoveTO(Command c){
 		AddCommand(c);
 		//clearMoveOptions();
+		
 	}
 
 }
