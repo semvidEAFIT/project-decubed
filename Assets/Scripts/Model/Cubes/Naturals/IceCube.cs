@@ -12,19 +12,13 @@ public class IceCube : Cube {
 	public override void MoveTo (Vector3Int endPosition)
 	{
 		this.endPosition = endPosition;
-		//this.nextPosition = nextPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
-		//TODO:Fix Animation
-		//transform.position = endPosition.ToVector3;
         Level.Singleton.AddEntity(this, endPosition);
-		//CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		if(NextPosition.y == new Vector3Int(transform.position).y){
 			CubeAnimations.AnimateSlide(gameObject,endPosition.ToVector3);
 		}else{
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		}
-		//Gravity(endPosition);
-		//EndExecution();
 	}
 	
 	public override Command[] GetOptions(){ 

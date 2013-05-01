@@ -21,8 +21,12 @@ public class Slide : Command {
     }
 	
 	public bool SlideTo(){
+		if (EndPosition.y == new Vector3Int (Cube.transform.position).y+1){
+			return true;
+		}
 		Vector3Int next = new Vector3Int(EndPosition.x+Direction.x,EndPosition.y+Direction.y,EndPosition.z+Direction.z);
 		if(!finished && CubeHelper.IsFree(next) && next.x <= 10 && next.x >= 0 && next.z <= 10 && next.z >= 0){
+			Level.Singleton.notifySwitches(EndPosition);
 			EndPosition = next;
 			return SlideTo();
 		}else if(next.x > 10 || next.x < 0 || next.z > 10 || next.z < 0){

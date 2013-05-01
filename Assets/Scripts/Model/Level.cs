@@ -134,6 +134,16 @@ public class Level : MonoBehaviour
 	public void SensorDeactivated(){
 		sensorsLeft++;
 	}
+	
+	public void notifySwitches(Vector3Int position){
+		if (sensorSpaces.ContainsKey (position)) {
+			foreach (BasicSensor s in sensorSpaces[position]) {
+				if(s is SensorSwitch){
+					s.NotifyPressed (position);
+				}
+			}
+		}
+	}
 	#endregion
 	
 	#region Monobehavious Methods
