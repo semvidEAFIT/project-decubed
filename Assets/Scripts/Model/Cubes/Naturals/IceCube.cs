@@ -14,11 +14,7 @@ public class IceCube : Cube {
 		this.endPosition = endPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
         Level.Singleton.AddEntity(this, endPosition);
-		if(NextPosition.y == new Vector3Int(transform.position).y){
-			CubeAnimations.AnimateSlide(gameObject,endPosition.ToVector3);
-		}else{
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
-		}
 	}
 	
 	public override Command[] GetOptions(){ 
