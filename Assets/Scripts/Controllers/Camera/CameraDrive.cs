@@ -12,15 +12,18 @@ public class CameraDrive : MonoBehaviour
     public float error = 10.0f;
     public float speedRot = 90.0f;
     public float speedMov = 30.0f;
-    public float yMax = 10f;
-    public float yMin = 2f;
-
+    public float maxDy = -8.0f;
+    public float minDy = 2.0f;
+    public float zoomSpeed = 2.0f;
     public GameObject centerObject;
     private GameObject lookingObject;
     private Vector3 currentLookingPosition;
     private Vector3 lookingObjectPosition;
-
+    private Vector3 startLookingPosition;
     private const int positionOffset = 5;
+
+    private bool lerping = false;
+    private float lerpingStartTime;
 
     #endregion Attributes
 
@@ -33,15 +36,39 @@ public class CameraDrive : MonoBehaviour
         lookingObjectPosition = lookingObject.transform.position;
     }
 
-    protected virtual void Update()
+    protected virtual void LateUpdate()
     {
         if (lookingObject == null)
         {
+            Vector3 translation = camera.transform.position - centerObject.transform.position;
+            centerObject.transform.Translate(translation);
             lookingObject = centerObject;
         }
+
         if (currentLookingPosition != lookingObject.transform.position)
         {
-            currentLookingPosition = Vector3.Lerp(currentLookingPosition, lookingObject.transform.position, Time.deltaTime / 4f);
+            if (lerping)
+            {
+                if (lookingObject == centerObject)
+                {
+                    currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, (Time.timeSinceLevelLoad - lerpingStartTime) / 4.0f);
+                }
+                else 
+                {
+                    currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, Time.timeSinceLevelLoad - lerpingStartTime);
+                }
+            }
+            else
+            {
+                if (lookingObject == centerObject)
+                {
+                    currentLookingPosition = centerObject.transform.position;
+                }
+            }
+        }
+        else
+        {
+            if (lerping) lerping = false;
         }
 
         //camera.transform.LookAt (lookingObject.transform);
@@ -59,42 +86,57 @@ public class CameraDrive : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            float y = camera.transform.position.y;
 
             //lookingObjectPosition.Set(
-            if (y < yMax)
-                camera.transform.Translate(Vector3.up * speedMov * Time.deltaTime);
 
-            //			lookingObjectPosition.Set (lookingObjectPosition.x,
-            //				lookingObjectPosition.y + (speedMov) * Time.deltaTime,
-            //				lookingObjectPosition.z);
+            if (lookingObject.transform.position == centerObject.transform.position)
+            {
+                centerObject.transform.Translate(Vector3.up * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+                camera.transform.Translate(Vector3.up * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                float dy = (currentLookingPosition - camera.transform.position).y;
+                Debug.Log(dy + " Max:" +maxDy);
+                if (dy > maxDy)
+                    camera.transform.Translate(Vector3.up * speedMov * Time.deltaTime);
 
-            //			camera.transform.Translate (0, speedMov * Time.deltaTime, 0, lookingObject.transform);
+                //			lookingObjectPosition.Set (lookingObjectPosition.x,
+                //				lookingObjectPosition.y + (speedMov) * Time.deltaTime,
+                //				lookingObjectPosition.z);
+
+                //			camera.transform.Translate (0, speedMov * Time.deltaTime, 0, lookingObject.transform);
+            }
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            float y = camera.transform.position.y;
-            if (y > yMin)
-                camera.transform.Translate(Vector3.down * speedMov * Time.deltaTime);
+            if (lookingObject.transform.position == centerObject.transform.position)
+            {
+                centerObject.transform.Translate(Vector3.down * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+                camera.transform.Translate(Vector3.down * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                float dy = (currentLookingPosition - camera.transform.position).y;
+                Debug.Log(dy+" Min:"+minDy);
+                if (dy < minDy)
+                    camera.transform.Translate(Vector3.down * speedMov * Time.deltaTime);
 
-            //			lookingObjectPosition.Set (
-            //				lookingObjectPosition.x,
-            //				lookingObjectPosition.y + (-speedMov) * Time.deltaTime,
-            //				lookingObjectPosition.z);
-            //			camera.transform.Translate (0, -speedMov * Time.deltaTime, 0, lookingObject.transform);
+                //			lookingObjectPosition.Set (
+                //				lookingObjectPosition.x,
+                //				lookingObjectPosition.y + (-speedMov) * Time.deltaTime,
+                //				lookingObjectPosition.z);
+                //			camera.transform.Translate (0, -speedMov * Time.deltaTime, 0, lookingObject.transform);
+            }
         }
 
-        if (camera.transform.position.y - 2 >= lookingObjectPosition.y && Input.GetAxis("Mouse ScrollWheel") > 0)
+        Vector3 distance = (currentLookingPosition - transform.position);
+        Debug.Log("Distance" + distance.sqrMagnitude);
+        if ((distance.sqrMagnitude > 10.0f && Input.GetAxis("Mouse ScrollWheel") > 0.0f) || (distance.sqrMagnitude < 200.0f && Input.GetAxis("Mouse ScrollWheel") < 0.0f))
         {
-            Vector3 mov = (lookingObjectPosition - camera.transform.position);
-            mov = mov.normalized * Time.deltaTime * 20.0f;
-            camera.transform.position += mov;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            Vector3 mov = (lookingObject.transform.position - camera.transform.position);
-            mov = mov.normalized * -Time.deltaTime * 20.0f;
-            camera.transform.position += mov;
+            distance = distance.normalized * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomSpeed;
+            Debug.Log(distance);
+            transform.Translate(distance);
         }
     }
 
@@ -116,8 +158,13 @@ public class CameraDrive : MonoBehaviour
             }
             else
             {
+                Vector3 translation = new Vector3(0.0f, camera.transform.position.y - centerObject.transform.position.y, 0.0f);
+                centerObject.transform.Translate(translation);
                 this.lookingObject = centerObject;
             }
+            lerping = true;
+            lerpingStartTime = Time.timeSinceLevelLoad;
+            startLookingPosition = currentLookingPosition;
 
             //lookingObjectPosition = lookingObject.transform.position;
         }
