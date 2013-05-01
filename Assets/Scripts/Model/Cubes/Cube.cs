@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class Cube : GameEntity, IClickable{
 	
+	public enum Mood {Normal = 0, Proud, EyesClosed,Happy,Angry}
+	
 	#region Variables
 	/// <summary>
 	/// The cube is selected.
@@ -14,6 +16,7 @@ public class Cube : GameEntity, IClickable{
     /// </summary>
 	private Command command;
 	private int jumpHeight;
+	private SpriteSheet spriteSheet;
 	#endregion
 	
 	
@@ -116,6 +119,14 @@ public class Cube : GameEntity, IClickable{
 		
 	}
 	
+	#region Animation Methods
+	
+	public void setMood(Mood mood){
+		spriteSheet.CurrentSequence = (int) mood;
+	}
+	
+	#endregion
+	
 	#region IClickable methods
 	
     public void NotifyClick()
@@ -129,6 +140,7 @@ public class Cube : GameEntity, IClickable{
 	
 	public void Awake(){
 		this.jumpHeight = GetJumpHeight();
+		this.spriteSheet = GetComponent<SpriteSheet>();
 	}
 	
 	public virtual int GetJumpHeight(){

@@ -52,21 +52,15 @@ public class SpriteSheetEditor : Editor {
 			}
 			
 		EditorGUILayout.EndVertical();
-		//sequenceCount = EditorGUILayout.IntField("Number of Sequences",sequenceCount);
-		//sequenceCount = Mathf.Abs(sequenceCount);
-//		if (sequenceCount != sequence.Length){
-//			sequence = new int[sequenceCount];
-//		}
-//		for (int i = 0 ; i < sequenceCount ; i++){
-//			sequence[i] = EditorGUILayout.IntField("Sq" +  i + ". Frame Count",sequence[i]);
-//		}
-//		spriteSheet.SequenceFrameCount = sequence;
 		
+		int rowCount = spriteSheet.renderer.sharedMaterials[spriteSheet.materialIndex].mainTexture.height / spriteSheet.frameHeight;
 		if (spriteSheet.frameWidth != 0 && spriteSheet.frameHeight != 0){
 			int colCount = spriteSheet.renderer.sharedMaterials[spriteSheet.materialIndex].mainTexture.width / spriteSheet.frameWidth;
-			int rowCount = spriteSheet.renderer.sharedMaterials[spriteSheet.materialIndex].mainTexture.height / spriteSheet.frameHeight;
+			
 			spriteSheet.renderer.sharedMaterials[spriteSheet.materialIndex].SetTextureScale("_MainTex", new Vector2(1f/colCount,1f/rowCount));
 		}
+		Vector2 offset = new Vector2( 0,(rowCount - 1)/((float)rowCount));
+	    spriteSheet.renderer.sharedMaterials[spriteSheet.materialIndex].SetTextureOffset("_MainTex", offset);
 		if (GUI.changed){
 			EditorUtility.SetDirty(target);
 		}
