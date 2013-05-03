@@ -81,13 +81,24 @@ public class Level : MonoBehaviour
 					s.NotifyPressed (position);
 				}
 			}
+			//TODO: temporal mientras se arregla el cubo hielo y se le ponen las caras al resto
+			try{
+			Cube cu = (Cube)entity;
+			if(position.y > 1 && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
+				Cube c = (Cube)Level.Singleton.getEntity(position.ToVector3 + Vector3.down);
+				if(c is IceCube){
+					c.setMood(Cube.Mood.EyesClosed);
+				}else {
+					c.setMood(Cube.Mood.Angry);
+				}
+			}}catch (Exception e){}
 		}
 	}
 	
 	public void RemoveEntity (Vector3 position)
 	{
 		RemoveEntity (new Vector3Int (position));
-		
+			
 	}
 	
 	public void RemoveEntity (Vector3Int position)
@@ -102,6 +113,14 @@ public class Level : MonoBehaviour
 				foreach (BasicSensor s in sensorSpaces[position]) {
 					s.NotifyUnpressed (position);
 				}
+			}
+			if(entities.ContainsKey(new Vector3Int( position.ToVector3+Vector3.down))){
+			try{
+				if(getEntity(position.ToVector3+Vector3.down)is Cube){
+					Cube c = (Cube)getEntity(position.ToVector3+Vector3.down);
+					c.setMood(Cube.Mood.Normal);
+				}
+			}catch(Exception e){}
 			}
 		}	
 	}
