@@ -35,6 +35,7 @@ public class Cube : GameEntity, IClickable{
 			Level.Singleton.AddEntity (this, nextPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		}
+		setMood(Mood.Normal);
 	}
 	
 	/// <summary>
@@ -68,6 +69,10 @@ public class Cube : GameEntity, IClickable{
 		if(command != null){
 			//fix
 			command.EndExecution();
+		}
+		if(transform.position.y > 1 && Level.Singleton.getEntity(transform.position + Vector3.down) is Cube){
+			Cube c = (Cube)Level.Singleton.getEntity(transform.position + Vector3.down);
+			c.setMood(Mood.Angry);
 		}
 		OnEndExecution();
 	}

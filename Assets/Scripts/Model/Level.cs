@@ -52,6 +52,8 @@ public class Level : MonoBehaviour
 			sensorsLeft += 1;
 		} else {
 			if (sensorSpaces.ContainsKey (position)) {
+				Cube c = (Cube)entity;
+				c.setMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
 					s.NotifyPressed (position);
 				}

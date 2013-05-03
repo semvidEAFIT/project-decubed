@@ -19,8 +19,7 @@ public class MouseInputManager : MonoBehaviour {
 	{
 		bool clickFound = false;
 		if (Input.GetMouseButtonDown (0)) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			
+			Ray ray = this.camera.ScreenPointToRay (Input.mousePosition);
 			//Physics.Raycast (ray, out hitInfo, Mathf.Infinity);
 			RaycastHit[] hitsInfo = Physics.RaycastAll(ray,Mathf.Infinity);
 			Transform decubePrefab = null;
