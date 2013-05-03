@@ -54,11 +54,12 @@ public class MouseInputManager : MonoBehaviour {
 //					}
 				}
 			}
+            if (decubePrefab != null)
+            {
+                CallIClickable(decubePrefab);
+            }
 			if (!clickFound) {
 				gameCamera.LookingObject = null;
-			}
-			if (decubePrefab != null){
-				CallIClickable(decubePrefab);
 			}
 		}
 	}
@@ -67,12 +68,12 @@ public class MouseInputManager : MonoBehaviour {
 		MonoBehaviour[] scripts = go.GetComponents<MonoBehaviour> ();
 		foreach (MonoBehaviour m in scripts) {
 			if (m is IClickable) {
-				MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
+				((IClickable)m).NotifyClick ();
+                MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
 				if (selector != null) {
 					gameCamera.LookingObject = selector.Cube.gameObject;
 				}
-				((IClickable)m).NotifyClick ();
-				break;
+                break;
 			} 
 		}
 	}
