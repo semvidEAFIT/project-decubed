@@ -25,6 +25,7 @@ public class CameraDrive : MonoBehaviour
 
     private bool lerping = false;
     private float lerpingStartTime;
+    public float lerpingTime = 4.0f;
 
     #endregion Attributes
 
@@ -39,20 +40,13 @@ public class CameraDrive : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
-        if (lookingObject == null)
-        {
-            Vector3 translation = camera.transform.position - centerObject.transform.position;
-            centerObject.transform.Translate(translation);
-            lookingObject = centerObject;
-        }
-
         if (currentLookingPosition != lookingObject.transform.position)
         {
             if (lookingObject == centerObject)
             {
                 if(lerping)
                 {
-                    currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, (Time.timeSinceLevelLoad - lerpingStartTime) / 4.0f);
+                    currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, (Time.timeSinceLevelLoad - lerpingStartTime) / lerpingTime);
                 }
                 else
                 {
@@ -87,7 +81,7 @@ public class CameraDrive : MonoBehaviour
 
             //lookingObjectPosition.Set(
 
-            if (lookingObject.transform.position == centerObject.transform.position)
+            if (lookingObject.transform.position == centerObject.transform.position && Input.GetMouseButton(1))
             {
                 centerObject.transform.Translate(Vector3.up * (speedMov) * Time.deltaTime, Space.World);
                 camera.transform.Translate(Vector3.up * (speedMov) * Time.deltaTime, Space.World);
@@ -110,7 +104,7 @@ public class CameraDrive : MonoBehaviour
         }
         else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && transform.position.y > minHeight)
         {
-            if (lookingObject.transform.position == centerObject.transform.position)
+            if (lookingObject.transform.position == centerObject.transform.position && Input.GetMouseButton(1))
             {
                 centerObject.transform.Translate(Vector3.down * (speedMov) * Time.deltaTime, Space.World);
                 camera.transform.Translate(Vector3.down * (speedMov) * Time.deltaTime, Space.World);
@@ -159,7 +153,7 @@ public class CameraDrive : MonoBehaviour
             }
             else
             {
-                Vector3 translation = new Vector3(0.0f, camera.transform.position.y - centerObject.transform.position.y, 0.0f);
+                Vector3 translation = new Vector3(0.0f, currentLookingPosition.y - centerObject.transform.position.y, 0.0f);
                 centerObject.transform.Translate(translation);
                 this.lookingObject = centerObject;
             }
