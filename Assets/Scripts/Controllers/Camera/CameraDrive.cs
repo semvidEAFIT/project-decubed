@@ -48,23 +48,20 @@ public class CameraDrive : MonoBehaviour
 
         if (currentLookingPosition != lookingObject.transform.position)
         {
-            if (lerping)
+            if (lookingObject == centerObject)
             {
-                if (lookingObject == centerObject)
+                if(lerping)
                 {
                     currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, (Time.timeSinceLevelLoad - lerpingStartTime) / 4.0f);
                 }
-                else 
+                else
                 {
-                    currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, Time.timeSinceLevelLoad - lerpingStartTime);
+                    currentLookingPosition = centerObject.transform.position;
                 }
             }
             else
             {
-                if (lookingObject == centerObject)
-                {
-                    currentLookingPosition = centerObject.transform.position;
-                }
+                currentLookingPosition = Vector3.Lerp(startLookingPosition, lookingObject.transform.position, Time.timeSinceLevelLoad - lerpingStartTime);
             }
         }
         else
