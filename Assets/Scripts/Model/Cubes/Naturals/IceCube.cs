@@ -11,6 +11,7 @@ public class IceCube : Cube {
 	
 	public override void MoveTo (Vector3Int endPosition)
 	{
+		setMood(Cube.Mood.Proud);
 		this.endPosition = endPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
         Level.Singleton.AddEntity(this, endPosition);
@@ -18,6 +19,7 @@ public class IceCube : Cube {
 	}
 	
 	public override Command[] GetOptions(){ 
+		setMood(Cube.Mood.Normal);
 		List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,GetJumpHeight())){
@@ -65,7 +67,10 @@ public class IceCube : Cube {
 			Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 			Destroy(gameObject);
 		}
-		
+		UpdateFaceDirection();
+		if(FaceDirection == Vector3.down && SpriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
+			setMood(Mood.Proud);
+		}
 	}
 	
 	public Vector3Int NextPosition {
