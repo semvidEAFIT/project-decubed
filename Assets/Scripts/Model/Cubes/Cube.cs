@@ -1,16 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System;
 public class Cube : GameEntity, IClickable{
-	
+	// para ice proud = eyesclosed, eyesclose = angry,  
 	public enum Mood {Normal = 0, Proud, EyesClosed,Happy,Angry}
+	
 	
 	#region Variables
 	/// <summary>
 	/// The cube is selected.
 	/// </summary>
     protected bool selected = false;
-	
+	private Vector3 faceDirection;
     /// <summary>
     /// The current command that is executing, if its null then there.
     /// </summary>
@@ -29,12 +30,14 @@ public class Cube : GameEntity, IClickable{
 	/// Next position.	/// </param>
     public virtual void MoveTo (Vector3Int nextPosition)
 	{
+		setMood(Mood.Happy);
 		if (!Level.Singleton.ContainsElement (nextPosition)) {
 			Level.Singleton.RemoveEntity (new Vector3Int (transform.position));
 			//TODO:Fix Animation
 			Level.Singleton.AddEntity (this, nextPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		}
+		setMood(Mood.Normal);
 	}
 	
 	/// <summary>
@@ -44,6 +47,7 @@ public class Cube : GameEntity, IClickable{
 	/// The options of commands of the chosen cube.
 	/// </value>
     public virtual Command[] GetOptions(){ 
+			setMood(Mood.Normal);
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -69,7 +73,12 @@ public class Cube : GameEntity, IClickable{
 			//fix
 			command.EndExecution();
 		}
+	
 		OnEndExecution();
+		UpdateFaceDirection();
+		if(faceDirection == Vector3.down && spriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
+			setMood(Mood.EyesClosed);
+		}
 	}
 	
 	/// <summary>
@@ -122,7 +131,11 @@ public class Cube : GameEntity, IClickable{
 	#region Animation Methods
 	
 	public void setMood(Mood mood){
-		spriteSheet.CurrentSequence = (int) mood;
+		try{
+			spriteSheet.CurrentSequence = (int) mood;
+		}catch(Exception e){
+			
+		}
 	}
 	
 	#endregion
@@ -141,6 +154,8 @@ public class Cube : GameEntity, IClickable{
 	public void Awake(){
 		this.jumpHeight = GetJumpHeight();
 		this.spriteSheet = GetComponent<SpriteSheet>();
+		setMood(Mood.Normal);
+		faceDirection = transform.forward;
 	}
 	
 	public virtual int GetJumpHeight(){
@@ -170,6 +185,23 @@ public class Cube : GameEntity, IClickable{
 		set { selected = value; }
 	}
 
+	public Vector3 FaceDirection {
+		get {
+			return this.faceDirection;
+		}
+		set {
+			faceDirection = value;
+		}
+	}
+	
+	public SpriteSheet SpriteSheet {
+		get {
+			return this.spriteSheet;
+		}
+		set {
+			spriteSheet = value;
+		}
+	}
 	
 	#endregion
 	
@@ -182,4 +214,9 @@ public class Cube : GameEntity, IClickable{
 		return v;
 	}
 	#endregion
+
+	public void UpdateFaceDirection(){
+		faceDirection = transform.forward;
+	}
+
 }
