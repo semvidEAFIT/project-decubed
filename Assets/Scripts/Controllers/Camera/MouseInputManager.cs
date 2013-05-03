@@ -21,7 +21,7 @@ public class MouseInputManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0)) {
 			Ray ray = this.camera.ScreenPointToRay (Input.mousePosition);
 			//Physics.Raycast (ray, out hitInfo, Mathf.Infinity);
-			RaycastHit[] hitsInfo = Physics.RaycastAll(ray,Mathf.Infinity);
+			RaycastHit[] hitsInfo = Physics.RaycastAll(ray,Mathf.Infinity, 1<<8);
 			Transform decubePrefab = null;
 			foreach (RaycastHit hitInfo in hitsInfo){
 				if (hitInfo.transform != null) {
@@ -30,34 +30,36 @@ public class MouseInputManager : MonoBehaviour {
 						CallIClickable(hitInfo.transform);
 						clickFound = true;
 						break;
-					}else if (hitInfo.transform.tag == "decubePrefab" && decubePrefab == null){
-						decubePrefab = hitInfo.transform;
-						clickFound = true;
 					}
-//					MonoBehaviour[] scripts = hitInfo.transform.GetComponents<MonoBehaviour> ();
-//					foreach (MonoBehaviour m in scripts) {
-//						if (m is IClickable) {
-//							MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
-//							if (selector != null) {
-//								gameCamera.LookingObject = selector.Cube.gameObject;
-//								clickFound = true;
-//							}
-//							((IClickable)m).NotifyClick ();
-//							shouldBreak = true;
-//							break;
-//						} 
-//					}
-
-//					if (shouldBreak){
-//						break;
-//					}
 				}
 			}
+
+            if(!clickFound){
+                foreach (RaycastHit hitInfo in hitsInfo)
+                {
+                    if (hitInfo.transform.tag == "decubePrefab")
+                    {
+                        if (decubePrefab == null)
+                        {
+                            decubePrefab = hitInfo.transform;
+                            clickFound = true;
+                        }
+                        else 
+                        {
+                            if ((hitInfo.transform.position - ray.origin).sqrMagnitude < (decubePrefab.position - ray.origin).sqrMagnitude)
+                            {
+                                decubePrefab = hitInfo.transform;       
+                            }
+                        }
+                    }
+                }
+            }
+            if (decubePrefab != null)
+            {
+                CallIClickable(decubePrefab);
+            }
 			if (!clickFound) {
 				gameCamera.LookingObject = null;
-			}
-			if (decubePrefab != null){
-				CallIClickable(decubePrefab);
 			}
 		}
 	}
@@ -66,12 +68,12 @@ public class MouseInputManager : MonoBehaviour {
 		MonoBehaviour[] scripts = go.GetComponents<MonoBehaviour> ();
 		foreach (MonoBehaviour m in scripts) {
 			if (m is IClickable) {
-				MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
+				((IClickable)m).NotifyClick ();
+                MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
 				if (selector != null) {
 					gameCamera.LookingObject = selector.Cube.gameObject;
 				}
-				((IClickable)m).NotifyClick ();
-				break;
+                break;
 			} 
 		}
 	}

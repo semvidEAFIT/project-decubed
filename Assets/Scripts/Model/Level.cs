@@ -32,10 +32,33 @@ public class Level : MonoBehaviour
 	
 	void OnGUI ()
 	{
+        float d = Screen.height / 6;
+        if(GUI.Button(new Rect(5, 5, d, d), "Exit\nLevel")){
+            exitLevel();
+        }
+
+        if(GUI.Button(new Rect(d + 10, 5, d, d), "Restart\nLevel")){
+            restartLevel();
+        }
+
+        Rect stepCountRect = new Rect(Screen.width - d - 5, 5, d, d);
+        GUI.Box(stepCountRect, "");
+        GUI.TextField(stepCountRect, stepCount.ToString());
+
 		if (sensorsLeft == 0){      
 			GUI.Label( new Rect(  0, 20, Screen.width - 20,40), "Level Completed");
 		}
 	}
+
+    private void restartLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    private void exitLevel()
+    {
+        Application.LoadLevel("MainMenu");
+    }
 
 	#region Entities Dictionary Management
 	
