@@ -10,11 +10,12 @@ public class CameraDrive : MonoBehaviour
     #region Attributes
 
     public float error = 10.0f;
-    public float speedRot = 90.0f;
-    public float speedMov = 30.0f;
-    public float maxDy = -8.0f;
-    public float minDy = 2.0f;
-    public float zoomSpeed = 2.0f;
+    public float speedRot = 30.0f;
+    public float speedMov = 15.0f;
+    public float maxAngle = 30.0f;
+    public float zoomSpeed = 100.0f;
+    public float maxHeight = 20.0f;
+    public float minHeight = -10.0f;
     public GameObject centerObject;
     private GameObject lookingObject;
     private Vector3 currentLookingPosition;
@@ -77,29 +78,31 @@ public class CameraDrive : MonoBehaviour
         // Camera Rotation in the Y Axis
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            camera.transform.RotateAround(lookingObject.transform.position, new Vector3(0, -1, 0), speedRot * Time.deltaTime);
+            camera.transform.RotateAround(lookingObject.transform.position, new Vector3(0, -1, 0), speedRot * 2.0f * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            camera.transform.RotateAround(lookingObject.transform.position, new Vector3(0, 1, 0), speedRot * Time.deltaTime);
+            camera.transform.RotateAround(lookingObject.transform.position, new Vector3(0, 1, 0), speedRot * 2.0f * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && transform.position.y < maxHeight)
         {
 
             //lookingObjectPosition.Set(
 
             if (lookingObject.transform.position == centerObject.transform.position)
             {
-                centerObject.transform.Translate(Vector3.up * (speedMov / 2.0f) * Time.deltaTime, Space.World);
-                camera.transform.Translate(Vector3.up * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+                centerObject.transform.Translate(Vector3.up * (speedMov) * Time.deltaTime, Space.World);
+                camera.transform.Translate(Vector3.up * (speedMov) * Time.deltaTime, Space.World);
             }
             else
             {
-                float dy = (currentLookingPosition - camera.transform.position).y;
-                Debug.Log(dy + " Max:" +maxDy);
-                if (dy > maxDy)
-                    camera.transform.Translate(Vector3.up * speedMov * Time.deltaTime);
+                Vector3 v = (currentLookingPosition - camera.transform.position);
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                float angle = Vector3.Angle(forward, v);
+                if (angle < maxAngle || v.normalized.y > 0)
+                    camera.transform.Translate(Vector3.up * speedRot * Time.deltaTime);
 
                 //			lookingObjectPosition.Set (lookingObjectPosition.x,
                 //				lookingObjectPosition.y + (speedMov) * Time.deltaTime,
@@ -108,19 +111,21 @@ public class CameraDrive : MonoBehaviour
                 //			camera.transform.Translate (0, speedMov * Time.deltaTime, 0, lookingObject.transform);
             }
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && transform.position.y > minHeight)
         {
             if (lookingObject.transform.position == centerObject.transform.position)
             {
-                centerObject.transform.Translate(Vector3.down * (speedMov / 2.0f) * Time.deltaTime, Space.World);
-                camera.transform.Translate(Vector3.down * (speedMov / 2.0f) * Time.deltaTime, Space.World);
+                centerObject.transform.Translate(Vector3.down * (speedMov) * Time.deltaTime, Space.World);
+                camera.transform.Translate(Vector3.down * (speedMov) * Time.deltaTime, Space.World);
             }
             else
             {
-                float dy = (currentLookingPosition - camera.transform.position).y;
-                Debug.Log(dy+" Min:"+minDy);
-                if (dy < minDy)
-                    camera.transform.Translate(Vector3.down * speedMov * Time.deltaTime);
+                Vector3 v = (currentLookingPosition - camera.transform.position);
+                Vector3 forward = transform.forward;
+                forward.y = 0;
+                float angle = Vector3.Angle(forward, v);
+                if (angle < maxAngle || v.normalized.y < 0)
+                    camera.transform.Translate(Vector3.down * speedRot * Time.deltaTime);
 
                 //			lookingObjectPosition.Set (
                 //				lookingObjectPosition.x,
@@ -130,13 +135,12 @@ public class CameraDrive : MonoBehaviour
             }
         }
 
-        Vector3 distance = (currentLookingPosition - transform.position);
-        Debug.Log("Distance" + distance.sqrMagnitude);
+        Vector3 distance = (lookingObject.transform.position - transform.position);
+        Debug.DrawLine(transform.position, lookingObject.transform.position);
         if ((distance.sqrMagnitude > 10.0f && Input.GetAxis("Mouse ScrollWheel") > 0.0f) || (distance.sqrMagnitude < 200.0f && Input.GetAxis("Mouse ScrollWheel") < 0.0f))
         {
             distance = distance.normalized * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomSpeed;
-            Debug.Log(distance);
-            transform.Translate(distance);
+            transform.Translate(distance, Space.World);
         }
     }
 
