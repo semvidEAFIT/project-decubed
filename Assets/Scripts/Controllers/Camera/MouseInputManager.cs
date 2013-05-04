@@ -23,42 +23,52 @@ public class MouseInputManager : MonoBehaviour {
 			Ray ray = this.camera.ScreenPointToRay (Input.mousePosition);
 			//Physics.Raycast (ray, out hitInfo, Mathf.Infinity);
 			RaycastHit[] hitsInfo = Physics.RaycastAll(ray,Mathf.Infinity, 1<<8);
-			Transform decubePrefab = null;
+			Transform iClickable = null;
 			foreach (RaycastHit hitInfo in hitsInfo){
 				if (hitInfo.transform != null) {
 					if (hitInfo.transform.tag == "selector"){
-						decubePrefab = null;
-						CallIClickable(hitInfo.transform);
-						clickFound = true;
-						break;
-					}
-				}
-			}
-
-            if(!clickFound){
-                foreach (RaycastHit hitInfo in hitsInfo)
-                {
-                    if (hitInfo.transform.tag == "decubePrefab")
-                    {
-                        if (decubePrefab == null)
+                        if (!clickFound)
                         {
-                            decubePrefab = hitInfo.transform;
+                            iClickable = hitInfo.transform;
                             clickFound = true;
                         }
                         else 
                         {
-                            if ((hitInfo.transform.position - ray.origin).sqrMagnitude < (decubePrefab.position - ray.origin).sqrMagnitude)
+                            if ((hitInfo.transform.position - ray.origin).sqrMagnitude < (iClickable.position - ray.origin).sqrMagnitude)
                             {
-                                decubePrefab = hitInfo.transform;       
+                                iClickable = hitInfo.transform;
+                            }
+                        }
+					}
+				}
+			}
+
+            if(!clickFound)
+            {
+                foreach (RaycastHit hitInfo in hitsInfo)
+                {
+                    if (hitInfo.transform.tag == "decubePrefab")
+                    {
+                        if (iClickable == null)
+                        {
+                            iClickable = hitInfo.transform;
+                            clickFound = true;
+                        }
+                        else 
+                        {
+                            if ((hitInfo.transform.position - ray.origin).sqrMagnitude < (iClickable.position - ray.origin).sqrMagnitude)
+                            {
+                                iClickable = hitInfo.transform;       
                             }
                         }
                     }
                 }
             }
-            if (decubePrefab != null)
+
+            if (iClickable != null)
             {
-                CallIClickable(decubePrefab);
-                gameCamera.LookingObject = decubePrefab.gameObject;
+                CallIClickable(iClickable);
+                gameCamera.LookingObject = iClickable.gameObject;
             }
             
 			if (!clickFound) {
@@ -66,7 +76,6 @@ public class MouseInputManager : MonoBehaviour {
 					lastClicked.NotifyUnClick();
 				}
 				gameCamera.LookingObject = null;
-				
 			}
 		}
 	}
