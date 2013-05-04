@@ -131,8 +131,7 @@ public class Cube : GameEntity, IClickable{
 	
 	public void setMood(Mood mood){
 		try{
-			
-			//spriteSheet.CurrentSequence = GetMoodSequence(mood);
+			spriteSheet.CurrentSequence = GetMoodSequence(mood);
 		}catch(Exception e){
 			
 		}
@@ -167,7 +166,7 @@ public class Cube : GameEntity, IClickable{
 	public void NotifyUnClick(){
 		Level.Singleton.SelectedCube = null;
 		selected = false;
-		Debug.Log("Hello");
+		setMood(Mood.Normal);
 	}
 	#endregion
 	
