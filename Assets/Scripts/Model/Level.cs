@@ -89,11 +89,8 @@ public class Level : MonoBehaviour
 			if(position.y > 1 && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
 				
 				Cube c = (Cube)Level.Singleton.getEntity(position.ToVector3 + Vector3.down);
-				if(c is IceCube){
-					c.setMood(Cube.Mood.EyesClosed);
-				}else {
 					c.setMood(Cube.Mood.Angry);
-				}
+				
 			}}catch (Exception e){
 			}
 		}
