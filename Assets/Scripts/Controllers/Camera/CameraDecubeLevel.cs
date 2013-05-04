@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraDecubeLevel : MonoBehaviour {
 
 	#region Variables
-	public GameObject target;
+	private GameObject target;
 	public float distance = 10f;
 	public float zoomMaxLimit = 15f;
 	public float zoomMinLimit = 5f;
@@ -48,8 +48,6 @@ public class CameraDecubeLevel : MonoBehaviour {
 		}
 		yMin += -1f;
 		yMax += 5f;
-		Debug.Log("Min" + yMin);
-		Debug.Log("Max" + yMax);
 	}
 	
 	void Update(){
@@ -90,8 +88,6 @@ public class CameraDecubeLevel : MonoBehaviour {
 			Vector3 position = rotation * new Vector3(0f,0f,-distance) + target.transform.position;
 			transform.rotation = rotation;
 			transform.position = position;
-			
-			
 		}
 	}
 	
