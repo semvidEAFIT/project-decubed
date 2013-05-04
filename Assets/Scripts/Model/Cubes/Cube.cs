@@ -30,14 +30,12 @@ public class Cube : GameEntity, IClickable{
 	/// Next position.	/// </param>
     public virtual void MoveTo (Vector3Int nextPosition)
 	{
-		setMood(Mood.Happy);
 		if (!Level.Singleton.ContainsElement (nextPosition)) {
 			Level.Singleton.RemoveEntity (new Vector3Int (transform.position));
 			//TODO:Fix Animation
 			Level.Singleton.AddEntity (this, nextPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		}
-		setMood(Mood.Normal);
 	}
 	
 	/// <summary>
@@ -47,7 +45,7 @@ public class Cube : GameEntity, IClickable{
 	/// The options of commands of the chosen cube.
 	/// </value>
     public virtual Command[] GetOptions(){ 
-			setMood(Mood.Normal);
+			setMood(Mood.Happy);
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -116,12 +114,14 @@ public class Cube : GameEntity, IClickable{
 	/// Last.
 	/// </param>
 	public virtual void Gravity(Vector3Int currentPosition){
+		
 		Level.Singleton.RemoveEntity(currentPosition);
 		if(CubeHelper.IsFree(new Vector3Int( currentPosition.ToVector3 +Vector3.down)) && currentPosition.y > 1){
 			currentPosition.y = currentPosition.y-1;
 			Level.Singleton.AddEntity (this,currentPosition);
 			Gravity(currentPosition);
 		}else{
+			Debug.Log(currentPosition.ToVector3);
 			Level.Singleton.AddEntity(this,currentPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, currentPosition.ToVector3);
 		}
@@ -131,9 +131,27 @@ public class Cube : GameEntity, IClickable{
 	
 	public void setMood(Mood mood){
 		try{
-			spriteSheet.CurrentSequence = (int) mood;
+			
+			//spriteSheet.CurrentSequence = GetMoodSequence(mood);
 		}catch(Exception e){
 			
+		}
+	}
+	
+	public virtual int GetMoodSequence(Mood mood){
+		switch(mood){
+		case Mood.Normal:
+			return 1;
+		case Mood.Proud:
+			return 2;
+		case Mood.EyesClosed:
+			return 4;
+		case Mood.Happy:
+			return 0;
+		case Mood.Angry:
+			return 3;
+		default: 
+			return 0;
 		}
 	}
 	
@@ -146,6 +164,11 @@ public class Cube : GameEntity, IClickable{
        Level.Singleton.SelectedCube = this;
     }
 	
+	public void NotifyUnClick(){
+		Level.Singleton.SelectedCube = null;
+		selected = false;
+		Debug.Log("Hello");
+	}
 	#endregion
 	
 	#region GameEntity overrides

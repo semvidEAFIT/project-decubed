@@ -74,10 +74,12 @@ public class Level : MonoBehaviour
 			AddSensor ((BasicSensor)entity);
 			sensorsLeft += 1;
 		} else {
-			if (sensorSpaces.ContainsKey (position)) {
+			if (sensorSpaces.ContainsKey (position)) {		
 				Cube c = (Cube)entity;
 				c.setMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
+					
+					Debug.Log("CASE");
 					s.NotifyPressed (position);
 				}
 			}
@@ -85,13 +87,15 @@ public class Level : MonoBehaviour
 			try{
 			Cube cu = (Cube)entity;
 			if(position.y > 1 && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
+				
 				Cube c = (Cube)Level.Singleton.getEntity(position.ToVector3 + Vector3.down);
 				if(c is IceCube){
 					c.setMood(Cube.Mood.EyesClosed);
 				}else {
 					c.setMood(Cube.Mood.Angry);
 				}
-			}}catch (Exception e){}
+			}}catch (Exception e){
+			}
 		}
 	}
 	
@@ -110,6 +114,7 @@ public class Level : MonoBehaviour
 			RemoveSensor ((BasicSensor)temp);
 		} else {
 			if (sensorSpaces.ContainsKey (position)) {
+				
 				foreach (BasicSensor s in sensorSpaces[position]) {
 					s.NotifyUnpressed (position);
 				}
@@ -241,7 +246,9 @@ public class Level : MonoBehaviour
             	if(selectedCube != null){
             	    selectedCube.IsSelected = false;
             	}
-            	value.IsSelected = true;
+            	if (value != null){
+            		value.IsSelected = true;
+            	}
             	selectedCube = value;
 			}
         }	

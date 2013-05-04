@@ -15,7 +15,7 @@ public class IceCube : Cube {
 		this.endPosition = endPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
         Level.Singleton.AddEntity(this, endPosition);
-			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
+		CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 	}
 	
 	public override Command[] GetOptions(){ 
@@ -59,7 +59,7 @@ public class IceCube : Cube {
 			Destroy(this.gameObject);
 		}else if( endPosition.z != transform.position.z || endPosition.x != transform.position.x){
 			CubeAnimations.AnimateSlide(gameObject, new Vector3Int(endPosition.x,Mathf.RoundToInt(transform.position.y),endPosition.z).ToVector3);
-		}else if( endPosition.y < transform.position.y){
+		}else if(  endPosition.y < transform.position.y){
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, endPosition.ToVector3);
 		}
 		Vector3Int next = new Vector3Int(transform.position);

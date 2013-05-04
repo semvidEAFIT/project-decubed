@@ -7,4 +7,8 @@ public class NaturalPlanet :MonoBehaviour, IClickable {
 	{
 		Application.LoadLevel("WorldSelector");
 	}
+	
+	public void NotifyUnClick ()
+	{
+	}
 }
