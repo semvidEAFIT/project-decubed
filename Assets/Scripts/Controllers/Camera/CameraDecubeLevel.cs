@@ -71,8 +71,8 @@ public class CameraDecubeLevel : MonoBehaviour {
 			}
 			currentYSpeed = Mathf.Lerp(currentYSpeed,0f,Time.deltaTime);
 			float newY =  Mathf.Clamp(target.transform.position.y + currentYSpeed, yMin,yMax);
-			float newX = Mathf.Lerp(target.transform.position.x,center.x,Time.deltaTime);
-			float newZ = Mathf.Lerp(target.transform.position.z,center.z,Time.deltaTime);
+			float newX = Mathf.Lerp(target.transform.position.x,center.x,Time.deltaTime/2);
+			float newZ = Mathf.Lerp(target.transform.position.z,center.z,Time.deltaTime/2);
 			target.transform.position = new Vector3(newX,newY,newZ);
 		}else{
 			// Lerp for the specific cube

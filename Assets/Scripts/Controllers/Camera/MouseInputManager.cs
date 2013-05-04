@@ -8,6 +8,7 @@ using System.Collections;
 public class MouseInputManager : MonoBehaviour {
 	
 	CameraDecubeLevel gameCamera;
+	IClickable lastClicked;
 	
 	void Start ()
 	{
@@ -57,9 +58,15 @@ public class MouseInputManager : MonoBehaviour {
             if (decubePrefab != null)
             {
                 CallIClickable(decubePrefab);
+                gameCamera.LookingObject = decubePrefab.gameObject;
             }
+            
 			if (!clickFound) {
+				if (lastClicked != null){
+					lastClicked.NotifyUnClick();
+				}
 				gameCamera.LookingObject = null;
+				
 			}
 		}
 	}
@@ -68,11 +75,15 @@ public class MouseInputManager : MonoBehaviour {
 		MonoBehaviour[] scripts = go.GetComponents<MonoBehaviour> ();
 		foreach (MonoBehaviour m in scripts) {
 			if (m is IClickable) {
+			
 				((IClickable)m).NotifyClick ();
                 MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
-				if (selector != null) {
-					gameCamera.LookingObject = selector.Cube.gameObject;
-				}
+                if (go.tag== "decubePrefab"){
+                	lastClicked = (IClickable)m;
+                }
+//				if (selector != null) {
+//					gameCamera.LookingObject = selector.Cube.gameObject;
+//				}
                 break;
 			} 
 		}

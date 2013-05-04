@@ -19,6 +19,10 @@ public class MoveOptionSelector : MonoBehaviour, IClickable {
     {	
         listener.NotifyOptionSelected(this);
     }
+    
+    public void NotifyUnClick(){
+    
+    }
 
 	public Cube Cube {
 		get {
