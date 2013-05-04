@@ -164,6 +164,11 @@ public class Cube : GameEntity, IClickable{
        Level.Singleton.SelectedCube = this;
     }
 	
+	public void NotifyUnClick(){
+		Level.Singleton.SelectedCube = null;
+		selected = false;
+		Debug.Log("Hello");
+	}
 	#endregion
 	
 	#region GameEntity overrides

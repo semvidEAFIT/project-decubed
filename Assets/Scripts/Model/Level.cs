@@ -246,7 +246,9 @@ public class Level : MonoBehaviour
             	if(selectedCube != null){
             	    selectedCube.IsSelected = false;
             	}
-            	value.IsSelected = true;
+            	if (value != null){
+            		value.IsSelected = true;
+            	}
             	selectedCube = value;
 			}
         }	
