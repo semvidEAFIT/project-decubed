@@ -21,7 +21,10 @@ public class Level : MonoBehaviour
 	public int sensorsLeft = 0;
 	public int stepCount = 0;
     private static Level singleton;
-	
+	private Texture2D[] images = new Texture2D[4];
+    private GUISkin skin;
+    private bool showHint = false;
+    private bool isMenu = false;
 	/// <summary>
 	/// x -> inf limit in y and x.
 	/// y -> sup limit in y and x
@@ -29,26 +32,6 @@ public class Level : MonoBehaviour
 	private static Vector2 dimension = new Vector2(0, 10);
 	
 	#endregion
-	
-	void OnGUI ()
-	{
-        float d = Screen.height / 6;
-        if(GUI.Button(new Rect(5, 5, d, d), "Exit\nLevel")){
-            exitLevel();
-        }
-
-        if(GUI.Button(new Rect(d + 10, 5, d, d), "Restart\nLevel")){
-            restartLevel();
-        }
-
-        Rect stepCountRect = new Rect(Screen.width - d - 5, 5, d, d);
-        GUI.Box(stepCountRect, "");
-        GUI.TextField(stepCountRect, stepCount.ToString());
-
-		if (sensorsLeft == 0){      
-			GUI.Label( new Rect(  0, 20, Screen.width - 20,40), "Level Completed");
-		}
-	}
 
     private void restartLevel()
     {
@@ -78,8 +61,6 @@ public class Level : MonoBehaviour
 				Cube c = (Cube)entity;
 				c.setMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
-					
-					Debug.Log("CASE");
 					s.NotifyPressed (position);
 				}
 			}
@@ -192,15 +173,61 @@ public class Level : MonoBehaviour
 	}
 	#endregion
 	
-	#region Monobehavious Methods
+	#region Monobehaviours Methods
 	
 	void Awake ()
 	{
 		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
 		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
+        images[0] = Resources.Load("Art/Textures/GUI/button_exit") as Texture2D;
+        images[1] = Resources.Load("Art/Textures/GUI/button_hint") as Texture2D;
+        images[2] = Resources.Load("Art/Textures/GUI/button_restart") as Texture2D;
+        skin = Resources.Load("Art/Textures/GUI/ingame_skin") as GUISkin;
+        if(Application.loadedLevelName == "MainMenu" || Application.loadedLevelName == "Options" || Application.loadedLevelName == "PlanetSelector" || Application.loadedLevelName == "ProfileSelector" ){
+            isMenu = true;
+        }
 	}
-	
-	
+
+    void OnGUI()
+    {
+        if (isMenu) return;
+
+        if(skin != null){
+            GUI.skin = skin;
+        }
+
+        float d = images[0].width * 0.75f;
+        if (GUI.Button(new Rect(5, 5, d, d), images[0]))
+        {
+            exitLevel();
+        }
+
+        if (GUI.Button(new Rect(d + 10, 5, d, d), images[2]))
+        {
+            restartLevel();
+        }
+
+        if (GUI.Button(new Rect(Screen.width - d -5, Screen.height - d - 5, d, d), images[1])) 
+        {
+            showHint = !showHint;
+        }
+        
+        float hintWidth = 512.0f * 0.75f , hintHeight = 128.0f * 0.75f;
+        if (showHint)
+        {
+            //Quemo el tamaño de la textura de fondo
+            GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), ""); //TODO Agregar aqui el hint
+        }
+
+        Rect stepCountRect = new Rect(Screen.width - d - 5, 5, d, d);
+        GUI.Box(stepCountRect, "");
+        GUI.Label(stepCountRect, stepCount.ToString());
+
+        if (sensorsLeft == 0)
+        {
+            GUI.Label(new Rect(0, 20, Screen.width - 20, 40), "Level Completed");
+        }
+    }
 
 	#endregion
 	

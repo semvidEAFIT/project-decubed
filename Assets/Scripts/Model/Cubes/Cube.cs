@@ -18,6 +18,9 @@ public class Cube : GameEntity, IClickable{
 	private Command command;
 	private int jumpHeight;
 	private SpriteSheet spriteSheet;
+	public AudioClip audio1;
+	public AudioClip audio2;
+	//private bool justSelected = false;
 	#endregion
 	
 	
@@ -46,6 +49,7 @@ public class Cube : GameEntity, IClickable{
 	/// </value>
     public virtual Command[] GetOptions(){ 
 			setMood(Mood.Happy);
+			
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -160,7 +164,17 @@ public class Cube : GameEntity, IClickable{
 	
     public void NotifyClick()
     {
-       Level.Singleton.SelectedCube = this;
+       	Level.Singleton.SelectedCube = this;
+		if(audio.clip == audio1){
+			Debug.Log(1);
+			audio.clip = audio2;
+		}else{
+			Debug.Log(2);
+			audio.clip = audio1;
+		}
+		if (audio.clip !=null){
+			audio.Play();
+		}
     }
 	
 	public void NotifyUnClick(){
