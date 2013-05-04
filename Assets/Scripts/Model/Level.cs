@@ -78,8 +78,6 @@ public class Level : MonoBehaviour
 				Cube c = (Cube)entity;
 				c.setMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
-					
-					Debug.Log("CASE");
 					s.NotifyPressed (position);
 				}
 			}
