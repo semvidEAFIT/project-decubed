@@ -7,11 +7,11 @@ using System.Collections;
 /// </summary>
 public class MouseInputManager : MonoBehaviour {
 	
-	CameraDrive gameCamera;
+	CameraDecubeLevel gameCamera;
 	
 	void Start ()
 	{
-		gameCamera = gameObject.GetComponent<CameraDrive> ();
+		gameCamera = gameObject.GetComponent<CameraDecubeLevel> ();
 	}
 	
 	// Update is called once per frame

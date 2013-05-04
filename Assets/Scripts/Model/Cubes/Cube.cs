@@ -125,7 +125,6 @@ public class Cube : GameEntity, IClickable{
 			Level.Singleton.AddEntity(this,currentPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, currentPosition.ToVector3);
 		}
-		
 	}
 	
 	#region Animation Methods
