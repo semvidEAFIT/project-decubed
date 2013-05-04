@@ -11,11 +11,11 @@ public class IceCube : Cube {
 	
 	public override void MoveTo (Vector3Int endPosition)
 	{
-		setMood(Cube.Mood.Proud);
+		setMood(Cube.Mood.EyesClosed);
 		this.endPosition = endPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
         Level.Singleton.AddEntity(this, endPosition);
-			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
+		CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 	}
 	
 	public override Command[] GetOptions(){ 
@@ -59,7 +59,7 @@ public class IceCube : Cube {
 			Destroy(this.gameObject);
 		}else if( endPosition.z != transform.position.z || endPosition.x != transform.position.x){
 			CubeAnimations.AnimateSlide(gameObject, new Vector3Int(endPosition.x,Mathf.RoundToInt(transform.position.y),endPosition.z).ToVector3);
-		}else if( endPosition.y < transform.position.y){
+		}else if(  endPosition.y < transform.position.y){
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, endPosition.ToVector3);
 		}
 		Vector3Int next = new Vector3Int(transform.position);
@@ -69,7 +69,7 @@ public class IceCube : Cube {
 		}
 		UpdateFaceDirection();
 		if(FaceDirection == Vector3.down && SpriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
-			setMood(Mood.Proud);
+			setMood(Mood.EyesClosed);
 		}
 	}
 	
@@ -80,4 +80,24 @@ public class IceCube : Cube {
 			this.nextPosition = value;
 		}
 	}
+	
+	#region Animation Methods
+	public override int GetMoodSequence (Mood mood)
+	{
+		switch(mood){
+		case Mood.Normal:
+			return 0;
+		case Mood.Proud:
+			return 3;
+		case Mood.EyesClosed:
+			return 1;
+		case Mood.Happy:
+			return 0;
+		case Mood.Angry:
+			return 2;
+		default: 
+			return 0;
+		}
+	}
+	#endregion
 }
