@@ -18,6 +18,8 @@ public class Cube : GameEntity, IClickable{
 	private Command command;
 	private int jumpHeight;
 	private SpriteSheet spriteSheet;
+	public AudioClip audio1;
+	public AudioClip audio2;
 	//private bool justSelected = false;
 	#endregion
 	
@@ -163,7 +165,16 @@ public class Cube : GameEntity, IClickable{
     public void NotifyClick()
     {
        	Level.Singleton.SelectedCube = this;
-		this.audio.Play();
+		if(audio.clip == audio1){
+			Debug.Log(1);
+			audio.clip = audio2;
+		}else{
+			Debug.Log(2);
+			audio.clip = audio1;
+		}
+		if (audio.clip !=null){
+			audio.Play();
+		}
     }
 	
 	public void NotifyUnClick(){
