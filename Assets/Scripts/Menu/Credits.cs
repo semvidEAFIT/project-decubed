@@ -16,26 +16,34 @@ public class Credits : MonoBehaviour
     {
 		credits = new List<string>();
 		positionRect = new List<Rect>();
-        // Set the path for the credits.txt file
-        //path = "Assets/Scripts/Credits.txt";
  
         // Create reader & open file
-        tr = new StreamReader(path);
- 
-        string temp;
-        int count = 0;
-        while((temp = tr.ReadLine()) != null)
-        {
-            // Read a line of text
-            credits.Add(temp);
-            positionRect.Add(new Rect(0f, (float)(Screen.height * 0.2 * count + Screen.height), (float)(Screen.width), (float)(Screen.height * 0.5)));
-            Debug.Log(temp);
-            count++;
-        }
- 
-        // Close the stream
-        tr.Close();
+		try{
+        	tr = new StreamReader(path);
+			string temp;
+        	int count = 0;
+	        while((temp = tr.ReadLine()) != null)
+	        {
+	            credits.Add(temp);
+	            positionRect.Add(new Rect(0f, (float)(Screen.height * 0.2 * count + Screen.height), (float)(Screen.width), (float)(Screen.height * 0.5)));
+	            count++;
+	        }
+	 
+	        // Close the stream
+	        tr.Close();
+		} 
+		catch(FileLoadException e) {
+			Debug.LogException(e);
+			credits.Add("Error while loading credits file.");
+		}        
     }
+	
+	void Update(){
+		//NIGGAZ: Aquí hay que poner la escena que va después de que se muestren los créditos.
+		if(positionRect[positionRect.Count - 1].y < -100f){
+			Application.LoadLevel("MainMenu");
+		}
+	}
 	
     void OnGUI() 
     {
@@ -44,7 +52,7 @@ public class Credits : MonoBehaviour
         {
             GUI.Label(positionRect[i], credits[i], "label");
             Rect tempRect = positionRect[i];
-            tempRect.y = tempRect.y - creditSpeed;
+            tempRect.y -= creditSpeed;
             positionRect[i] = tempRect;
         }
     }
