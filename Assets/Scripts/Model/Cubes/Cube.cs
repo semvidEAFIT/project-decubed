@@ -72,12 +72,12 @@ public class Cube : GameEntity, IClickable{
 	public virtual void EndExecution(){
 		OrganizeTransform();
 		if(command != null){
-			//fix
 			command.EndExecution();
 		}
 	
 		OnEndExecution();
 		UpdateFaceDirection();
+		Debug.Log(faceDirection);
 		if(faceDirection == Vector3.down && spriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
 			setMood(Mood.EyesClosed);
 		}
