@@ -40,7 +40,10 @@ public class Credits : MonoBehaviour
 	
 	void Update(){
 		//NIGGAZ: Aquí hay que poner la escena que va después de que se muestren los créditos.
-		if(positionRect[positionRect.Count - 1].y < -100f){
+		if(positionRect[positionRect.Count - 1].y < -150f){
+			Application.LoadLevel("MainMenu");
+		}
+		if(Input.GetKey(KeyCode.Escape)){
 			Application.LoadLevel("MainMenu");
 		}
 	}
@@ -52,7 +55,7 @@ public class Credits : MonoBehaviour
         {
             GUI.Label(positionRect[i], credits[i], "label");
             Rect tempRect = positionRect[i];
-            tempRect.y -= creditSpeed;
+            tempRect.y -= creditSpeed * Time.deltaTime;
             positionRect[i] = tempRect;
         }
     }
