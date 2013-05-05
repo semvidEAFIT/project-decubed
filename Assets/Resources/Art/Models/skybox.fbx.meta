@@ -1,24 +1,13 @@
 fileFormatVersion: 2
-guid: 480966349720bfe489ff0fed8f344a7b
+guid: a20a617eef11be0439487e0d8247d62b
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: Camera
-    100002: Camera_Interest
-    100004: Camera_Root
-    100006: cube
-    100008: light
-    100010: //RootNode
-    400000: Camera
-    400002: Camera_Interest
-    400004: Camera_Root
-    400006: cube
-    400008: light
-    400010: //RootNode
-    2300000: cube
-    3300000: cube
-    4300000: cube
-    7400000: Take 001
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Skybox
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -36,7 +25,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
