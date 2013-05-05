@@ -19,7 +19,10 @@ public class IceCube : Cube {
 	}
 	
 	public override Command[] GetOptions(){ 
-		setMood(Cube.Mood.Normal);
+		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+			Debug.Log("selected");
+			setMood(Mood.Happy);
+		}
 		List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,GetJumpHeight())){
@@ -67,8 +70,7 @@ public class IceCube : Cube {
 			Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
 			Destroy(gameObject);
 		}
-		UpdateFaceDirection();
-		if(FaceDirection == Vector3.down && SpriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
+		if(transform.forward == Vector3.down && SpriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
 			setMood(Mood.EyesClosed);
 		}
 	}
@@ -92,7 +94,7 @@ public class IceCube : Cube {
 		case Mood.EyesClosed:
 			return 1;
 		case Mood.Happy:
-			return 0;
+			return 3;
 		case Mood.Angry:
 			return 2;
 		default: 

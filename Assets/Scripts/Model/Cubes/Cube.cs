@@ -11,7 +11,6 @@ public class Cube : GameEntity, IClickable{
 	/// The cube is selected.
 	/// </summary>
     protected bool selected = false;
-	private Vector3 faceDirection;
     /// <summary>
     /// The current command that is executing, if its null then there.
     /// </summary>
@@ -48,8 +47,9 @@ public class Cube : GameEntity, IClickable{
 	/// The options of commands of the chosen cube.
 	/// </value>
     public virtual Command[] GetOptions(){ 
+		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
 			setMood(Mood.Happy);
-			
+		}
             List<Command> options = new List<Command>();
 			Vector3Int pos;
 			if (CubeHelper.CheckAvailablePosition(transform.position + Vector3.forward,out pos,jumpHeight)){
@@ -76,9 +76,7 @@ public class Cube : GameEntity, IClickable{
 		}
 	
 		OnEndExecution();
-		UpdateFaceDirection();
-		Debug.Log(faceDirection);
-		if(faceDirection == Vector3.down && spriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
+		if(transform.forward == Vector3.down && spriteSheet.CurrentSequence!=GetMoodSequence( Mood.EyesClosed)){
 			setMood(Mood.EyesClosed);
 		}
 	}
@@ -135,7 +133,10 @@ public class Cube : GameEntity, IClickable{
 	
 	public void setMood(Mood mood){
 		try{
-			spriteSheet.CurrentSequence = GetMoodSequence(mood);
+			int id = GetMoodSequence(mood);
+			if(spriteSheet.currentSequence!=id){
+				spriteSheet.CurrentSequence = id;
+			}
 		}catch(Exception e){
 			
 		}
@@ -166,10 +167,8 @@ public class Cube : GameEntity, IClickable{
     {
        	Level.Singleton.SelectedCube = this;
 		if(audio.clip == audio1){
-			Debug.Log(1);
 			audio.clip = audio2;
 		}else{
-			Debug.Log(2);
 			audio.clip = audio1;
 		}
 		if (audio.clip !=null){
@@ -180,7 +179,15 @@ public class Cube : GameEntity, IClickable{
 	public void NotifyUnClick(){
 		Level.Singleton.SelectedCube = null;
 		selected = false;
-		setMood(Mood.Normal);
+		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+			setMood(Mood.Normal);
+		}	
+	}
+	
+	public void NotifyChange(){
+		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+			setMood(Mood.Normal);
+		}
 	}
 	#endregion
 	
@@ -190,7 +197,6 @@ public class Cube : GameEntity, IClickable{
 		this.jumpHeight = GetJumpHeight();
 		this.spriteSheet = GetComponent<SpriteSheet>();
 		setMood(Mood.Normal);
-		faceDirection = transform.forward;
 	}
 	
 	public virtual int GetJumpHeight(){
@@ -219,15 +225,6 @@ public class Cube : GameEntity, IClickable{
 		}
 		set { selected = value; }
 	}
-
-	public Vector3 FaceDirection {
-		get {
-			return this.faceDirection;
-		}
-		set {
-			faceDirection = value;
-		}
-	}
 	
 	public SpriteSheet SpriteSheet {
 		get {
@@ -250,8 +247,6 @@ public class Cube : GameEntity, IClickable{
 	}
 	#endregion
 
-	public void UpdateFaceDirection(){
-		faceDirection = transform.forward;
-	}
+
 
 }

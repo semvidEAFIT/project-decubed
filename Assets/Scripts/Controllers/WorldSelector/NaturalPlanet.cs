@@ -11,4 +11,8 @@ public class NaturalPlanet :MonoBehaviour, IClickable {
 	public void NotifyUnClick ()
 	{
 	}
+	
+	public void NotifyChange()
+	{
+	}
 }

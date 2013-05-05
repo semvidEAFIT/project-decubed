@@ -90,6 +90,9 @@ public class MouseInputManager : MonoBehaviour {
 				((IClickable)m).NotifyClick ();
                 MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
                 if (go.tag == "decubePrefab"){
+					if (lastClicked != null){
+						((IClickable)lastClicked).NotifyChange();
+					}
                 	lastClicked = (IClickable)m;
                 }
 //				if (selector != null) {
