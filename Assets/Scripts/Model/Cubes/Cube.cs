@@ -47,7 +47,7 @@ public class Cube : GameEntity, IClickable{
 	/// The options of commands of the chosen cube.
 	/// </value>
     public virtual Command[] GetOptions(){ 
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Happy);
 		}
             List<Command> options = new List<Command>();
@@ -179,13 +179,13 @@ public class Cube : GameEntity, IClickable{
 	public void NotifyUnClick(){
 		Level.Singleton.SelectedCube = null;
 		selected = false;
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Normal);
 		}	
 	}
 	
 	public void NotifyChange(){
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Normal);
 		}
 	}

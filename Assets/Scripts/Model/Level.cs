@@ -57,7 +57,7 @@ public class Level : MonoBehaviour
 			AddSensor ((BasicSensor)entity);
 			sensorsLeft += 1;
 		} else {
-			if (sensorSpaces.ContainsKey (position)) {		
+			if (sensorSpaces.ContainsKey (position)) {
 				Cube c = (Cube)entity;
 				c.setMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
@@ -145,6 +145,10 @@ public class Level : MonoBehaviour
 			Vector3Int pos = new Vector3Int (sensor.transform.position + direction);
 			sensorSpaces [pos].Remove (sensor);
 		}
+	}
+	
+	public bool ContainsSensor(Vector3 position){
+		return SensorSpaces.ContainsKey (new Vector3Int (position));
 	}
 	
 	public void SensorActivated ()
