@@ -1,6 +1,19 @@
-Hola
-Creditos
-aw yea
-muthafucka
-Shizznit
-Castillo = DA BEST
+PROJECT MANAGEMENT
+Project Lead             Rodrigo Diaz      
+Producer               Alejandra Paniagua
+
+PROGRAMMING TEAM
+Technical Lead          Rodrigo Diaz
+Programmer            Mateo Carvajal
+Programmer            Daniel Gomez
+Programmer            Juan David Castillo
+
+ART TEAM
+3D Artist              Yohan Sebastian Gallego
+3D Artist              Ana Echavarria
+Texturing              Stefany Londono
+Texturing              Giovanny Pineda
+3D Artist              Alejandro Morales
+Music & Sound Fx       Sebastian Schut
+
+

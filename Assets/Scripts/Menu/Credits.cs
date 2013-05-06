@@ -25,7 +25,7 @@ public class Credits : MonoBehaviour
 	        while((temp = tr.ReadLine()) != null)
 	        {
 	            credits.Add(temp);
-	            positionRect.Add(new Rect(0f, (float)(Screen.height * 0.2 * count + Screen.height), (float)(Screen.width), (float)(Screen.height * 0.5)));
+	            positionRect.Add(new Rect(Screen.width/4 - Screen.width/8, (float)(Screen.height * 0.2 * count + Screen.height), (float)(Screen.width/2 + Screen.width/4), (float)(Screen.height * 0.5)));
 	            count++;
 	        }
 	 
