@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using System.IO;
 
 /// <summary>
 /// Level. Singleton Class
@@ -30,6 +31,10 @@ public class Level : MonoBehaviour
 	/// y -> sup limit in y and x
 	/// </summary>
 	private static Vector2 dimension = new Vector2(0, 10);
+	
+    private TextReader tr;
+	private List<string> hints;
+	private string path;
 	
 	#endregion
 
@@ -184,6 +189,25 @@ public class Level : MonoBehaviour
         if(Application.loadedLevelName == "MainMenu" || Application.loadedLevelName == "Options" || Application.loadedLevelName == "PlanetSelector" || Application.loadedLevelName == "ProfileSelector" ){
             isMenu = true;
         }
+		hints = new List<string>();
+		path = "Assets/Resources/Txt/hints.txt";
+		try{
+        	tr = new StreamReader(path);
+			string temp;
+	        while((temp = tr.ReadLine()) != null)
+	        {
+				if(hints.Count == 12){
+	            	hints.Add(temp);
+				}
+	            hints.Add(temp);
+	        }
+	 
+	        // Close the stream
+	        tr.Close();
+		} 
+		catch(FileLoadException e) {
+			Debug.LogException(e);
+		}
 	}
 
     void OnGUI()
@@ -214,7 +238,7 @@ public class Level : MonoBehaviour
         if (showHint)
         {
             //Quemo el tamaño de la textura de fondo
-            GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), ""); //TODO Agregar aqui el hint
+            GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), hints[Int16.Parse(Application.loadedLevelName) - 1]); //TODO Agregar aqui el hint
         }
 
         Rect stepCountRect = new Rect(Screen.width - d - 5, 5, d, d);

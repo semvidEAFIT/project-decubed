@@ -29,7 +29,6 @@ public class Intro : MonoBehaviour {
 		try{
         	tr = new StreamReader(path);
 			string temp;
-        	int count = 0;
 	        while((temp = tr.ReadLine()) != null)
 	        {
 	            script.Add(temp);
@@ -46,6 +45,9 @@ public class Intro : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetKey(KeyCode.Escape)){
+			Application.LoadLevel("MainMenu");
+		}
 		if(index < story.Count){
 			if((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && canLoad){
 				index++;
