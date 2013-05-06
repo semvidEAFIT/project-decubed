@@ -19,8 +19,7 @@ public class IceCube : Cube {
 	}
 	
 	public override Command[] GetOptions(){ 
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
-			Debug.Log("selected");
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Happy);
 		}
 		List<Command> options = new List<Command>();

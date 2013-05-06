@@ -56,6 +56,7 @@ public class LevelSelector : MonoBehaviour {
 	
 	public void GoToLevel (Island island)
 	{
+		Debug.Log(island.LevelName);
 //		string levelName = island.LevelName;
 		//Todo goto level with this name
 	}

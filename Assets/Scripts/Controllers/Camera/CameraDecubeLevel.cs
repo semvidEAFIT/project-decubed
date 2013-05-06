@@ -5,23 +5,24 @@ public class CameraDecubeLevel : MonoBehaviour {
 
 	#region Variables
 	private GameObject target;
-	public float distance = 10f;
+	
 	public float zoomMaxLimit = 15f;
 	public float zoomMinLimit = 5f;
 	public float zoomSpeed = 20f;
-	public float xRotSpeed = 150f;
-	public float yRotSpeed = 100f;
+	public float xRotSpeed = 2f;
+	public float yRotSpeed = 1f;
 	public float yRotMinLimit = -10f;
 	public float yRotMaxLimit = 90f;
 	public float ySpeed = 0.25f;
 	public Vector3 center = new Vector3(5,0,5);
 	
+	private float distance = 15f;
 	private float yMin = 0f;
 	private float yMax = 0f;
-	private float xRot = 0f;
-	private float yRot = 0f;
-	private float currentZoomSpeed = 0f;
-	private float currentYSpeed = 0f;
+	private float xRot = 45f;
+	private float yRot = 45f;
+	private float currentZoomSpeed = -0.05f;
+	private float currentYSpeed = -0.05f;
 	private Vector3 lastMousePosition;
 	private GameObject lookingObject;
 	#endregion
@@ -29,10 +30,10 @@ public class CameraDecubeLevel : MonoBehaviour {
 	void Start ()
 	{
 		target = new GameObject("Camera Center");
-		target.transform.position = new Vector3(5,0,5);
+		target.transform.position = new Vector3(5,1,5);
 		Vector3 angles = transform.eulerAngles;
-		xRot = angles.x;
-		yRot = angles.y;
+//		xRot = angles.x;
+//		yRot = angles.y;
 		if (rigidbody != null) {
 			rigidbody.freezeRotation = true;
 		}
@@ -46,8 +47,8 @@ public class CameraDecubeLevel : MonoBehaviour {
 			yMin = Mathf.Min(yMin,go.transform.position.y);
 			yMax = Mathf.Max(yMax,go.transform.position.y);
 		}
-		yMin += -1f;
-		yMax += 5f;
+		yMin += 5f;
+		yMax += -6f;
 	}
 	
 	void Update(){
@@ -81,8 +82,8 @@ public class CameraDecubeLevel : MonoBehaviour {
 	void LateUpdate ()
 	{
 		if (target != null) {
-			xRot -= Input.GetAxis("Horizontal") * xRotSpeed * 0.02f;
-			yRot += Input.GetAxis("Vertical") * yRotSpeed * 0.02f;
+			xRot -= Input.GetAxis("Horizontal") * xRotSpeed;
+			yRot += Input.GetAxis("Vertical") * yRotSpeed;
 			yRot = ClampAngle( yRot,yRotMinLimit,yRotMaxLimit);
 			Quaternion rotation = Quaternion.Euler( yRot,xRot ,0);
 			Vector3 position = rotation * new Vector3(0f,0f,-distance) + target.transform.position;

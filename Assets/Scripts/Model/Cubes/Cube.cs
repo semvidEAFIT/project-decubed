@@ -47,7 +47,7 @@ public class Cube : GameEntity, IClickable{
 	/// The options of commands of the chosen cube.
 	/// </value>
     public virtual Command[] GetOptions(){ 
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Happy);
 		}
             List<Command> options = new List<Command>();
@@ -123,7 +123,6 @@ public class Cube : GameEntity, IClickable{
 			Level.Singleton.AddEntity (this,currentPosition);
 			Gravity(currentPosition);
 		}else{
-			Debug.Log(currentPosition.ToVector3);
 			Level.Singleton.AddEntity(this,currentPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, currentPosition.ToVector3);
 		}
@@ -132,13 +131,9 @@ public class Cube : GameEntity, IClickable{
 	#region Animation Methods
 	
 	public void setMood(Mood mood){
-		try{
-			int id = GetMoodSequence(mood);
-			if(spriteSheet.currentSequence!=id){
-				spriteSheet.CurrentSequence = id;
-			}
-		}catch(Exception e){
-			
+		int id = GetMoodSequence(mood);
+		if(spriteSheet.currentSequence!=id){
+			spriteSheet.CurrentSequence = id;
 		}
 	}
 	
@@ -179,13 +174,13 @@ public class Cube : GameEntity, IClickable{
 	public void NotifyUnClick(){
 		Level.Singleton.SelectedCube = null;
 		selected = false;
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Normal);
 		}	
 	}
 	
 	public void NotifyChange(){
-		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
 			setMood(Mood.Normal);
 		}
 	}
