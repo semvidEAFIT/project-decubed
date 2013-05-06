@@ -47,7 +47,7 @@ public class Intro : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(index < story.Count){
-			if(Input.GetKeyDown(KeyCode.Space) && canLoad){
+			if((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && canLoad){
 				index++;
 				StartCoroutine("fade");
 			}
