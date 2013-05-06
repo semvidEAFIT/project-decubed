@@ -23,6 +23,8 @@ public class MoveOptionSelector : MonoBehaviour, IClickable {
     public void NotifyUnClick(){
     
     }
+	
+	public void NotifyChange(){}
 
 	public Cube Cube {
 		get {

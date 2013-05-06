@@ -26,7 +26,6 @@ public class SensorSwitch : BasicSensor {
 	
 	public override void NotifyPressed (Vector3Int position)
 	{
-		
 		Pressed = !Pressed;
 		Renderer r = gameObject.transform.GetChild(0).renderer;
 		Material[] m = new Material[2];

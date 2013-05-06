@@ -89,6 +89,9 @@ public class MouseInputManager : MonoBehaviour {
 			
 				((IClickable)m).NotifyClick ();
                 if (go.tag == "decubePrefab"){
+					if (lastClicked != null){
+						((IClickable)lastClicked).NotifyChange();
+					}
                 	lastClicked = (IClickable)m;
                 }
 

@@ -15,14 +15,14 @@ public class Slide : Command {
 		base.Execute();
 		IceCube ic = (IceCube)Cube;
 		ic.NextPosition = EndPosition;
-		if(SlideTo(true)){
-			Cube.MoveTo(EndPosition);
-		}
+		SlideTo(true);
+		Cube.MoveTo(EndPosition);
+		
     }
 	
 	public bool SlideTo(bool first){
 		Vector3Int next = new Vector3Int(EndPosition.x+Direction.x,EndPosition.y+Direction.y,EndPosition.z+Direction.z);
-		if(CubeHelper.IsFree(next)){
+		if(CubeHelper.IsFree(next) && Cube.transform.position+Direction.ToVector3+Vector3.up!=  EndPosition.ToVector3){
 			Level.Singleton.notifySwitches(EndPosition);
 		}
 		if (EndPosition.y == new Vector3Int (Cube.transform.position).y+1){

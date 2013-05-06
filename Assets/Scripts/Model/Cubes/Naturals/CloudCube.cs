@@ -21,6 +21,9 @@ public class CloudCube : Cube {
 	
 	
 	public override Command[] GetOptions(){ 
+		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
+			setMood(Mood.Happy);
+		}
 		List<Command> commands = new List<Command>();
 		if(!stuck || !CubeHelper.IsFree(new Vector3Int(transform.position+Vector3.down))){
 			commands = CubeHelper.GetListOptions(base.GetOptions());	
@@ -67,4 +70,25 @@ public class CloudCube : Cube {
 		Debug.Log("subir" );
 		CubeAnimations.AnimateMove (gameObject, Vector3.down, transform.position+Vector3.up);
 	}
+	
+	#region Animation Methods
+	
+	public override int GetMoodSequence (Mood mood)
+	{
+		switch(mood){
+		case Mood.Normal:
+			return 0;
+		case Mood.Proud:
+			return 2;
+		case Mood.EyesClosed:
+			return 3;
+		case Mood.Happy:
+			return 2;
+		case Mood.Angry:
+			return 1;
+		default: 
+			return 0;
+		}
+	}
+	#endregion
 }
