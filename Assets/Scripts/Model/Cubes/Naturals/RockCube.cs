@@ -19,12 +19,12 @@ public class RockCube : Cube {
 	public override void OnEndExecution ()
 	{
 		if(cl!=null){
-			Debug.Log( "cl");
 			cl.renderer.enabled = true;
 			cl = null;
 		}
 		CloudFall();
 		IceBreak();
+		PlayMovement();
 	}
 	
 	public void CloudFall(){

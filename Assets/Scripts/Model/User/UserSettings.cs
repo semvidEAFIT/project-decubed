@@ -45,14 +45,23 @@ public class UserSettings {
 					currentPlayer = p;
 				}
 			}
-			Debug.Log ("Players Count" + players);
-			Debug.Log ("Players Count: " + players.Count);
+			if (array.Length == 0){
+				SetUpNewPlayers();
+			}
+			if (currentPlayer == null){
+				currentPlayer = players[0];
+			}
 		} else {
-			
-			players.Add (new Player (1, "Player 1", new Dictionary<string,LevelData> ()));
-			players.Add (new Player (2, "Player 2", new Dictionary<string,LevelData> ()));
-			players.Add (new Player (3, "Player 3", new Dictionary<string,LevelData> ()));
+			SetUpNewPlayers();
 		}
+	}
+	
+	private void SetUpNewPlayers(){
+		Debug.Log("Reset Players");
+		players.Add (new Player (1, "Player 1", new Dictionary<string,LevelData> ()));
+		players.Add (new Player (2, "Player 2", new Dictionary<string,LevelData> ()));
+		players.Add (new Player (3, "Player 3", new Dictionary<string,LevelData> ()));
+		currentPlayer = players[0];
 	}
 	
 	public void SavePlayerData ()
@@ -74,6 +83,7 @@ public class UserSettings {
 		}
 		PlayerPrefs.SetString ("players", array.ToString ());
 		PlayerPrefs.Save ();
+		
 	}
 	
 	public int getNextId (){

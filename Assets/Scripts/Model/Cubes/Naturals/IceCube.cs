@@ -51,6 +51,7 @@ public class IceCube : Cube {
 			Command.EndExecution();
 			comandEnded = false;
 		}
+		PlayMovement();
 		OnEndExecution();
 	}
 	

@@ -11,11 +11,7 @@ public class LevelSelector : MonoBehaviour {
 	void Awake ()
 	{
 		singleton = this;
-		//Todo cargar player directamente
-		Dictionary<string,LevelData> completedLevels = new Dictionary<string, LevelData> ();
-		completedLevels.Add ("N01", new LevelData ("N01", 10));
-		//completedLevels.Add ("N02", new LevelData ("N02", 10));
-		player = new Player (0, "Rodrigo", completedLevels);
+		player = UserSettings.Instance.CurrentPlayer;
 	}
 	
 	public void AddIsland (Island island)

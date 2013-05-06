@@ -32,6 +32,12 @@ public class SpriteSheet : MonoBehaviour {
 	
 	void Awake() {
 		listeners = new List<ISpriteSheet>();
+		sequences = new SpriteSequence[sequenceFrameCount.Count];
+		int counter = 0;
+		for (int i =0 ; i < sequences.Length ; i++){
+			sequences[i] = new SpriteSequence(counter, counter + sequenceFrameCount[i] - 1);
+			counter += sequenceFrameCount[i];
+		}
 	}
 	
 	// Use this for initialization
@@ -42,12 +48,7 @@ public class SpriteSheet : MonoBehaviour {
 		if (frameHeight != 0){
 			rowCount = renderer.materials[materialIndex].mainTexture.height / frameHeight;
 		}
-		sequences = new SpriteSequence[sequenceFrameCount.Count];
-		int counter = 0;
-		for (int i =0 ; i < sequences.Length ; i++){
-			sequences[i] = new SpriteSequence(counter, counter + sequenceFrameCount[i] - 1);
-			counter += sequenceFrameCount[i];
-		}
+		
 		//renderer.materials[materialIndex].SetTextureScale("_MainTex", new Vector2(1f/colCount,1f/rowCount));
 		StartCoroutine(UpdateSprite());
 	}
@@ -163,6 +164,12 @@ public class SpriteSheet : MonoBehaviour {
 	public void NotifySequenceEnded(){
 		foreach (ISpriteSheet iSpriteSheet in listeners){
 			iSpriteSheet.SequenceEnded(this);
+		}
+	}
+	
+	public int SecuenceCount{
+		get{
+			return sequences.Length;
 		}
 	}
 }

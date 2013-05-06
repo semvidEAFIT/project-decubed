@@ -11,6 +11,11 @@ public class LevelData{
 		this.id = id;
 		this.stepCount = stepCount;
 	}
+	
+	public override string ToString ()
+	{
+		return string.Format ("[LevelData: Id={0}, StepCount={1}]", Id, StepCount);
+	}
 
 	#region Get and Sets
 

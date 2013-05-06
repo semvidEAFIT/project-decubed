@@ -26,6 +26,7 @@ public class Level : MonoBehaviour
     private GUISkin skin;
     private bool showHint = false;
     private bool isMenu = false;
+    private bool isExiting = false;
 	/// <summary>
 	/// x -> inf limit in y and x.
 	/// y -> sup limit in y and x
@@ -35,7 +36,6 @@ public class Level : MonoBehaviour
     private TextReader tr;
 	private List<string> hints;
 	private string path;
-	
 	#endregion
 
     private void restartLevel()
@@ -43,7 +43,7 @@ public class Level : MonoBehaviour
         Application.LoadLevel(Application.loadedLevel);
     }
 
-    private void exitLevel()
+    private void ExitLevel()
     {
         Application.LoadLevel("WorldSelector");
     }
@@ -152,13 +152,21 @@ public class Level : MonoBehaviour
 	
 	public void SensorActivated ()
 	{
-		
-		//TODO revisar si termino nivel
 		sensorsLeft --;
-		
-		if (sensorsLeft == 0){  
-			
+		if (sensorsLeft == 0 && !isExiting){  
+			StartCoroutine(GoBack());
+			isExiting = true;
+			if (UserSettings.Instance.CurrentPlayer.Levels.ContainsKey(Application.loadedLevelName)){
+				UserSettings.Instance.CurrentPlayer.Levels.Remove(Application.loadedLevelName);
+			}
+			UserSettings.Instance.CurrentPlayer.Levels.Add(Application.loadedLevelName,new LevelData(Application.loadedLevelName,stepCount));
+			UserSettings.Instance.SavePlayerData();
 		}
+	}
+	
+	IEnumerator GoBack(){
+		yield return new WaitForSeconds(3f);
+		ExitLevel();
 	}
 	
 	public void SensorDeactivated(){
@@ -221,7 +229,7 @@ public class Level : MonoBehaviour
         float d = images[0].width * 0.75f;
         if (GUI.Button(new Rect(5, 5, d, d), images[0]))
         {
-            exitLevel();
+            ExitLevel();
         }
 
         if (GUI.Button(new Rect(d + 10, 5, d, d), images[2]))
@@ -247,9 +255,8 @@ public class Level : MonoBehaviour
 
         if (sensorsLeft == 0)
         {
-            GUI.Label(new Rect(0, 20, Screen.width, 80), "Ganaste!");
-			GUI.Label(new Rect(0, 11, Screen.width, 80), "Numero de pasos: " + stepCount);
-
+            GUI.Label(new Rect(0, 20, Screen.width, 80), "Ganaste!!");
+			GUI.Label(new Rect(0, 70, Screen.width, 80), "Numero de pasos: " + stepCount);
         }
     }
 

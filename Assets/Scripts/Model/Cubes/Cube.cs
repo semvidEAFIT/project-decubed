@@ -17,8 +17,8 @@ public class Cube : GameEntity, IClickable{
 	private Command command;
 	private int jumpHeight;
 	private SpriteSheet spriteSheet;
-	public AudioClip audio1;
-	public AudioClip audio2;
+	public AudioClip[] MovementSounds;
+	public AudioClip[] ClickSouds;
 	//private bool justSelected = false;
 	#endregion
 	
@@ -34,7 +34,6 @@ public class Cube : GameEntity, IClickable{
 	{
 		if (!Level.Singleton.ContainsElement (nextPosition)) {
 			Level.Singleton.RemoveEntity (new Vector3Int (transform.position));
-			//TODO:Fix Animation
 			Level.Singleton.AddEntity (this, nextPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, nextPosition.ToVector3);
 		}
@@ -67,17 +66,24 @@ public class Cube : GameEntity, IClickable{
             return options.ToArray();
     }
 	
-
-		
 	public virtual void EndExecution(){
 		OrganizeTransform();
 		if(command != null){
 			command.EndExecution();
 		}
-	
+		PlayMovement();
 		OnEndExecution();
 		if(transform.forward == Vector3.down && spriteSheet.CurrentSequence!=GetMoodSequence( Mood.EyesClosed)){
 			setMood(Mood.EyesClosed);
+		}
+	}
+	
+	public void PlayMovement(){
+		if (MovementSounds != null){
+			audio.clip = MovementSounds[UnityEngine.Random.Range(0,MovementSounds.Length-1)];
+		}
+		if (audio.clip !=null){
+			audio.Play();
 		}
 	}
 	
@@ -161,10 +167,8 @@ public class Cube : GameEntity, IClickable{
     public void NotifyClick()
     {
        	Level.Singleton.SelectedCube = this;
-		if(audio.clip == audio1){
-			audio.clip = audio2;
-		}else{
-			audio.clip = audio1;
+		if (ClickSouds != null){
+			audio.clip = ClickSouds[UnityEngine.Random.Range(0,ClickSouds.Length-1)];
 		}
 		if (audio.clip !=null){
 			audio.Play();
