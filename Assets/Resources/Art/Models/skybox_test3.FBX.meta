@@ -1,13 +1,58 @@
 fileFormatVersion: 2
-guid: a20a617eef11be0439487e0d8247d62b
+guid: 8e410e4cb28a25544af5a9b2d5b44331
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Skybox
+    100000: Cielo_1
+    100002: Cielo_2
+    100004: Cielo_3
+    100006: Cielo_4
+    100008: Hueco
+    100010: Hueco_01
+    100012: Hueco_02
+    100014: Hueco_03
+    100016: //RootNode
+    100018: Techo
+    400000: Cielo_1
+    400002: Cielo_2
+    400004: Cielo_3
+    400006: Cielo_4
+    400008: Hueco
+    400010: Hueco_01
+    400012: Hueco_02
+    400014: Hueco_03
+    400016: //RootNode
+    400018: Techo
+    2300000: Cielo_1
+    2300002: Cielo_2
+    2300004: Cielo_3
+    2300006: Cielo_4
+    2300008: Hueco
+    2300010: Hueco_01
+    2300012: Hueco_02
+    2300014: Hueco_03
+    2300016: //RootNode
+    2300018: Techo
+    3300000: Cielo_1
+    3300002: Cielo_2
+    3300004: Cielo_3
+    3300006: Cielo_4
+    3300008: Hueco
+    3300010: Hueco_01
+    3300012: Hueco_02
+    3300014: Hueco_03
+    3300016: //RootNode
+    3300018: Techo
+    4300000: Piso
+    4300002: Hueco
+    4300004: Hueco_02
+    4300006: Hueco_03
+    4300008: Hueco_01
+    4300010: Cielo_1
+    4300012: Cielo_2
+    4300014: Cielo_3
+    4300016: Cielo_4
+    4300018: Techo
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -25,7 +70,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

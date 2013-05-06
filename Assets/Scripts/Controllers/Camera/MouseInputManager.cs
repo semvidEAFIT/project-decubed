@@ -88,13 +88,10 @@ public class MouseInputManager : MonoBehaviour {
 			if (m is IClickable) {
 			
 				((IClickable)m).NotifyClick ();
-                MoveOptionSelector selector = m.gameObject.GetComponent<MoveOptionSelector> ();
                 if (go.tag == "decubePrefab"){
                 	lastClicked = (IClickable)m;
                 }
-//				if (selector != null) {
-//					gameCamera.LookingObject = selector.Cube.gameObject;
-//				}
+
                 break;
 			} 
 		}

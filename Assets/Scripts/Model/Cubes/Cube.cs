@@ -137,7 +137,7 @@ public class Cube : GameEntity, IClickable{
 		try{
 			spriteSheet.CurrentSequence = GetMoodSequence(mood);
 		}catch(Exception e){
-			
+			Debug.Log(e);
 		}
 	}
 	
