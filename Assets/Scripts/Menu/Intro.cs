@@ -51,7 +51,7 @@ public class Intro : MonoBehaviour {
 		if(index < story.Count){
 			if((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0)) && canLoad){
 				index++;
-				StartCoroutine("fade");
+				StartCoroutine(fade());
 			}
 		} 
 		else {
