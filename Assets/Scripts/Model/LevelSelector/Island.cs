@@ -25,7 +25,7 @@ public class Island : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if ( (!completed) || (islandOut && completed)) {
+		if ( (available && !completed) || (islandOut && completed)) {
 			if (transform.position != initialPosition) {
 				transform.position = Vector3.Lerp (transform.position, initialPosition, Time.deltaTime);
 			}

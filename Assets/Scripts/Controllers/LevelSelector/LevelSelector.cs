@@ -56,9 +56,11 @@ public class LevelSelector : MonoBehaviour {
 	
 	public void GoToLevel (Island island)
 	{
-		Debug.Log(island.LevelName);
+		
+//		Debug.Log(island.LevelName);
 //		string levelName = island.LevelName;
 		//Todo goto level with this name
+		Application.LoadLevel(island.LevelName);
 	}
 	
 	#region Singleton
