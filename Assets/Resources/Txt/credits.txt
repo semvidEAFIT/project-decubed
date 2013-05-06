@@ -1,12 +1,13 @@
 PROJECT MANAGEMENT
-Project Lead             Rodrigo Diaz      
+Project Lead            Rodrigo Diaz      
 Producer               Alejandra Paniagua
 
 PROGRAMMING TEAM
 Technical Lead          Rodrigo Diaz
-Programmer            Mateo Carvajal
+Core Programmer        Mateo Carvajal
 Programmer            Daniel Gomez
 Programmer            Juan David Castillo
+Programmer            Hector Camilo Alzate
 
 ART TEAM
 3D Artist              Yohan Sebastian Gallego
