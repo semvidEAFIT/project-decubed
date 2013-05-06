@@ -1,20 +1,57 @@
+SEMVID EAFIT
+
+PROJECT DECUBE
+
+
 PROJECT MANAGEMENT
-Project Lead            Rodrigo Diaz      
-Producer               Alejandra Paniagua
+
+PROJECT LEAD
+Rodrigo Diaz
+
+PRODUCERS
+Hector Camilo Alzate
+Alejandra Paniagua
+
 
 PROGRAMMING TEAM
-Technical Lead          Rodrigo Diaz
-Core Programmer        Mateo Carvajal
-Programmer            Daniel Gomez
-Programmer            Juan David Castillo
-Programmer            Hector Camilo Alzate
+
+TECHNICAL LEAD
+Rodrigo Diaz
+
+CORE DEVELOPER
+Mateo Carvajal
+
+DEVELOPERS
+Daniel Gomez Rico
+Juan David Castillo
+Hector Camilo Alzate
+
+ADDITIONAL PROGRAMMING
+Sebastian Moreno
+
 
 ART TEAM
-3D Artist              Yohan Sebastian Gallego
-3D Artist              Ana Echavarria
-Texturing              Stefany Londono
-Texturing              Giovanny Pineda
-3D Artist              Alejandro Morales
-Music & Sound Fx       Sebastian Schut
+
+3D ARTISTS
+Yohan Sebastian Gallego
+Rodrigo Diaz
+
+TEXTURING & ANIMATION
+Estefania Londono
+Giovany Pineda
+
+MUSIC & SOUND FX
+Sebastian Schuth
 
 
+GAME DESIGNERS
+
+ORIGINAL IDEA
+Hector Camilo Alzate
+Rodrigo Diaz
+
+LEVEL DESIGN
+Juan David Castillo
+Rodrigo Diaz
+
+Semillero de Videojuegos EAFIT (c) 2013

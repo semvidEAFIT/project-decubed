@@ -79,7 +79,7 @@ public class Cube : GameEntity, IClickable{
 	}
 	
 	public void PlayMovement(){
-		if (MovementSounds != null){
+		if (MovementSounds != null && MovementSounds.Length > 0){
 			audio.clip = MovementSounds[UnityEngine.Random.Range(0,MovementSounds.Length-1)];
 		}
 		if (audio.clip !=null){
@@ -167,7 +167,7 @@ public class Cube : GameEntity, IClickable{
     public void NotifyClick()
     {
        	Level.Singleton.SelectedCube = this;
-		if (ClickSouds != null){
+		if (ClickSouds != null  && ClickSouds.Length > 0){
 			audio.clip = ClickSouds[UnityEngine.Random.Range(0,ClickSouds.Length-1)];
 		}
 		if (audio.clip !=null){
