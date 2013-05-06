@@ -123,7 +123,6 @@ public class Cube : GameEntity, IClickable{
 			Level.Singleton.AddEntity (this,currentPosition);
 			Gravity(currentPosition);
 		}else{
-			Debug.Log(currentPosition.ToVector3);
 			Level.Singleton.AddEntity(this,currentPosition);
 			CubeAnimations.AnimateMove (gameObject, Vector3.down, currentPosition.ToVector3);
 		}
@@ -132,13 +131,9 @@ public class Cube : GameEntity, IClickable{
 	#region Animation Methods
 	
 	public void setMood(Mood mood){
-		try{
-			int id = GetMoodSequence(mood);
-			if(spriteSheet.currentSequence!=id){
-				spriteSheet.CurrentSequence = id;
-			}
-		}catch(Exception e){
-			Debug.Log(e);
+		int id = GetMoodSequence(mood);
+		if(spriteSheet.currentSequence!=id){
+			spriteSheet.CurrentSequence = id;
 		}
 	}
 	

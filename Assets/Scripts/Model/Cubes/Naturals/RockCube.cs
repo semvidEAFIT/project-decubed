@@ -70,4 +70,22 @@ public class RockCube : Cube {
 			OnEndExecution();
 		}
 	}
+	
+	public override int GetMoodSequence (Mood mood)
+	{
+		switch(mood){
+		case Mood.Normal:
+			return 1;
+		case Mood.Proud:
+			return 3;
+		case Mood.EyesClosed:
+			return 2;
+		case Mood.Happy:
+			return 0;
+		case Mood.Angry:
+			return 2;
+		default: 
+			return 0;
+		}
+	}
 }
