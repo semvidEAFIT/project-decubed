@@ -66,7 +66,7 @@ public class Level : MonoBehaviour
 			}
 			//TODO: temporal mientras se arregla el cubo hielo y se le ponen las caras al resto
 	
-			if(position.y > 1 && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
+			if(position.y > 1 && ContainsElement(position.ToVector3 + Vector3.down) && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
 				Cube c = (Cube)Level.Singleton.getEntity(position.ToVector3 + Vector3.down);
 				c.setMood(Cube.Mood.Angry);	
 			}
