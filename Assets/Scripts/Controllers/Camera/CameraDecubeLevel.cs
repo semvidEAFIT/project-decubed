@@ -15,6 +15,7 @@ public class CameraDecubeLevel : MonoBehaviour {
 	public float yRotMaxLimit = 90f;
 	public float ySpeed = 0.25f;
 	public Vector3 center = new Vector3(5,0,5);
+	public AudioClip win;
 	
 	private float distance = 15f;
 	private float yMin = 0f;
@@ -26,7 +27,14 @@ public class CameraDecubeLevel : MonoBehaviour {
 	private Vector3 lastMousePosition;
 	private GameObject lookingObject;
 	#endregion
-
+	
+	public void PlayWin(){
+		if (win != null){
+			audio.clip = win;
+			audio.Play();
+		}
+	}
+	
 	void Start ()
 	{
 		target = new GameObject("Camera Center");
