@@ -238,7 +238,7 @@ public class Level : MonoBehaviour
         if (showHint)
         {
             //Quemo el tamaño de la textura de fondo
-            GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), hints[Int16.Parse(Application.loadedLevelName) - 1]); //TODO Agregar aqui el hint
+            GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), hints[Int16.Parse(Application.loadedLevelName) - 1]);
         }
 
         Rect stepCountRect = new Rect(Screen.width - d - 5, 5, d, d);
@@ -247,7 +247,9 @@ public class Level : MonoBehaviour
 
         if (sensorsLeft == 0)
         {
-            GUI.Label(new Rect(0, 20, Screen.width - 20, 40), "Level Completed");
+            GUI.Label(new Rect(0, 20, Screen.width, 80), "Ganaste!");
+			GUI.Label(new Rect(0, 11, Screen.width, 80), "Numero de pasos: " + stepCount);
+
         }
     }
 
