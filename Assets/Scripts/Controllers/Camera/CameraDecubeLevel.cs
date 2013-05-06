@@ -8,9 +8,9 @@ public class CameraDecubeLevel : MonoBehaviour {
 	
 	public float zoomMaxLimit = 15f;
 	public float zoomMinLimit = 5f;
-	public float zoomSpeed = 20f;
-	public float xRotSpeed = 2f;
-	public float yRotSpeed = 1f;
+	public float zoomSpeed = 12f;
+	public float xRotSpeed = 30f;
+	public float yRotSpeed = 30f;
 	public float yRotMinLimit = -10f;
 	public float yRotMaxLimit = 90f;
 	public float ySpeed = 0.25f;
@@ -90,8 +90,8 @@ public class CameraDecubeLevel : MonoBehaviour {
 	void LateUpdate ()
 	{
 		if (target != null) {
-			xRot -= Input.GetAxis("Horizontal") * xRotSpeed;
-			yRot += Input.GetAxis("Vertical") * yRotSpeed;
+			xRot -= Input.GetAxis("Horizontal") * xRotSpeed * Time.deltaTime;
+			yRot += Input.GetAxis("Vertical") * yRotSpeed * Time.deltaTime;
 			yRot = ClampAngle( yRot,yRotMinLimit,yRotMaxLimit);
 			Quaternion rotation = Quaternion.Euler( yRot,xRot ,0);
 			Vector3 position = rotation * new Vector3(0f,0f,-distance) + target.transform.position;
