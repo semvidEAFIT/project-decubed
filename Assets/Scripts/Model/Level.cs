@@ -27,6 +27,7 @@ public class Level : MonoBehaviour
     private bool showHint = false;
     private bool isMenu = false;
     private bool isExiting = false;
+    private CameraDecubeLevel levelCamera;
 	/// <summary>
 	/// x -> inf limit in y and x.
 	/// y -> sup limit in y and x
@@ -170,6 +171,8 @@ public class Level : MonoBehaviour
 		sensorsLeft --;
 		if (sensorsLeft == 0 && !isExiting){  
 			StartCoroutine(GoBack());
+			levelCamera.PlayWin();
+			
 			isExiting = true;
 			if (UserSettings.Instance.CurrentPlayer.Levels.ContainsKey(Application.loadedLevelName)){
 				UserSettings.Instance.CurrentPlayer.Levels.Remove(Application.loadedLevelName);
@@ -212,6 +215,13 @@ public class Level : MonoBehaviour
         skin = Resources.Load("Art/Textures/GUI/ingame_skin") as GUISkin;
         if(Application.loadedLevelName == "MainMenu" || Application.loadedLevelName == "Options" || Application.loadedLevelName == "PlanetSelector" || Application.loadedLevelName == "ProfileSelector" ){
             isMenu = true;
+        }
+        foreach (GameObject go in FindObjectsOfType(typeof(GameObject))){
+        	if (go.name == "Camera"){
+        		CameraDecubeLevel c = go.GetComponent<CameraDecubeLevel>();
+        		levelCamera = c;
+        		break;
+        	}
         }
 		hints = new List<string>();
 		path = "Assets/Resources/Txt/hints.txt";
