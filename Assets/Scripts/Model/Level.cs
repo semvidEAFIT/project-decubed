@@ -42,24 +42,29 @@ public class Level : MonoBehaviour
 
     private void restartLevel()
     {
-        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
-        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
-        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", StepCount", stepCount);
+        if(!isMenu){
+            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
+            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", StepCount", stepCount);
+        }
         Application.LoadLevel(Application.loadedLevel);
     }
 
     private void ExitLevel()
     {
-        if (sensorsLeft != 0)
+        if (!isMenu)
         {
-            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
-            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Stepcount", stepCount);
-            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
-        }
-        else 
-        {
-            Lumos.Event("Solved Level " + Application.loadedLevelName + ", Stepcount", stepCount);
-            Lumos.Event("Solved Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+            if (sensorsLeft != 0)
+            {
+                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
+                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Stepcount", stepCount);
+                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+            }
+            else
+            {
+                Lumos.Event("Solved Level " + Application.loadedLevelName + ", Stepcount", stepCount);
+                Lumos.Event("Solved Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+            }
         }
         Application.LoadLevel("WorldSelector");
     }
@@ -206,16 +211,20 @@ public class Level : MonoBehaviour
 	
 	void Awake ()
 	{
-        Lumos.Event("Started Level " + Application.loadedLevelName);
+        if (Application.loadedLevelName == "MainMenu" || Application.loadedLevelName == "Options" || Application.loadedLevelName == "PlanetSelector" || Application.loadedLevelName == "ProfileSelector")
+        {
+            isMenu = true;
+        }
+        if (!isMenu)
+        {
+            Lumos.Event("Started Level " + Application.loadedLevelName);
+        }
 		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
 		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
         images[0] = Resources.Load("Art/Textures/GUI/button_exit") as Texture2D;
         images[1] = Resources.Load("Art/Textures/GUI/button_hint") as Texture2D;
         images[2] = Resources.Load("Art/Textures/GUI/button_restart") as Texture2D;
         skin = Resources.Load("Art/Textures/GUI/ingame_skin") as GUISkin;
-        if(Application.loadedLevelName == "MainMenu" || Application.loadedLevelName == "Options" || Application.loadedLevelName == "PlanetSelector" || Application.loadedLevelName == "ProfileSelector" ){
-            isMenu = true;
-        }
         foreach (GameObject go in FindObjectsOfType(typeof(GameObject))){
         	if (go.name == "Camera"){
         		CameraDecubeLevel c = go.GetComponent<CameraDecubeLevel>();
