@@ -36,15 +36,30 @@ public class Level : MonoBehaviour
     private TextReader tr;
 	private List<string> hints;
 	private string path;
+    private bool askedForHint = false;
 	#endregion
 
     private void restartLevel()
     {
+        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
+        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+        Lumos.Event("Restarted Level" + Application.loadedLevelName + ", StepCount", stepCount);
         Application.LoadLevel(Application.loadedLevel);
     }
 
     private void ExitLevel()
     {
+        if (sensorsLeft != 0)
+        {
+            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
+            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Stepcount", stepCount);
+            Lumos.Event("Quit Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+        }
+        else 
+        {
+            Lumos.Event("Solved Level " + Application.loadedLevelName + ", Stepcount", stepCount);
+            Lumos.Event("Solved Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
+        }
         Application.LoadLevel("WorldSelector");
     }
 
@@ -188,6 +203,7 @@ public class Level : MonoBehaviour
 	
 	void Awake ()
 	{
+        Lumos.Event("Started Level " + Application.loadedLevelName);
 		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
 		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
         images[0] = Resources.Load("Art/Textures/GUI/button_exit") as Texture2D;
@@ -245,6 +261,10 @@ public class Level : MonoBehaviour
         float hintWidth = 512.0f * 0.75f , hintHeight = 128.0f * 0.75f;
         if (showHint)
         {
+            if(!askedForHint){
+                Lumos.Event("Asked for hint on level " + Application.loadedLevelName, Time.timeSinceLevelLoad);
+                askedForHint = true;
+            }
             //Quemo el tamaño de la textura de fondo
             GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), hints[Int16.Parse(Application.loadedLevelName) - 1]);
         }
