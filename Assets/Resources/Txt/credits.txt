@@ -15,16 +15,14 @@ Alejandra Paniagua
 
 PROGRAMMING TEAM
 
-TECHNICAL LEAD
-Rodrigo Diaz
-
 CORE DEVELOPER
 Mateo Carvajal
+Rodrigo Diaz
 
 DEVELOPERS
-Daniel Gomez Rico
-Juan David Castillo
 Hector Camilo Alzate
+Juan David Castillo
+Daniel Gomez Rico
 
 ADDITIONAL PROGRAMMING
 Sebastian Moreno
@@ -33,8 +31,9 @@ Sebastian Moreno
 ART TEAM
 
 3D ARTISTS
-Yohan Sebastian Gallego
 Rodrigo Diaz
+Ana Maria Echavarria
+Yohan Sebastian Gallego
 
 TEXTURING & ANIMATION
 Estefania Londono
@@ -54,4 +53,4 @@ LEVEL DESIGN
 Juan David Castillo
 Rodrigo Diaz
 
-Semillero de Videojuegos EAFIT (c) 2013
+Semillero de Videojuegos EAFIT (cc) 2013

@@ -42,7 +42,7 @@ public class PlayerSelection : MonoBehaviour {
 			Application.LoadLevel ("MainMenu");
 		}
 		if (settings.Players [0].Levels.Count > 0) {
-			GUI.Label (new Rect (20, labelHeight, 100, 20), "Levels " + settings.Players [0].Levels.Count);
+			GUI.Label (new Rect (20, labelHeight, 100, 20), "Levels " + settings.Players [0].Levels.Count + "/20");
 		} else {
 			GUI.Label (new Rect (20, labelHeight, 100, 20), "New Game!");
 		}
@@ -52,7 +52,7 @@ public class PlayerSelection : MonoBehaviour {
 			Application.LoadLevel ("MainMenu");
 		}
 		if (settings.Players [1].Levels.Count > 0) {
-			GUI.Label (new Rect (140, labelHeight, 100, 20), "Levels " + settings.Players [1].Levels.Count);
+			GUI.Label (new Rect (140, labelHeight, 100, 20), "Levels " + settings.Players [1].Levels.Count + "/20");
 		} else {
 			GUI.Label (new Rect (140, labelHeight, 100, 20), "New Game!");
 		}
@@ -62,7 +62,7 @@ public class PlayerSelection : MonoBehaviour {
 			Application.LoadLevel ("MainMenu");
 		}
 		if (settings.Players [2].Levels.Count > 0) {
-			GUI.Label (new Rect (260, labelHeight, 100, 20), "Levels " + settings.Players [2].Levels.Count);
+			GUI.Label (new Rect (260, labelHeight, 100, 20), "Levels " + settings.Players [2].Levels.Count + "/20");
 		} else {
 			GUI.Label (new Rect (260, labelHeight, 100, 20), "New Game!");
 		}

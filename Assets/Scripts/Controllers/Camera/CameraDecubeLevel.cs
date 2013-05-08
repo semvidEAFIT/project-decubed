@@ -9,8 +9,8 @@ public class CameraDecubeLevel : MonoBehaviour {
 	public float zoomMaxLimit = 15f;
 	public float zoomMinLimit = 5f;
 	public float zoomSpeed = 12f;
-	public float xRotSpeed = 30f;
-	public float yRotSpeed = 30f;
+	public float xRotSpeed = 50f;
+	public float yRotSpeed = 50f;
 	public float yRotMinLimit = -10f;
 	public float yRotMaxLimit = 90f;
 	public float ySpeed = 0.25f;

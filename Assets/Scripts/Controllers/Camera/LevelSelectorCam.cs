@@ -47,8 +47,8 @@ public class LevelSelectorCam : MonoBehaviour {
 	void LateUpdate ()
 	{
 		if (target != null) {
-			x -= Input.GetAxis("Horizontal") * xSpeed * 0.02f;
-			y += Input.GetAxis("Vertical") * ySpeed * 0.02f;
+			x -= Input.GetAxis("Horizontal") * xSpeed * Time.deltaTime;
+			y += Input.GetAxis("Vertical") * ySpeed * Time.deltaTime;
 			y = ClampAngle( y,yMinLimit,yMaxLimit);
 			Quaternion rotation = Quaternion.Euler( y,x ,0);
 			Vector3 position = rotation * new Vector3(0f,0f,-distance) + target.transform.position;
