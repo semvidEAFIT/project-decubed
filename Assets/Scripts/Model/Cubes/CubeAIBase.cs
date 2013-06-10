@@ -37,11 +37,14 @@ public abstract class CubeAIBase : Cube {
 			thread.Start();
 		}
 		if (thread.ThreadState == ThreadState.WaitSleepJoin) {
-			if (moveToVector != Vector3.zero && 
-				((CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector))&& !jump) || 
-				(!CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector)) && jump))) {
-				MoveTo (moveToVector);
-				moveToVector = Vector3.zero;
+			if(moveToVector == Vector3.forward || moveToVector == Vector3.back 
+				|| moveToVector == Vector3.right || moveToVector == Vector3.left){
+				if (moveToVector != Vector3.zero && 
+					((CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector))&& !jump) || 
+					(!CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector)) && jump))) {
+					MoveTo (moveToVector);
+					moveToVector = Vector3.zero;
+				}
 			}
 			if (conditional != Conditionals.None) {
 				switch (conditional) {
