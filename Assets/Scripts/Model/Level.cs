@@ -85,14 +85,14 @@ public class Level : MonoBehaviour
 		} else {
 			if (sensorSpaces.ContainsKey (position)) {
 				Cube c = (Cube)entity;
-				c.setMood(Cube.Mood.Proud);
+				c.SetMood(Cube.Mood.Proud);
 				foreach (BasicSensor s in sensorSpaces[position]) {
 					s.NotifyPressed (position);
 				}
 			}
 			if(position.y > 1 && ContainsElement(position.ToVector3 + Vector3.down) && Level.Singleton.getEntity(position.ToVector3 + Vector3.down) is Cube){
 				Cube c = (Cube)Level.Singleton.getEntity(position.ToVector3 + Vector3.down);
-				c.setMood(Cube.Mood.Angry);	
+				c.SetMood(Cube.Mood.Angry);	
 			}
 		}
 	}
@@ -121,7 +121,7 @@ public class Level : MonoBehaviour
 			try{
 				if(getEntity(position.ToVector3+Vector3.down)is Cube){
 					Cube c = (Cube)getEntity(position.ToVector3+Vector3.down);
-					c.setMood(Cube.Mood.Normal);
+					c.SetMood(Cube.Mood.Normal);
 				}
 			}catch(Exception e){}
 			}
@@ -284,7 +284,7 @@ public class Level : MonoBehaviour
                 Lumos.Event("Asked for hint on level " + Application.loadedLevelName, Time.timeSinceLevelLoad);
                 askedForHint = true;
             }
-            //Quemo el tamaño de la textura de fondo
+            //Quemo el tamaï¿½o de la textura de fondo
             GUI.TextArea(new Rect(Screen.width / 2 - hintWidth / 2 - 5, Screen.height - hintHeight - 5, hintWidth, hintHeight), hints[Int16.Parse(Application.loadedLevelName) - 1]);
         }
 

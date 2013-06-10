@@ -11,7 +11,7 @@ public class IceCube : Cube {
 	
 	public override void MoveTo (Vector3Int endPosition)
 	{
-		setMood(Cube.Mood.EyesClosed);
+		SetMood(Cube.Mood.EyesClosed);
 		this.endPosition = endPosition;
 		Level.Singleton.RemoveEntity(new Vector3Int(transform.position));
         Level.Singleton.AddEntity(this, endPosition);
@@ -20,7 +20,7 @@ public class IceCube : Cube {
 	
 	public override Command[] GetOptions(){ 
 		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
-			setMood(Mood.Happy);
+			SetMood(Mood.Happy);
 		}
 		List<Command> options = new List<Command>();
 			Vector3Int pos;
@@ -71,7 +71,7 @@ public class IceCube : Cube {
 			Destroy(gameObject);
 		}
 		if(transform.forward == Vector3.down && SpriteSheet.CurrentSequence!=(int)Mood.EyesClosed){
-			setMood(Mood.EyesClosed);
+			SetMood(Mood.EyesClosed);
 		}
 	}
 	
