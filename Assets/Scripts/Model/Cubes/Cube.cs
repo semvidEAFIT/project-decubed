@@ -47,7 +47,7 @@ public class Cube : GameEntity, IClickable{
 	/// </value>
     public virtual Command[] GetOptions(){ 
 		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
-			setMood(Mood.Happy);
+			SetMood(Mood.Happy);
 		}
             List<Command> options = new List<Command>();
 			Vector3Int pos;
@@ -74,7 +74,7 @@ public class Cube : GameEntity, IClickable{
 		PlayMovement();
 		OnEndExecution();
 		if(transform.forward == Vector3.down && spriteSheet.CurrentSequence!=GetMoodSequence( Mood.EyesClosed)){
-			setMood(Mood.EyesClosed);
+			SetMood(Mood.EyesClosed);
 		}
 	}
 	
@@ -115,12 +115,14 @@ public class Cube : GameEntity, IClickable{
 	}
 	
 	#endregion
+	
 	/// <summary>
 	/// Make the cube, with position currentPosition, fall.
 	/// </summary>
 	/// <param name='currentPosition'>
 	/// Last.
 	/// </param>
+	/// 
 	public virtual void Gravity(Vector3Int currentPosition){
 		
 		Level.Singleton.RemoveEntity(currentPosition);
@@ -136,7 +138,7 @@ public class Cube : GameEntity, IClickable{
 	
 	#region Animation Methods
 	
-	public void setMood(Mood mood){
+	public void SetMood(Mood mood){
 		int id = GetMoodSequence(mood);
 		if(spriteSheet.currentSequence!=id){
 			spriteSheet.CurrentSequence = id;
@@ -179,13 +181,13 @@ public class Cube : GameEntity, IClickable{
 		Level.Singleton.SelectedCube = null;
 		selected = false;
 		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
-			setMood(Mood.Normal);
+			SetMood(Mood.Normal);
 		}	
 	}
 	
 	public void NotifyChange(){
 		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
-			setMood(Mood.Normal);
+			SetMood(Mood.Normal);
 		}
 	}
 	#endregion
@@ -195,7 +197,7 @@ public class Cube : GameEntity, IClickable{
 	public void Awake(){
 		this.jumpHeight = GetJumpHeight();
 		this.spriteSheet = GetComponent<SpriteSheet>();
-		setMood(Mood.Normal);
+		SetMood(Mood.Normal);
 	}
 	
 	public virtual int GetJumpHeight(){

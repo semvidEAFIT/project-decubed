@@ -79,6 +79,15 @@ public abstract class CubeAIBase : Cube {
 		}
 	}
 	
+	public virtual void EndExecution(){
+		OrganizeTransform();
+		if(Command != null){
+			Command.EndExecution();
+		}
+		PlayMovement();
+		OnEndExecution();
+	}
+	
 	public abstract void StartCube ();
 	
 	public void Move (Vector3 direction)
@@ -169,8 +178,7 @@ public abstract class CubeAIBase : Cube {
 	public static Vector3 RotateRight(Vector3 direction){
 		return Quaternion.AngleAxis(90, Vector3.up) * direction;
 	}
-	
-	
+		
 	#region Get and Sets
 	public Vector3 Position{
 		get{
@@ -218,6 +226,36 @@ public abstract class CubeAIBase : Cube {
 	public int Id {
 		get {
 			return this.id;
+		}
+	}
+	
+	public Cube.Mood Happy {
+		get{
+			return Cube.Mood.Happy;
+		}
+	}
+	
+	public Cube.Mood Angry {
+		get{
+			return Cube.Mood.Angry;
+		}
+	}
+	
+	public Cube.Mood EyesClosed {
+		get{
+			return Cube.Mood.EyesClosed;
+		}
+	}
+	
+	public Cube.Mood Normal {
+		get{
+			return Cube.Mood.Normal;
+		}
+	}
+	
+	public Cube.Mood Proud {
+		get{
+			return Cube.Mood.Proud;
 		}
 	}
 	#endregion
