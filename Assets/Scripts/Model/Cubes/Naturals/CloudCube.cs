@@ -22,7 +22,7 @@ public class CloudCube : Cube {
 	
 	public override Command[] GetOptions(){ 
 		if(transform.forward != Vector3.down && (!Level.Singleton.ContainsElement(transform.position+Vector3.down) || !Level.Singleton.getEntity(transform.position+Vector3.down) is BasicSensor)){
-			setMood(Mood.Happy);
+			SetMood(Mood.Happy);
 		}
 		List<Command> commands = new List<Command>();
 		if(!stuck || !CubeHelper.IsFree(new Vector3Int(transform.position+Vector3.down))){
