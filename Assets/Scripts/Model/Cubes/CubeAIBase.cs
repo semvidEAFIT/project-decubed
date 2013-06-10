@@ -13,7 +13,7 @@ public abstract class CubeAIBase : Cube {
 	private int id;
 	private Thread thread;
 	private AutoResetEvent moveEvent;
-	
+	private bool jump;
 	private Vector3 moveToVector;
 
 	// Use this for initialization
@@ -37,9 +37,14 @@ public abstract class CubeAIBase : Cube {
 			thread.Start();
 		}
 		if (thread.ThreadState == ThreadState.WaitSleepJoin) {
-			if (moveToVector != Vector3.zero) {
-				MoveTo (moveToVector);
-				moveToVector = Vector3.zero;
+			if(moveToVector == Vector3.forward || moveToVector == Vector3.back 
+				|| moveToVector == Vector3.right || moveToVector == Vector3.left){
+				if (moveToVector != Vector3.zero && 
+					((CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector))&& !jump) || 
+					(!CubeHelper.IsFree(new Vector3Int(transform.position+moveToVector)) && jump))) {
+					MoveTo (moveToVector);
+					moveToVector = Vector3.zero;
+				}
 			}
 			if (conditional != Conditionals.None) {
 				switch (conditional) {
@@ -60,7 +65,6 @@ public abstract class CubeAIBase : Cube {
 				moveEvent.Set ();
 			}
 		}
-		
 	}
 	
 	public void MoveTo (Vector3 direction)
@@ -92,6 +96,14 @@ public abstract class CubeAIBase : Cube {
 	
 	public void Move (Vector3 direction)
 	{
+		jump = false;	
+		moveToVector = direction;
+		moveEvent.WaitOne ();
+	}
+	
+	public void Jump (Vector3 direction)
+	{
+		jump = true;
 		moveToVector = direction;
 		moveEvent.WaitOne ();
 	}
