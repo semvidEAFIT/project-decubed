@@ -1,8 +1,7 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\AI Levels\Secuencias\Ejercicio2\Ejercicio2Secuencias.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\AI Levels\Condicionales\Ejercicio2\Ejercicio2Condicionales.cs">
     <Files>
-      <File FileName="Assets\AI\AI Levels\Secuencias\Ejercicio3\Ejercicio3Secuencias.cs" Line="1" Column="1" />
       <File FileName="Assets\AI\AI Levels\Secuencias\Actividad\ActividadSecuencias.cs" Line="8" Column="3" />
       <File FileName="Assets\AI\AI Levels\Other\FreeStyle\CubeFreeStyle.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Interfaces\IClickable.cs" Line="1" Column="1" />
@@ -14,6 +13,10 @@
       <File FileName="Assets\Scripts\Model\Cubes\Commands\Command.cs" Line="1" Column="1" />
       <File FileName="Assets\AI\AI Levels\Secuencias\Ejercicio1\Ejercicio1Secuencias.cs" Line="8" Column="3" />
       <File FileName="Assets\AI\AI Levels\Secuencias\Ejercicio2\Ejercicio2Secuencias.cs" Line="9" Column="17" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Actividad\ActividadCondicionales.cs" Line="4" Column="36" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Ejemplo\EjemploCondicionales.cs" Line="4" Column="34" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Ejercicio1\Ejercicio1Condicionales.cs" Line="4" Column="37" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Ejercicio2\Ejercicio2Condicionales.cs" Line="4" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
