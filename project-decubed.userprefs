@@ -1,18 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\AI Levels\Funciones\Ejercicio1\Ejercicio1Funciones.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AI\AI Levels\Funciones\Actividad\ActividadFunciones.cs">
     <Files>
+      <File FileName="Assets\AI\AI Levels\Condicionales\Ejemplo\CondicionalesEjemplo.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Controllers\Cube\CubeControllerInput.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Libs\SpriteSheet.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\AI Levels\Secuencias\Actividad2\Actividad2Secuencias.cs" Line="4" Column="24" />
-      <File FileName="Assets\AI\AI Levels\Ciclos\Actividad\ActividadCiclos.cs" Line="4" Column="30" />
-      <File FileName="Assets\AI\AI Levels\Ciclos\Ejemplo\EjemploCiclos.cs" Line="4" Column="27" />
-      <File FileName="Assets\AI\AI Levels\Ciclos\Ejercicio1\Ejercicio1Ciclos.cs" Line="4" Column="30" />
-      <File FileName="Assets\AI\AI Levels\Ciclos\Ejercicio2\Ejercicio2Ciclos.cs" Line="4" Column="30" />
+      <File FileName="Assets\AI\AI Levels\Secuencias\Actividad2\Actividad2Secuencias.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Ciclos\Actividad\ActividadCiclos.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Ciclos\Ejemplo\EjemploCiclos.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Ciclos\Ejercicio1\Ejercicio1Ciclos.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Ciclos\Ejercicio2\Ejercicio2Ciclos.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Model\Cubes\Cube.cs" Line="1" Column="1" />
-      <File FileName="Assets\AI\AI Levels\Funciones\Actividad\ActividadFunciones.cs" Line="4" Column="33" />
-      <File FileName="Assets\AI\AI Levels\Funciones\Ejemplo\EjemploFunciones.cs" Line="4" Column="30" />
-      <File FileName="Assets\AI\AI Levels\Funciones\Ejercicio1\Ejercicio1Funciones.cs" Line="4" Column="33" />
+      <File FileName="Assets\AI\AI Levels\Funciones\Actividad\ActividadFunciones.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Funciones\Ejemplo\EjemploFunciones.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Funciones\Ejercicio1\Ejercicio1Funciones.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Secuencias\Ejemplo\EjemploSecuencias.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Secuencias\Actividad1\Actividad1Secuencias4.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Secuencias\Ejercicio1\Ejercicio1Secuencias.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Secuencias\Ejercicio2\Ejercicio2Secuencias.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Actividad\CondicionalesActividad.cs" Line="1" Column="1" />
+      <File FileName="Assets\AI\AI Levels\Condicionales\Ejercicio1\CondicionalesEjercicio1.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

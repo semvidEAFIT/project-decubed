@@ -1,12 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class Ejercicio3Secuencias : CubeAIBase {
+public class Ejercicio2Secuencias : CubeAIBase {
 
 	public override void StartCube ()
 	{
-		for(int i=0; i<4; i++){
-			Move(Backward);
-		}
+		Move(Backward);
+		Move(Backward);
+		Jump(Backward);
+		Move(Right);
+		Jump(Right);
+		Move(Forward);
+		Jump(Forward);
+		Move(Left);
+		Move(Backward);
 	}
 }
