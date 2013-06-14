@@ -7,7 +7,7 @@ public class CubeFreeStyle : CubeAIBase {
 	{
 		Vector3 a = Backward;
 		while (true){
-			Jump(a);
+			Move(a);
 			a = RotateRight(a);
 			a = RotateRight(a);
 			a = RotateRight(a);
