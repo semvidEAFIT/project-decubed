@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ActividadCiclos : CubeAIBase {
+public class CiclosActividad2 : CubeAIBase {
 	
 	public override void StartCube ()
 	{

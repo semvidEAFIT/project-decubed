@@ -1,11 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class EjemploFunciones : CubeAIBase {
+public class FuncionesEjemplo : CubeAIBase {
 	
 	public override void StartCube ()
 	{
-		
 	}	
-
 }
