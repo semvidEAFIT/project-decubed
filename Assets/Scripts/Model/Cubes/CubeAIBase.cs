@@ -163,6 +163,9 @@ public abstract class CubeAIBase : Cube {
 	}
 	
 	private bool isNextToCube(Vector3 direction){
+		if (PositionOutOfLimits(Position + direction) || !Level.Singleton.ContainsElement(Position + direction)){
+			return false;
+		}
 		return (Level.Singleton.getEntity(Position+direction) is CubeAI);
 	}
 	

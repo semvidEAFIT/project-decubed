@@ -78,7 +78,11 @@ public class Level : MonoBehaviour
 	
 	public void AddEntity (GameEntity entity, Vector3Int position)
 	{
+	try{
 		entities.Add (position, entity);
+		}catch(Exception e){
+			Debug.Log(position);
+		}
 		if (entity is BasicSensor) {
 			AddSensor ((BasicSensor)entity);
 			sensorsLeft += 1;
