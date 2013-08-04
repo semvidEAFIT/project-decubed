@@ -11,6 +11,10 @@ public class RockCube : Cube {
 	//	this.nextPosition=nextPosition;
 	}
 	
+	public override Command[] GetOptions(){ 
+		return base.GetOptions();
+	}
+	
 	public override int GetJumpHeight ()
 	{
 		return 0;
