@@ -42,30 +42,11 @@ public class Level : MonoBehaviour
 
     private void restartLevel()
     {
-        if(!isMenu){
-            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
-            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
-            Lumos.Event("Restarted Level" + Application.loadedLevelName + ", StepCount", stepCount);
-        }
         Application.LoadLevel(Application.loadedLevel);
     }
 
     private void ExitLevel()
     {
-        if (!isMenu)
-        {
-            if (sensorsLeft != 0)
-            {
-                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Remaining sensors", sensorsLeft);
-                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Stepcount", stepCount);
-                Lumos.Event("Quit Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
-            }
-            else
-            {
-                Lumos.Event("Solved Level " + Application.loadedLevelName + ", Stepcount", stepCount);
-                Lumos.Event("Solved Level " + Application.loadedLevelName + ", Time", Time.timeSinceLevelLoad);
-            }
-        }
         Application.LoadLevel("WorldSelector");
     }
 
@@ -78,7 +59,7 @@ public class Level : MonoBehaviour
 	
 	public void AddEntity (GameEntity entity, Vector3Int position)
 	{
-	try{
+		try{
 		entities.Add (position, entity);
 		}catch(Exception e){
 			Debug.Log(position);
@@ -219,16 +200,12 @@ public class Level : MonoBehaviour
         {
             isMenu = true;
         }
-        if (!isMenu)
-        {
-            Lumos.Event("Started Level " + Application.loadedLevelName);
-        }
 		entities = new Dictionary<Vector3Int, GameEntity> (new Vector3EqualityComparer ());
 		sensorSpaces = new Dictionary<Vector3Int, List<BasicSensor>> (new Vector3EqualityComparer ());
         images[0] = Resources.Load("Art/Textures/GUI/button_exit") as Texture2D;
         images[1] = Resources.Load("Art/Textures/GUI/button_hint") as Texture2D;
         images[2] = Resources.Load("Art/Textures/GUI/button_restart") as Texture2D;
-        skin = Resources.Load("Art/Textures/GUI/ingame_skin") as GUISkin;
+        skin = 		Resources.Load("Art/Textures/GUI/ingame_skin") as GUISkin;
         foreach (GameObject go in FindObjectsOfType(typeof(GameObject))){
         	if (go.name == "Camera"){
         		CameraDecubeLevel c = go.GetComponent<CameraDecubeLevel>();
@@ -285,7 +262,6 @@ public class Level : MonoBehaviour
         if (showHint)
         {
             if(!askedForHint){
-                Lumos.Event("Asked for hint on level " + Application.loadedLevelName, Time.timeSinceLevelLoad);
                 askedForHint = true;
             }
             //Quemo el tama�o de la textura de fondo
