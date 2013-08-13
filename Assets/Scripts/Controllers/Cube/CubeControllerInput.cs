@@ -21,21 +21,21 @@ public class CubeControllerInput : CubeController {
     {
         if (Cube.IsSelected)
         {
-            if(!initedSelectors){
-                UpdateMoveOptionsSelectors();
-                initedSelectors = true;
-            }
+//            if(!initedSelectors){
+//                UpdateMoveOptionsSelectors();
+//                initedSelectors = true;
+//            }
         }
         else 
         {
-            if(moveOptions.Count >= 0){
-                foreach (MoveOptionSelector s in moveOptions.Keys)
-                {
-                    Destroy(s.gameObject);
-                }
-                moveOptions.Clear();
-                initedSelectors = false;
-            }
+//            if(moveOptions.Count >= 0){
+//                foreach (MoveOptionSelector s in moveOptions.Keys)
+//                {
+//                    Destroy(s.gameObject);
+//                }
+//                moveOptions.Clear();
+//                initedSelectors = false;
+//            }
         }
         base.Update();
     }
@@ -50,19 +50,19 @@ public class CubeControllerInput : CubeController {
   
 	public override void CommandFinished(Command command)
     {		
-        if (Cube.IsSelected)
-        {
-            UpdateMoveOptionsSelectors();
-        }
+//        if (Cube.IsSelected)
+//        {
+//            UpdateMoveOptionsSelectors();
+//        }
     }
 	
 	#endregion
 	
 	#region Move Option Selectors
 	
-    private void UpdateMoveOptionsSelectors()
+    public void UpdateMoveOptionsSelectors()
     {
-       	clearMoveOptions();
+       	RemoveCommandOptions();
 		
         foreach(Command c in Cube.GetOptions()){
             GameObject selectorGameObject = (GameObject)Instantiate(moveOptionSelector);
@@ -77,11 +77,10 @@ public class CubeControllerInput : CubeController {
         }
     }
 	
-	private void clearMoveOptions() {
+	public void clearMoveOptions() {
 		 foreach(MoveOptionSelector s in moveOptions.Keys){
             Destroy(s.gameObject);
         }
-        moveOptions.Clear();
 	}
 	
 	#endregion
@@ -89,13 +88,17 @@ public class CubeControllerInput : CubeController {
 	public void NotifyOptionSelected(MoveOptionSelector selector)
     {
         AddCommand(moveOptions[selector]);
-		clearMoveOptions();
+		RemoveCommandOptions();
+    }
+    
+    public void RemoveCommandOptions(){
+    	clearMoveOptions();
+    	moveOptions.Clear();
     }
 	
 	public void NotifyMoveTO(Command c){
 		AddCommand(c);
 		//clearMoveOptions();
-		
 	}
 
 }

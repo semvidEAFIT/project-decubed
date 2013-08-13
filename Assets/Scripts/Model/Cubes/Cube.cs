@@ -5,7 +5,6 @@ public class Cube : GameEntity, IClickable{
 	// para ice proud = eyesclosed, eyesclose = angry,  
 	public enum Mood {Normal = 0, Proud, EyesClosed,Happy,Angry}
 	
-	
 	#region Variables
 	/// <summary>
 	/// The cube is selected.
@@ -19,6 +18,8 @@ public class Cube : GameEntity, IClickable{
 	private SpriteSheet spriteSheet;
 	public AudioClip[] MovementSounds;
 	public AudioClip[] ClickSouds;
+	private CubeControllerInput input;
+	private bool click = false;
 	//private bool justSelected = false;
 	#endregion
 	
@@ -200,8 +201,26 @@ public class Cube : GameEntity, IClickable{
 		SetMood(Mood.Normal);
 	}
 	
+	void Start(){
+		input = GetComponent<CubeControllerInput>();
+	}
+	
 	public virtual int GetJumpHeight(){
 		return 1;
+	}
+	
+	void Update(){
+		if (input != null && click && Input.GetMouseButtonUp(0)){
+			click = false;
+			input.clearMoveOptions();
+		}
+	}
+	
+	void OnMouseOver () {
+		if (input != null && !click && Input.GetMouseButtonDown(0)){
+			click = true;
+			input.UpdateMoveOptionsSelectors();
+		}
 	}
 		
 	#endregion
