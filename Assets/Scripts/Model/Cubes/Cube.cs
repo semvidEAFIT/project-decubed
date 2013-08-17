@@ -201,8 +201,9 @@ public class Cube : GameEntity, IClickable{
 		SetMood(Mood.Normal);
 	}
 	
-	void Start(){
+	public override void Start(){
 		input = GetComponent<CubeControllerInput>();
+		base.Start();
 	}
 	
 	public virtual int GetJumpHeight(){

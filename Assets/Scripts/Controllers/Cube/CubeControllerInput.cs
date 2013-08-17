@@ -19,24 +19,6 @@ public class CubeControllerInput : CubeController {
 
     protected override void Update()
     {
-        if (Cube.IsSelected)
-        {
-//            if(!initedSelectors){
-//                UpdateMoveOptionsSelectors();
-//                initedSelectors = true;
-//            }
-        }
-        else 
-        {
-//            if(moveOptions.Count >= 0){
-//                foreach (MoveOptionSelector s in moveOptions.Keys)
-//                {
-//                    Destroy(s.gameObject);
-//                }
-//                moveOptions.Clear();
-//                initedSelectors = false;
-//            }
-        }
         base.Update();
     }
 	
@@ -63,7 +45,6 @@ public class CubeControllerInput : CubeController {
     public void UpdateMoveOptionsSelectors()
     {
        	RemoveCommandOptions();
-		
         foreach(Command c in Cube.GetOptions()){
             GameObject selectorGameObject = (GameObject)Instantiate(moveOptionSelector);
 			
@@ -88,17 +69,15 @@ public class CubeControllerInput : CubeController {
 	public void NotifyOptionSelected(MoveOptionSelector selector)
     {
         AddCommand(moveOptions[selector]);
-		RemoveCommandOptions();
     }
     
     public void RemoveCommandOptions(){
-    	clearMoveOptions();
     	moveOptions.Clear();
+    	clearMoveOptions();
     }
 	
 	public void NotifyMoveTO(Command c){
 		AddCommand(c);
-		//clearMoveOptions();
 	}
 
 }
