@@ -19,6 +19,24 @@ public class CubeControllerInput : CubeController {
 
     protected override void Update()
     {
+        if (Cube.IsSelected)
+        {
+            if(!initedSelectors){
+                UpdateMoveOptionsSelectors();
+                initedSelectors = true;
+            }
+        }
+        else 
+        {
+            if(moveOptions.Count >= 0){
+                foreach (MoveOptionSelector s in moveOptions.Keys)
+                {
+                    Destroy(s.gameObject);
+                }
+                moveOptions.Clear();
+                initedSelectors = false;
+            }
+        }
         base.Update();
     }
 	
@@ -32,19 +50,20 @@ public class CubeControllerInput : CubeController {
   
 	public override void CommandFinished(Command command)
     {		
-//        if (Cube.IsSelected)
-//        {
-//            UpdateMoveOptionsSelectors();
-//        }
+        if (Cube.IsSelected)
+        {
+            UpdateMoveOptionsSelectors();
+        }
     }
 	
 	#endregion
 	
 	#region Move Option Selectors
 	
-    public void UpdateMoveOptionsSelectors()
+    private void UpdateMoveOptionsSelectors()
     {
-       	RemoveCommandOptions();
+       	clearMoveOptions();
+		
         foreach(Command c in Cube.GetOptions()){
             GameObject selectorGameObject = (GameObject)Instantiate(moveOptionSelector);
 			
@@ -58,10 +77,11 @@ public class CubeControllerInput : CubeController {
         }
     }
 	
-	public void clearMoveOptions() {
+	private void clearMoveOptions() {
 		 foreach(MoveOptionSelector s in moveOptions.Keys){
             Destroy(s.gameObject);
         }
+        moveOptions.Clear();
 	}
 	
 	#endregion
@@ -69,15 +89,13 @@ public class CubeControllerInput : CubeController {
 	public void NotifyOptionSelected(MoveOptionSelector selector)
     {
         AddCommand(moveOptions[selector]);
-    }
-    
-    public void RemoveCommandOptions(){
-    	moveOptions.Clear();
-    	clearMoveOptions();
+		clearMoveOptions();
     }
 	
 	public void NotifyMoveTO(Command c){
 		AddCommand(c);
+		//clearMoveOptions();
+		
 	}
 
 }
