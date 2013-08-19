@@ -26,7 +26,7 @@ public abstract class CubeController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (commandQueue.Count > 0 && cube.IsSelected)
+        if (commandQueue.Count > 0)
         {
 			Command c = commandQueue.Dequeue();
 			cube.Command = c;
