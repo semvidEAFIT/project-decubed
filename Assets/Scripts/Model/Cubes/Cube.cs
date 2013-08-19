@@ -236,6 +236,15 @@ public class Cube : GameEntity, IClickable{
 		}
 	}
 	
+
+	public int JumpHeight {
+		get {
+			return this.jumpHeight;
+		}
+		set {
+			jumpHeight = value;
+		}
+	}
 	#endregion
 	
 	#region Helper Methods

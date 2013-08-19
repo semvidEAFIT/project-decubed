@@ -5,7 +5,9 @@ public class CiclosEjemplo2 : CubeAIBase {
 	
 	public override void StartCube ()
 	{
-		
+		while(!IsPressingSensor()){
+			Move(Right);
+		}
 	}	
 
 }

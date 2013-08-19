@@ -43,11 +43,6 @@ public class RockCube : Cube {
 				this.cl=cl;
 				CubeAnimations.AnimateMove (gameObject, Vector3.down, aux);
 				cl.renderer.enabled=false;
-				//CubeControllerInput cc = cl.gameObject.GetComponent<CubeControllerInput> ();
-				//cc.NotifyMoveTO (new Move (cl, new Vector3Int( cl.transform.position + Vector3.up)));
-				//TODO cambiar transform por animacion
-				//CubeAnimations.AnimateMove (cl.gameObject, Vector3.down, aux + Vector3.up);
-				//this.transform.position = aux;
 				cl.transform.position = aux + Vector3.up;
 			}else if(CubeHelper.IsFree(new Vector3Int(cl.transform.position+Vector3.down))){
 				Level.Singleton.RemoveEntity(transform.position);

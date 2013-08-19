@@ -47,6 +47,7 @@ public abstract class Command
 
 	protected Cube Cube {
 		get { return cube;}
+		set { cube = value; }
 	}
 	
 	#endregion
