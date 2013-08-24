@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-
 public class AnimationHelper 
 { //TODO quitar Monobehavior
 	
@@ -94,7 +93,6 @@ public class AnimationHelper
 		} else {// This is the last movement
 			AnimateJump (bounceObject, down, nextPositions [actualPosition], bounceDelay, onCompleteMethod, parameters);
 		}
-		
 	}
 	
 	#endregion
