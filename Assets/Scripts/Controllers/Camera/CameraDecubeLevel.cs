@@ -76,11 +76,9 @@ public class CameraDecubeLevel : MonoBehaviour {
 					currentYSpeed += deltaY * Time.deltaTime;
 				}
 			}
-			currentYSpeed = Mathf.Lerp(currentYSpeed,0f,Time.deltaTime);
-			float newY =  Mathf.Clamp(target.transform.position.y + currentYSpeed, yMin,yMax);
-			float newX = Mathf.Lerp(target.transform.position.x,center.x,Time.deltaTime/4);
-			float newZ = Mathf.Lerp(target.transform.position.z,center.z,Time.deltaTime/4);
-			target.transform.position = new Vector3(newX,newY,newZ);
+			
+			moveCamera ();
+			
 		}else{
 			// Lerp for the specific cube
 			target.transform.position = Vector3.Lerp(target.transform.position,lookingObject.transform.position,Time.deltaTime);
@@ -92,6 +90,45 @@ public class CameraDecubeLevel : MonoBehaviour {
 		if (target != null) {
 			xRot -= Input.GetAxis("Horizontal") * xRotSpeed * Time.deltaTime;
 			yRot += Input.GetAxis("Vertical") * yRotSpeed * Time.deltaTime;
+			
+			if (Input.mousePosition.x < 25)
+			{
+				xRot -= -1 * xRotSpeed * Time.deltaTime;
+			}
+			
+			if (Input.mousePosition.x > Screen.width - 25)
+			{
+				xRot -= 1 * xRotSpeed * Time.deltaTime;
+			}
+			
+			if (Input.mousePosition.y < 15)
+			{
+				if ( (target.transform.position.y > yMin) || (target.transform.position.y < yMax))
+				{
+					currentYSpeed += -2 * Time.deltaTime;
+				}
+				
+				moveCamera ();
+			}
+			else
+			{
+				currentYSpeed = 0;
+			}
+			
+			if (Input.mousePosition.y > Screen.height - 15)
+			{
+				if ( (target.transform.position.y > yMin) || (target.transform.position.y < yMax))
+				{
+					currentYSpeed += 1 * Time.deltaTime;
+				}
+				
+				moveCamera ();
+			}
+			else
+			{
+				currentYSpeed = 0;
+			}
+			
 			yRot = ClampAngle( yRot,yRotMinLimit,yRotMaxLimit);
 			Quaternion rotation = Quaternion.Euler( yRot,xRot ,0);
 			Vector3 position = rotation * new Vector3(0f,0f,-distance) + target.transform.position;
@@ -99,6 +136,18 @@ public class CameraDecubeLevel : MonoBehaviour {
 			transform.position = position;
 		}
 	}
+	
+	
+	
+	void moveCamera()
+	{
+		currentYSpeed = Mathf.Lerp(currentYSpeed,0f,Time.deltaTime);
+		float newY =  Mathf.Clamp(target.transform.position.y + currentYSpeed, yMin,yMax);
+		float newX = Mathf.Lerp(target.transform.position.x,center.x,Time.deltaTime/4);
+		float newZ = Mathf.Lerp(target.transform.position.z,center.z,Time.deltaTime/4);
+		target.transform.position = new Vector3(newX,newY,newZ);
+	}
+	
 	
 	#region Get and Sets
 	public GameObject LookingObject
