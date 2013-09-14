@@ -80,19 +80,20 @@ public class AnimationHelper
 		AnimationHelper.onCompleteMethod = onCompleteMethod;
 		AnimationHelper.parameters = parameters;
 		
-		AnimateJump2 (bounceObject, down, nextPositions [actualPosition], delay, "AnimateBouncePositions", null);
+		AnimateJump2 (bounceObject, down, nextPositions [actualPosition], delay, "TestBounce", null);
 	}
 	
 	/// <summary>
 	/// Animates each bounce position (using nextPositions) recursivelly.
 	/// </summary>
-	public void AnimateBouncePositions ()
+	public static void AnimateBouncePositions ()
 	{
 		actualPosition++;
+		
 		if (actualPosition < nextPositions.Length - 1) {// The last last position should make the recursive call
-			AnimateJump (bounceObject, down, nextPositions [actualPosition], bounceDelay, "AnimateBouncePositions", parameters);
+			AnimateJump2 (bounceObject, down, nextPositions [actualPosition], bounceDelay, "TestBounce", parameters);
 		} else {// This is the last movement
-			AnimateJump (bounceObject, down, nextPositions [actualPosition], bounceDelay, onCompleteMethod, parameters);
+			AnimateJump2 (bounceObject, down, nextPositions [actualPosition], bounceDelay, onCompleteMethod, parameters);
 		}
 		
 	}
@@ -271,7 +272,7 @@ public class AnimationHelper
 	{
 		Vector3 finalMovement = finalPosition - objective.transform.position;
 		Vector3 directionAxis = -down;// movement is countrary to down
-		Vector3 upMovement = Vector3.Dot (directionAxis, finalMovement) * directionAxis;// MoveDirection*Quantity + offset
+		Vector3 upMovement =  Vector3.Dot (directionAxis, finalMovement) * directionAxis;// MoveDirection*Quantity + offset
 		Vector3 sideDirection = (finalMovement - upMovement).normalized;
 		//Vector3 sideMovement = finalMovement - upMovement;
 		Vector3 rotationAxis; // = Vector3.Cross (sideDirection, down) * 180;
@@ -291,9 +292,9 @@ public class AnimationHelper
 			rotationTime = 0.5f;
 			
 			// Jumps
-			//hs = getBasicHs (upMovement, 0.2f, delay, iTween.EaseType.spring);
-			//iTween.MoveAdd (originTemp, hs);
-			//delay = delay + 0.2f;
+			hs = getBasicHs (new Vector3(upMovement.x, upMovement.y-1f, upMovement.z), 0.2f, delay, iTween.EaseType.spring);
+			iTween.MoveAdd (originTemp, hs);
+			delay = delay + 0.2f;
 			
 		}else{
 			

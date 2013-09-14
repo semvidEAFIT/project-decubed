@@ -28,6 +28,7 @@ public class Bounce : Command
 			Vector3Int aux = new Vector3Int (endPosition.ToVector3 + direction.ToVector3);
 			aux.y += jumpHeight;
 			aux = CubeHelper.GetTopPosition (aux.ToVector3);
+			
 			if (aux.y > endPosition.y) {
 				if (aux.y < (endPosition.y + jumpHeight)) {
 					EndPosition = aux;
@@ -35,7 +36,7 @@ public class Bounce : Command
 			} else if (aux.y < endPosition.y) {
 				position=endPosition;
 				EndPosition = aux;
-				if (endPosition.y > 1 && Level.Singleton.getEntity (aux.ToVector3 + Vector3.down) is RubberCube) {
+				if (endPosition.y > 1 && !CubeHelper.IsFree(new Vector3Int(aux.ToVector3 + Vector3.down)) && Level.Singleton.getEntity (aux.ToVector3 + Vector3.down) is RubberCube) {
 					FindEndPosition (aux, direction, 2);
 				} else {
 					FindEndPosition (aux, direction, 1);

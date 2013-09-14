@@ -18,8 +18,18 @@ public class RubberCube : Cube {
 			//transform.position = nextPosition.ToVector3
 		if(positions.Count>1){
 			positions.Add(nextPosition);
-			CubeAnimations.AnimateMove (gameObject, Vector3.down, positions[0].ToVector3);
-			Debug.Log(positions[0]);
+			
+			List<Vector3> nextPositions = new List<Vector3>();
+			//Debug.Log(positions.Count);
+			foreach (Vector3Int vector  in positions)
+			{
+				if(vector.y>0){
+					Debug.Log(vector);
+					nextPositions.Add(vector.ToVector3);
+				}
+			}
+			CubeAnimations.AnimateBounce (gameObject, Vector3.down, nextPositions.ToArray());
+			//Debug.Log(positions[0]);
 			positions.RemoveAt(0);
 		}else{
 			positions = new List<Vector3Int>();
@@ -29,6 +39,10 @@ public class RubberCube : Cube {
 		//}
 	}
 	
+	public void TestBounce()
+	{
+		AnimationHelper.AnimateBouncePositions();
+	}
 	
 	public override Command[] GetOptions (){
 		if(transform.forward != Vector3.down && !Level.Singleton.ContainsSensor(new Vector3Int(transform.position).ToVector3)){
@@ -62,16 +76,10 @@ public class RubberCube : Cube {
 	}
 	
 	public override void OnEndExecution (){
-		base.OnEndExecution ();
-		if(positions.Count>0){
-			CubeAnimations.AnimateMove (gameObject, Vector3.down, positions[0].ToVector3);
-			positions.RemoveAt(0);
-			Debug.Log(positions.Count);
-		}else{
 			positions = new List<Vector3Int>();
 			OrganizeTransform();
 			Command.EndExecution();
-		}
+
 	}
 	
 	

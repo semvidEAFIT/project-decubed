@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CubeAnimations
 {
@@ -20,7 +21,6 @@ public class CubeAnimations
 		AnimationHelper.AnimateJump2 (gameObject, down, nextPosition, 0f, "EndExecution", null);
 	}
 	
-	
 	public static void AnimateBounce (GameObject gameObject, Vector3 down, Vector3[] nextPositions)
 	{
 		AnimationHelper.AnimateBounce (gameObject, down, nextPositions, 0f, "EndExecution", null);
@@ -35,5 +35,6 @@ public class CubeAnimations
     {
         AnimationHelper.AnimateSlide(gameObject, nextPosition, 0f, method, parameters);
     }
+	
 	#endregion
 }
