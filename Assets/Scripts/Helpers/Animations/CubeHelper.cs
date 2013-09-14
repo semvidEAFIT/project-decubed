@@ -73,7 +73,57 @@ public class CubeHelper
 		}
 		return options;
 	}
-	//
+	/// <summary>
+	/// Checks the last position in the specify direction.
+	/// </summary>
+	/// <returns>
+	/// True if there is a last position and it isnt the.
+	/// </returns>
+	/// <param name='direction'>
+	/// If set to <c>true</c> direction.
+	/// </param>
+	/// <param name='finalPosition'>
+	/// If set to <c>true</c> final position.
+	/// </param>
+	/// 
+	///
+	/// <summary>
+	/// Checks the last position in the specify direction.
+	/// </summary>
+	/// <returns>
+	///  True if there is a last position and it isnt next to psition.
+	/// </returns>
+	/// <param name='position'>
+	/// position to serch from
+	/// </param>
+	/// <param name='direction'>
+	/// directin to serch
+	/// </param>
+	/// <param name='finalPosition'>
+	/// out the las position. Vector3Int.zero return == false
+	/// </param>
+	/// 
+	public static bool CheckLastPosition(Vector3Int position ,Vector3Int direction, out Vector3Int finalPosition){
+		Vector3Int aux = new Vector3Int(position.ToVector3);
+		aux = aux.Add(direction.ToVector3);
+		aux = aux.Add(direction.ToVector3);
+		Vector3Int c;
+		for(int i = 0; i < 11; i++){
+			if(Level.Singleton.ContainsElement(aux)||aux.y==0){
+				if(i>0 || aux.y==0){
+					finalPosition = aux.Add(new Vector3(direction.x*-1,direction.y*-1,direction.z*-1));
+					return true;
+				}else{
+					finalPosition = new Vector3Int(Vector3.zero);
+					return false;
+				}
+			}
+			aux = aux.Add(direction.ToVector3);
+		}
+		finalPosition = new Vector3Int(Vector3.zero);
+		return false;
+	}
+//
 //	public static Vector3 GetLastPositionInDirection (Vector3 position, Vector3 direction)
 //	{
 //		int diff = GetDifferenceInDirection (position, direction.normalized);
