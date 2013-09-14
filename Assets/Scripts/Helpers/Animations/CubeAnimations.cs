@@ -35,5 +35,9 @@ public class CubeAnimations
     {
         AnimationHelper.AnimateSlide(gameObject, nextPosition, 0f, method, parameters);
     }
+	
+	public static void AnimetSwing(GameObject gameObject, Vector3 nextPosition){
+		AnimationHelper.AnimateSwing(gameObject,nextPosition);
+	}
 	#endregion
 }

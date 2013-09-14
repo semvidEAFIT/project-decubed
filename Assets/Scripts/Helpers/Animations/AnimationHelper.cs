@@ -384,4 +384,16 @@ public class AnimationHelper
 	
 	#endregion
 
+	public static void AnimateSwing(GameObject gameObject, Vector3 finalPosition){
+		Hashtable hs = new Hashtable ();
+		Vector3 direction = finalPosition - gameObject.transform.position;
+		hs.Add ("amount", direction);
+		hs.Add ("time", (finalPosition-gameObject.transform.position).magnitude*0.1);
+		hs.Add ("delay", 1f);
+		hs.Add ("space", Space.World);
+		hs.Add ("easetype", iTween.EaseType.linear);
+        hs.Add("onComplete", "EndExecution");
+        hs.Add("oncompleteTarget", gameObject);
+		iTween.MoveAdd (gameObject, hs);
+	}
 }

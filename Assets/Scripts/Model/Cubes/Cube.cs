@@ -5,7 +5,6 @@ public class Cube : GameEntity, IClickable{
 	// para ice proud = eyesclosed, eyesclose = angry,  
 	public enum Mood {Normal = 0, Proud, EyesClosed,Happy,Angry}
 	
-	
 	#region Variables
 	/// <summary>
 	/// The cube is selected.
@@ -71,11 +70,11 @@ public class Cube : GameEntity, IClickable{
 		if(command != null){
 			command.EndExecution();
 		}
-		PlayMovement();
+		//PlayMovement();
 		OnEndExecution();
-		if(transform.forward == Vector3.down && spriteSheet.CurrentSequence!=GetMoodSequence( Mood.EyesClosed)){
+		/*if(transform.forward == Vector3.down && spriteSheet.CurrentSequence!=GetMoodSequence( Mood.EyesClosed)){
 			SetMood(Mood.EyesClosed);
-		}
+		}*/
 	}
 	
 	public void PlayMovement(){

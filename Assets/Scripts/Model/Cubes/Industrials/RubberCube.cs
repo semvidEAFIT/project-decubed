@@ -10,6 +10,7 @@ public class RubberCube : Cube {
 		base.Start();
 		positions = new List<Vector3Int>();
 	}
+	
 	public override void MoveTo (Vector3Int nextPosition)
 	{
 		//if (!Level.Singleton.ContainsElement (nextPosition)) {

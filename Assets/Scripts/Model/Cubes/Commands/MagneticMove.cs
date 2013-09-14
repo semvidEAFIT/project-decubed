@@ -14,6 +14,7 @@ public class MagneticMove : Command {
 		base.Execute();
 		MetalCube cube = (MetalCube)Cube;
 		cube.Direction = direction;
+		cube.rockFall = false;
 		Cube.MoveTo(EndPosition);
     }
 }
